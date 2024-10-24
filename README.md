@@ -36,7 +36,7 @@ The **crantr** package serves as a wrapper over the [fafbseg](https://github.com
 
 1. Setup of necessary default paths / data redirects.
 2. Integration with [CAVE tables](https://proofreading.zetta.ai/info/) for storing various annotation information.
-3. Relevant helper functions called from the [bancr](https://github.com/flyconnectome/bancr) package.
+3. Relevant helper functions called from the [bancr](https://github.com/flyconnectome/crantr) package.
 3. CLANT project specific data wrangling and browsing code.
 
 ## Installation
@@ -109,7 +109,7 @@ neuron.mesh <- crant_read_neuron_meshes("576460752684030043")
 plot3d(neuron.mesh, col = "purple")
 ```
 
-![crantb_example_neuron](https://github.com/flyconnectome/bancr/blob/main/inst/images/crantb_example_neuron.png?raw=true)
+![crantb_example_neuron](https://github.com/flyconnectome/crantr/blob/main/inst/images/crantb_example_neuron.png?raw=true)
 
 ## Updating
 
@@ -185,7 +185,7 @@ plot3d(crantb.surf, col = "lightgrey", alpha = 0.1)
 # plot neurons
 plot3d(pn.meshes)
 ```
-![crantb_example_neuron_meshes](https://github.com/flyconnectome/bancr/blob/main/inst/images/crantb_example_neuron_meshes.png?raw=true)
+![crantb_example_neuron_meshes](https://github.com/flyconnectome/crantr/blob/main/inst/images/crantb_example_neuron_meshes.png?raw=true)
 
 We can also make this plot in 2D, in the popular `ggplot2` framework.
 
@@ -193,7 +193,7 @@ We can also make this plot in 2D, in the popular `ggplot2` framework.
 # ggplot
 crant_ggneuron(pn.meshes , volume = crantb.surf)
 ```
-![crantb_example_neuron_ggplot](https://github.com/flyconnectome/bancr/blob/main/inst/images/crantb_example_neuron_ggplot.png?raw=true)
+![crantb_example_neuron_ggplot](https://github.com/flyconnectome/crantr/blob/main/inst/images/crantb_example_neuron_ggplot.png?raw=true)
 
 Sometimes it is also useful for work with skeletons, for example for NBLASTing neurons. We can swiftly fetch the L2 skeletons of a neuron,
 built from its supervoxel locations using the python library [pcg_skel](https://github.com/AllenInstitute/pcg_skel), as so:
@@ -214,7 +214,7 @@ plot3d(crantb.surf, col = "lightgrey", alpha = 0.1)
 # plot neurons
 plot3d(pn.skels, lwd = 1)
 ```
-![crantb_example_neuron_skeletons](https://github.com/flyconnectome/bancr/blob/main/inst/images/crantb_example_neuron_skeletons.png?raw=true)
+![crantb_example_neuron_skeletons](https://github.com/flyconnectome/crantr/blob/main/inst/images/crantb_example_neuron_skeletons.png?raw=true)
 
 These are the raw ingredients to start morphological analyses in `CRANTb` using the [natverse](https://natverse.org/)! 
 
@@ -222,7 +222,7 @@ We hope to come: neuron annotations, synapses, transmitter predictions, dense co
 
 ## Meta data management in seatable
 
-![ant_table](https://github.com/flyconnectome/bancr/blob/main/inst/images/ant_table.png?raw=true)
+![ant_table](https://github.com/flyconnectome/crantr/blob/main/inst/images/ant_table.png?raw=true)
 
 Seatable is a powerful way to make collaborative annotations in this connectome dataset and we encourage you to use it rather than keeping your own google sheets or similar to track neurons.
 It works similarly to google sheets, but has better filter views, data type management, programmatic access, etc. 
