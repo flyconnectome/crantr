@@ -70,7 +70,7 @@ To ensure everything is set up correctly, run:
 dr_crant()
 
 # Confirm functionality (should return FALSE)
-crant_islatest("576460752684030043")
+crant_islatest("576460752703346048")
 ```
 
 ### Python Dependencies
@@ -122,7 +122,7 @@ remotes::install_github('flyconnectome/crantr')
 To update a specific Python library dependency:
 
 ```r
-fafbseg::simple_python(pkgs='fafbseg')
+fafbseg::simple_python(pkgs='pcg_skel')
 ```
 
 ## Tutorial
@@ -232,23 +232,30 @@ See our seatable [here](https://cloud.seatable.io/workspace/62919/dtable/CRANTb/
 If this link does not work you can request access by contacting Lindsey Lopes.
 
 Each row is a `CRANTb` neuron. If you hover your tool-tip over the **i** icon in each column header, you can see what that column records.
-Each neuron is identified by a 16-digit integer `root_id`, which is modified each time the neuron is edited.
+Each neuron is identified by its unique 16-digit integer `root_id`, which is modified each time the neuron is edited.
 As `CRANTb` is an active project, this happens frequently so our seatable needs to keep track of changes, which it does on a daily schedule.
 
 The update logic is `position` (voxel space) -> `supervoxel_id` -> `root_id`.
 If `position` and `supervoxel_id` are missing, `root_id` is updated directly but this is longer. 
 It will also take the most up to date `root_id` with the most number of voxels from the previous root_id, so if a neuron is split this could be the incorrect choice. 
-Updating from the `position` gives you the neuron at that position, regardless of size, merges or splits.
-Best practice is probably to add position always if you can, and `root_id` also if you want. 
-You may want to add only `root_id` if you want to track neuron but do not yet have a good position. 
-A good position is a point in the neuron you expect not to change during proofreading, e.g. the first branch point in the neuron where it splits from the primary neurite into axon and dendrite.
+Updating from `position` gives you the neuron at that position, regardless of its size, merges or splits.
+Best practice is to add position always if you can, and `root_id` in addition if you want. 
+You may want to add only `root_id` alone if you want to track a neuron but do not yet have a good position for it. 
+A good position is a point on the neuron that you expect not to change during proofreading, e.g. the first branch point in the neuron where it splits from the primary neurite into axon and dendrite.
+
+![ant_table_ids](https://github.com/flyconnectome/crantr/blob/main/inst/images/ant_table_ids.png?raw=true)
 
 You can access the seatable programmatically using the `crantr`, if you have access.
+
+```r
+remotes::github_install('flyconnectome/crantr')
+library(crantr)
+```
 
 You will first need to obtain your authorised login credentials, you only need to do this once:
 
 ```r
-crant_table_set_token(user="MY_EMAIL_FOR_SEATABLE.com",
+crant_table_set_token(user="MY_EMAIL_FOR_SEATABLE",
                pwd="MY_SEATABLE_PASSWORD",
                url="https://cloud.seatable.io/")
 ```
@@ -263,16 +270,21 @@ ac <- crant_table_query()
 You can also update rows automatically. Be careful when doing this. If you want to be sure not to mess something up, 
 you can take a 'snapshot' of the seatable before you edit it in the browser, which will save a historical version.
 
-You can then change column in `ac`, keeping their names, as youl ike. Then to update via R:
+You can then change columns in `ac`, keeping their names, as you like. Then to update via R:
 
 ```r
 # Update
-crant_table_update_rows(base="CRANTb"", 
+crant_table_update_rows(base="CRANTb", 
                      table = "CRANTb_meta", 
-                     df = bc.new, 
+                     df = ac.new, 
                      append_allowed = FALSE, 
                      chunksize = 100)
 ```
+
+
+To update, you must have the seatable identifier for each column in `ac.new`, i.e. an `_id` column.
+
+This method is good for bulk uploads/changes.
 
 You can also make a quick, simpler update, replacing one column's entries with a given `update` for a set of root IDs.
 
@@ -287,10 +299,6 @@ crant_table_annotate(root_ids = c("576460752667713229",
                   append = FALSE,
                   column = "user_annotator")
 ```
-
-To update, you must have the seatable identifier for each column in `ac.new`, i.e. an `_id` column.
-
-This method is good for bulk uploads/changes.
 
 ## Data Acknowledgment
 
