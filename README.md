@@ -226,13 +226,22 @@ We hope to come: neuron annotations, synapses, transmitter predictions, dense co
 
 Seatable is a powerful way to make collaborative annotations in this connectome dataset and we encourage you to use it rather than keeping your own google sheets or similar to track neurons.
 It works similarly to google sheets, but has better filter views, data type management, programmatic access, etc. 
-
 It should work in the browser and as an [app](https://seatable.io/en).
 
 See our seatable [here](https://cloud.seatable.io/workspace/62919/dtable/CRANTb/?tid=0000&vid=0000).
 If this link does not work you can request access by contacting Lindsey Lopes.
 
 Each row is a `CRANTb` neuron. If you hover your tool-tip over the **i** icon in each column header, you can see what that column records.
+Each neuron is identified by a 16-digit integer `root_id`, which is modified each time the neuron is edited.
+As `CRANTb` is an active project, this happens frequently so our seatable needs to keep track of changes, which it does on a daily schedule.
+
+The update logic is `position` (voxel space) -> `supervoxel_id` -> `root_id`.
+If `position` and `supervoxel_id` are missing, `root_id` is updated directly but this is longer. 
+It will also take the most up to date `root_id` with the most number of voxels from the previous root_id, so if a neuron is split this could be the incorrect choice. 
+Updating from the `position` gives you the neuron at that position, regardless of size, merges or splits.
+Best practice is probably to add position always if you can, and `root_id` also if you want. 
+You may want to add only `root_id` if you want to track neuron but do not yet have a good position. 
+A good position is a point in the neuron you expect not to change during proofreading, e.g. the first branch point in the neuron where it splits from the primary neurite into axon and dendrite.
 
 You can access the seatable programmatically using the `crantr`, if you have access.
 
