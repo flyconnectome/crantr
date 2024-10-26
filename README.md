@@ -22,7 +22,7 @@ Clonal raider ants (*Ooceraea biroi*) are a fascinating species of ant known for
 - They reproduce clonally via parthenogenesis.
 - They lack a queen caste, and all workers in a colony lay eggs.
 - They exhibit complex social behaviors, including division of labor, chemical communication, and parental care.
-- It is possible to make [mutant] (https://www.cell.com/fulltext/S0092-8674(17)30772-9) and [transgenic] (https://www.cell.com/cell/fulltext/S0092-8674(23)00544-5) ants to explore the neural and genetic basis of behaviors.
+- It is possible to make [mutant](https://www.cell.com/fulltext/S0092-8674(17)30772-9) and [transgenic](https://www.cell.com/fulltext/S0092-8674(17)30772-9) ants.
 
 These characteristics make clonal raider ants an excellent model system for studying the neural basis of social behavior and the evolution of eusociality in insects.
 
