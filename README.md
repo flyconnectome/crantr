@@ -7,9 +7,9 @@
 crantr
 ===========
 
-**crantr** is an R package designed to support the analysis of connectome data sets for clonal raider ants (*Ooceraea biroi*, formerly *Cerapachys biroi*). The package primarily focuses on proofread auto-segmentation data from the [CRANT (Clonal Raider Ant) project](https://proofreading.zetta.ai/info/api/v2/datastack/full/kronauer_ant?middle_auth_url=proofreading.zetta.ai%2Fsticky_auth).
+**crantr** is an R package designed to support the analysis of connectome data sets for the clonal raider ant (*Ooceraea biroi*, formerly *Cerapachys biroi*). The package primarily focuses on proofread auto-segmentation data from the [CRANT (Clonal Raider Ant) project](https://proofreading.zetta.ai/info/api/v2/datastack/full/kronauer_ant?middle_auth_url=proofreading.zetta.ai%2Fsticky_auth).
 This project has a community based in the [CRANT slack](https://app.slack.com/client/T07RC68DXQA/C07S10GRL9W).
-The project was foudned as a collaboration between the laboratories of [Wei-Chung Allen Lee](https://www.lee.hms.harvard.edu/), 
+The project was founded as a collaboration between the laboratories of [Wei-Chung Allen Lee](https://www.lee.hms.harvard.edu/), 
 [Daniel Kronauer](https://www.rockefeller.edu/our-scientists/heads-of-laboratories/988-daniel-kronauer/) and [Hannah Haberkern](https://www.research-in-bavaria.de/research-news/details/article/new-junior-research-group-hannah-haberkern-investigates-navigation-in-flies-and-ants/),
 among others. 
 The project lead is [Lindsey Lopes](https://www.linkedin.com/in/lindsey-e-lopes-a16a3292/). 
@@ -19,10 +19,10 @@ For the time being, there is a single ant brain connectome under construction,`C
 
 Clonal raider ants (*Ooceraea biroi*) are a fascinating species of ant known for their unique reproductive biology and social structure:
 
-- They reproduce through parthenogenesis, meaning all individuals are female clones.
-- They lack a queen caste, with all individuals capable of laying eggs.
-- They alternate between reproductive and brood care phases in synchronized cycles.
-- They exhibit collective hunting behavior, raiding other ant colonies for their larvae.
+- They reproduce clonally via parthenogenesis.
+- They lack a queen caste, and all workers in a colony lay eggs.
+- They exhibit complex social behaviors, including division of labor, chemical communication, and parental care.
+- It is possible to make [mutant] (https://www.cell.com/fulltext/S0092-8674(17)30772-9) and [transgenic] (https://www.cell.com/cell/fulltext/S0092-8674(23)00544-5) ants to explore the neural and genetic basis of behaviors.
 
 These characteristics make clonal raider ants an excellent model system for studying the neural basis of social behavior and the evolution of eusociality in insects.
 
@@ -37,7 +37,7 @@ The **crantr** package serves as a wrapper over the [fafbseg](https://github.com
 1. Setup of necessary default paths / data redirects.
 2. Integration with [CAVE tables](https://proofreading.zetta.ai/info/) for storing various annotation information.
 3. Relevant helper functions called from the [bancr](https://github.com/flyconnectome/crantr) package.
-3. CLANT project specific data wrangling and browsing code.
+3. CRANT project specific data wrangling and browsing code.
 
 ## Installation
 
@@ -127,7 +127,7 @@ fafbseg::simple_python(pkgs='pcg_skel')
 
 ## Tutorial
 
-Project lead [Lindsey Lopes](https://www.linkedin.com/in/lindsey-e-lopes-a16a3292/) in the [Kronauer group](https://www.rockefeller.edu/our-scientists/heads-of-laboratories/988-daniel-kronauer/) is interested in the olfactory system of the ant, and so some of the earliest reconstruction was done in the ant antennal lobe.
+Project lead [Lindsey E. Lopes](https://www.linkedin.com/in/lindsey-e-lopes-a16a3292/) in the [Laboratory of Social Evolution and Behavior](https://www.rockefeller.edu/our-scientists/heads-of-laboratories/988-daniel-kronauer/) is interested in the olfactory system of the ant, and so some of the earliest reconstruction was done in the ant antennal lobe.
 
 Let us look at some antennal lobe projection neurons.
 
@@ -308,7 +308,7 @@ When using CRANT data, please acknowledge it in accordance with the [CRANT commu
 
 If you use this package, please cite:
 
-1. The upcoming CRANT paper (TBD)
+1. The upcoming CRANTb paper (TBD)
 2. The natverse paper: [Bates et al. 2020](https://elifesciences.org/articles/53350)
 3. This R package:
 
@@ -320,9 +320,9 @@ citation(package = "crantr")
 
 ## Acknowledgements
 
-- CRANT data set: Collected at Harvard Medical School in the [laboratory of Wei-Chung Allen Lee](https://www.lee.hms.harvard.edu/), by Wangchu Xiang and Lindsey Lopes.
+- CRANTb data set: Lindsey E. Lopes and David G.C. Hildebrand prepared the clonal raider ant brain sample. The EM dataset was collected at Harvard Medical School in the [laboratory of Wei-Chung Allen Lee](https://www.lee.hms.harvard.edu/), by Wangchu Xiang, Mohd Mazri, and Lindsey E. Lopes.
 - Segmentation and synapse prediction: Built by [Zetta.ai](https://zetta.ai/).
-- Neuron reconstruction: Hosted and supported by the laboratory of Wei-Chung Allen Lee and the [Kronauer Laboratory](https://www.rockefeller.edu/our-scientists/heads-of-laboratories/988-daniel-kronauer/) at the Rockerfeller Institute.
+- Neuron reconstruction: Hosted and supported by the laboratory of Wei-Chung Allen Lee and the [Laboratory of Social Evolution and Behavior](https://www.rockefeller.edu/our-scientists/heads-of-laboratories/988-daniel-kronauer/) at The Rockefeller University.
 - R package: Initialized using the [fancr](https://github.com/flyconnectome/fancr) package developed by Greg Jefferis at the MRC Laboratory of Molecular Biology, Cambridge, UK.
 - Development: Alexander S. Bates worked on this R package while in the laboratory of Rachel Wilson at Harvard Medical School.
 
