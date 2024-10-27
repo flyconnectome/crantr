@@ -318,7 +318,7 @@ crant_table_update_tracing <- function(table = "CRANTb_meta",
 
   # Only add ngl_link for a certain set of statuses
   cat('generating neuroglancer links ...\n')
-  n_rows <- nrow(ac %>% dplyr::filter(grepl("TRACING_ISSUE$|PROOFREADING_ISSUE$|PARTIALLY_PROOFREAD$", status)))
+  n_rows <- nrow(ac %>% dplyr::filter(grepl("TRACING_ISSUE$|TRACING_ISSUE,|PROOFREADING_ISSUE$|PROOFREADING_ISSUE,|PARTIALLY_PROOFREAD$|PARTIALLY_PROOFREAD,", status)))
   p <- dplyr::progress_estimated(n_rows)
   ac.new <- ac %>%
     dplyr::filter(grepl("TRACING_ISSUE$|PROOFREADING_ISSUE$|PARTIALLY_PROOFREAD$", !!rlang::sym("status"))) %>%
