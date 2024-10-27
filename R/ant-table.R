@@ -300,4 +300,54 @@ crant_table_annotate <- function(root_ids,
   invisible()
 }
 
+# crant table update tracing
+# hidden
+crant_table_update_tracing <- function(table = "CRANTb_meta",
+                                       base = "CRANTb"){
 
+  # Get current table
+  cat('reading CRANT meta seatable...\n')
+  ac <- crant_table_query(sql = sprintf('select _id, root_id, status, ngl_link from %s',table),
+                          base = base) %>%
+    dplyr::select(!!rlang::sym("root_id"),
+                  !!rlang::sym("status"),
+                  !!rlang::sym("ngl_link"),
+                  !!rlang::sym("_id"))
+  ac[ac=="0"] <- NA
+  ac[ac==""] <- NA
+
+  # Only add ngl_link for a certain set of statuses
+  cat('generating neuroglancer links ...\n')
+  n_rows <- nrow(ac %>% dplyr::filter(grepl("TRACING_ISSUE$|PROOFREADING_ISSUE$|PARTIALLY_PROOFREAD$", status)))
+  p <- dplyr::progress_estimated(n_rows)
+  ac.new <- ac %>%
+    dplyr::filter(grepl("TRACING_ISSUE$|PROOFREADING_ISSUE$|PARTIALLY_PROOFREAD$", !!rlang::sym("status"))) %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(
+      ngl_id = {
+        p$tick()$print() # Update progress bar
+        tryCatch(paste(crant_ngl_segments(!!rlang::sym("ngl_link")),collapse="_"), error = function(e) NA)
+      }
+    ) %>%
+    dplyr::mutate(ngl_link = dplyr::case_when(
+      is.na(!!rlang::sym("ngl_link")) ~ crant_scene(!!rlang::sym("root_id"), shorten_url = TRUE),
+      !is.na(!!rlang::sym("ngl_id")) & !grepl(!!rlang::sym("root_id"),!!rlang::sym("ngl_id")) ~ crant_scene(!!rlang::sym("root_id"), shorten_url = TRUE),
+      TRUE ~ ngl_link
+    )) %>%
+    dplyr::ungroup() %>%
+    dplyr::select(-!!rlang::sym("ngl_id")) %>%
+    as.data.frame()
+
+  # Update
+  cat('updating CRANTb_meta seatable...\n')
+  ac.new[is.na(ac.new)] <- ''
+  crant_table_update_rows(df = ac.new,
+                          base = "CRANTb",
+                          table = "CRANTb_meta",
+                          append_allowed = FALSE,
+                          chunksize = 1000)
+  cat('done.')
+
+  # Return
+  invisible()
+}

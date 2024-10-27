@@ -6,6 +6,7 @@
 #' but could point to another dataset layer.
 #' @param open Whether to open the URL in your browser (see
 #'   \code{\link{browseURL}})
+#' @param shorten_url logical, whether or not to produce a shortened URL.
 #' @return A character vector containing a single Neuroglancer URL (invisibly
 #'   when \code{open=TRUE}).
 #' @export
@@ -18,16 +19,17 @@
 #' }
 crant_scene <- function(ids=NULL,
                         open=FALSE,
-                        layer = NULL,
+                        shorten_url = FALSE,
+                        layer = "proofreadable seg",
                         url=paste0("https://spelunker.cave-explorer.org/#!middleauth+",
                                    "https://global.daf-apis.com/nglstate/api/v1/",
                                    "5733498854834176")) {
-  url=sub("#!middleauth+", "?", url, fixed = T)
-  parts=unlist(strsplit(url, "?", fixed = T))
-  json=try(fafbseg::flywire_fetch(parts[2], token=fafbseg::chunkedgraph_token(), return = 'text', cache = TRUE)) # token = crant_token()
+  url <- sub("#!middleauth+", "?", url, fixed = T)
+  parts <- unlist(strsplit(url, "?", fixed = T))
+  json <- try(fafbseg::flywire_fetch(parts[2], token=fafbseg::chunkedgraph_token(), return = 'text', cache = TRUE)) # NOT token = crant_token()
   if(inherits(json, 'try-error')) {
     badtoken=paste0("You have a token but it doesn't seem to be authorised for CAVE or global.daf-apis.com.\n",
-                    "Have you definitely used `crant_set_token()` to make a token for the CAVE datasets?")
+                    "Have you definitely used `flywire_set_token()` to make a token for the CAVE datasets?")
     if(grepl(500, json))
       stop("There seems to be a (temporary?) problem with the zetta server!")
     else if(grepl(401, json))
@@ -39,14 +41,18 @@ crant_scene <- function(ids=NULL,
     else
       stop(badtoken)
   }
-  u=fafbseg::ngl_encode_url(json, baseurl = parts[1])
+  u <- fafbseg::ngl_encode_url(json, baseurl = parts[1])
   if(!is.null(ids)){
-    banc_ngl_segments(u, layer=layer) <- crant_ids(ids)
+    crant_ngl_segments(u, layer=layer) <- crant_ids(ids)
   }
   if(open) {
     browseURL(u)
     invisible(u)
-  } else (u)
+  } else if(shorten_url){
+    crant_shorturl(u)
+  }else{
+    u
+  }
 }
 
 #' Set the token to be used to authenticate to CRANT autosegmentation resources

@@ -7,7 +7,8 @@
 crant_scene(
   ids = NULL,
   open = FALSE,
-  layer = NULL,
+  shorten_url = FALSE,
+  layer = "proofreadable seg",
   url = paste0("https://spelunker.cave-explorer.org/#!middleauth+",
     "https://global.daf-apis.com/nglstate/api/v1/", "5733498854834176")
 )
@@ -17,6 +18,8 @@ crant_scene(
 
 \item{open}{Whether to open the URL in your browser (see
 \code{\link{browseURL}})}
+
+\item{shorten_url}{logical, whether or not to produce a shortened URL.}
 
 \item{layer}{the segmentation layer for which \code{ids} intended. Defaults to 'segmentation proofreading',
 but could point to another dataset layer.}
