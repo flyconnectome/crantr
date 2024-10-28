@@ -6,7 +6,7 @@
 \alias{crantr-package}
 \title{crantr: R Client Access to Clonal Raider ANT (CRANT) Datasets}
 \description{
-Access to the Clonal Raider ANT (CRANT) EM datasets, starying with CRANTb, focussing on support for autosegmentation. Organised as a wrapper around the fafbseg and bancr packages.
+Access to the Clonal Raider ANT (CRANT) EM datasets, starting with CRANTb and focussing on support for autosegmentation. Organised as a wrapper around the fafbseg and bancr packages.
 }
 \seealso{
 Useful links:
@@ -18,7 +18,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Alexnder Bates \email{alexander.shakeel.bates@gmail.com} (\href{https://orcid.org/0000-0002-1195-0445}{ORCID})
+\strong{Maintainer}: Alexander Bates \email{alexander.shakeel.bates@gmail.com} (\href{https://orcid.org/0000-0002-1195-0445}{ORCID})
 
 }
 \keyword{internal}

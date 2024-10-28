@@ -47,27 +47,17 @@ Suggests:
     usethis,
     rmarkdown,
     spelling,
-    arrow,
-    ggnewscale (>= 0.4.10.9000),
-    ggpubr,
-    catmaid,
     grDevices,
-    nabor,
-    fs,
-    purrr,
     plyr
 Remotes: 
     natverse/nat,
     natverse/fafbseg@asb-dev,
     natverse/nat.flybrains,
     natverse/nat.templatebrains,
-    catmaid=natverse/rcatmaid,
     natverse/malevnc,
     flyconnectome/fancr,
     flyconnectome/bancr,
-    kassambara/ggpubr,
-    tidyverse/ggplot2,
-    eliocamp/ggnewscale
+    tidyverse/ggplot2
 Config/testthat/edition: 3
 LazyDataCompression: xz
 Encoding: UTF-8
