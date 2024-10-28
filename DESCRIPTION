@@ -4,12 +4,12 @@ Title: R Client Access to Clonal Raider ANT (CRANT) Datasets
 Version: 0.1.0
 Date: 2024-07-11
 Authors@R: 
-    c(person(given = "Alexnder",
+    c(person(given = "Alexander",
            family = "Bates",
            role = c("aut", "cre"),
            email = "alexander.shakeel.bates@gmail.com",
            comment = c(ORCID = "0000-0002-1195-0445")))
-Description: Access to the Clonal Raider ANT (CRANT) EM datasets, starying with CRANTb, focussing on support for
+Description: Access to the Clonal Raider ANT (CRANT) EM datasets, starting with CRANTb and focussing on support for
     autosegmentation. Organised as a wrapper around the fafbseg and bancr
     packages.
 License: GPL-3
@@ -19,7 +19,7 @@ Depends:
     R (>= 3.5.0),
     fafbseg (>= 0.14.1.9200),
     nat.flybrains,
-    bancr,
+    bancr
 Imports: 
     dplyr,
     nat,
