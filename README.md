@@ -122,7 +122,7 @@ If you are a collaborator on the project and have access to our [seatable](https
 library(crantr)
 
 # get meta data, will one dya be available via CAVE tables
-ac <- anttable_query()
+ac <- crant_table_query()
 
 # have a look at it!
 View(ac)
