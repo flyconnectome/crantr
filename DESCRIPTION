@@ -2,7 +2,7 @@ Type: Package
 Package: crantr
 Title: R Client Access to Clonal Raider ANT (CRANT) Datasets 
 Version: 0.1.0
-Date: 2024-07-11
+Date: 2024-10-01
 Authors@R: 
     c(person(given = "Alexander",
            family = "Bates",
@@ -51,7 +51,7 @@ Suggests:
     plyr
 Remotes: 
     natverse/nat,
-    natverse/fafbseg@asb-dev,
+    natverse/fafbseg,
     natverse/nat.flybrains,
     natverse/nat.templatebrains,
     natverse/malevnc,
