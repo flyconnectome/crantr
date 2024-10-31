@@ -26,10 +26,14 @@ crant_scene <- function(ids=NULL,
                                    "5733498854834176")) {
   url <- sub("#!middleauth+", "?", url, fixed = T)
   parts <- unlist(strsplit(url, "?", fixed = T))
-  json <- try(fafbseg::flywire_fetch(parts[2], token=fafbseg::chunkedgraph_token(), return = 'text', cache = TRUE)) # NOT token = crant_token()
+  json <- try(fafbseg::flywire_fetch(parts[2],
+                                     token=fafbseg::chunkedgraph_token(url=url),
+                                     return = 'text',
+                                     cache = TRUE)) # NOT token = crant_token()
   if(inherits(json, 'try-error')) {
     badtoken=paste0("You have a token but it doesn't seem to be authorised for CAVE or global.daf-apis.com.\n",
-                    "Have you definitely used `flywire_set_token()` to make a token for the CAVE datasets?")
+                    "Have you definitely used `flywire_set_token()` to make a token for the CAVE datasets?",
+                    "Note you may have to do this in addition to `crantr_set_token()`")
     if(grepl(500, json))
       stop("There seems to be a (temporary?) problem with the zetta server!")
     else if(grepl(401, json))
@@ -37,7 +41,8 @@ crant_scene <- function(ids=NULL,
 
     token=try(crant_token(), silent = T)
     if(inherits(token, 'try-error'))
-      stop("It looks like you do not have a stored token. Please use `flywire_set_token()` to make one.")
+      stop(paste0("It looks like you do not have a stored token. Please use `flywire_set_token()` to make one.",
+           "Note you may have to do this in addition to `crantr_set_token()`"))
     else
       stop(badtoken)
   }
