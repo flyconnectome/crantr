@@ -62,7 +62,7 @@ To ensure everything is set up correctly, run:
 
 ```r
 # Diagnose issues
-dr_crant()
+fafbseg::dr_fafbseg()
 
 # Confirm functionality (should return FALSE)
 crant_islatest("576460752684030043")
