@@ -74,7 +74,7 @@ To ensure everything is set up correctly, run:
 # Diagnose issues
 fafbseg::dr_fafbseg()
 
-# Confirm functionality (should return FALSE)
+# Confirm functionality
 crant_islatest("576460752684030043")
 ```
 
