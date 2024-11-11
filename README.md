@@ -15,6 +15,8 @@ among others.
 
 This project has a community based in the [CRANT slack](https://app.slack.com/client/T07RC68DXQA/C07S10GRL9W).
 
+![crantb_example_neuron_ggplot](https://github.com/flyconnectome/crantr/blob/main/inst/images/crantb_example_neuron_ggplot.png?raw=true)
+
 ### About Clonal Raider Ants
 
 Clonal raider ants (*Ooceraea biroi*) are a fascinating species of ant known for their unique reproductive biology and social structure:
