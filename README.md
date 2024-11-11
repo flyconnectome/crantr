@@ -41,6 +41,8 @@ The **crantr** package serves as a wrapper over the [fafbseg](https://github.com
 3. Relevant helper functions called from the [bancr](https://github.com/flyconnectome/bancr) package.
 3. CRANT project specific data wrangling and browsing code.
 
+![crantb_example_neuron](https://github.com/flyconnectome/crantr/blob/main/inst/images/crantb_example_neuron.png?raw=true)
+
 ## Installation
 
 You can install the development version of `crantr` from GitHub:
@@ -125,6 +127,8 @@ Let us look at some antennal lobe projection neurons.
 
 If you are a collaborator on the project and have access to our [seatable](https://cloud.seatable.io/workspace/62919/dtable/CRANTb/?tid=0000&vid=0000), you can do this:
 
+![ant_table](https://github.com/flyconnectome/crantr/blob/main/inst/images/ant_table.png?raw=true)
+
 ```
 # load library
 library(crantr)
@@ -171,12 +175,16 @@ plot3d(crantb.surf, col = "lightgrey", alpha = 0.1)
 plot3d(pn.meshes)
 ```
 
+![crantb_example_neuron_meshes](https://github.com/flyconnectome/crantr/blob/main/inst/images/crantb_example_neuron_meshes.png?raw=true)
+
 We can also make this plot in 2D, in the popular `ggplot2` framework.
 
 ```r
 # ggplot
 crant_ggneuron(pn.meshes , volume = crantb.surf)
 ```
+
+![crantb_example_neuron_ggplot](https://github.com/flyconnectome/crantr/blob/main/inst/images/crantb_example_neuron_ggplot.png?raw=true)
 
 Sometimes it is also useful for work with skeletons, for example for NBLASTing neurons. We can swiftly fetch the L2 skeletons of a neuron,
 built from its super-voxel locations using the python library [pcg_skel](https://github.com/AllenInstitute/pcg_skel), as so:
@@ -192,9 +200,9 @@ plot3d(crantb.surf, col = "lightgrey", alpha = 0.1)
 
 # plot neurons
 plot3d(pn.skels, lwd = 1)
-plot3d(pn.meshes, alpha = 0.1)
 ```
 
+![crantb_example_neuron_skeletons](https://github.com/flyconnectome/crantr/blob/main/inst/images/crantb_example_neuron_skeletons.png?raw=true)
 
 ## Data Acknowledgment
 
