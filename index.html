@@ -83,6 +83,9 @@
 <li>Relevant helper functions called from the <a href="https://github.com/flyconnectome/bancr" class="external-link">bancr</a> package.</li>
 <li>CRANT project specific data wrangling and browsing code.</li>
 </ol>
+<div class="float">
+<img src="https://github.com/flyconnectome/crantr/blob/main/inst/images/crantb_example_neuron.png?raw=true" alt="crantb_example_neuron"><div class="figcaption">crantb_example_neuron</div>
+</div>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -111,7 +114,7 @@
 <code class="sourceCode R"><span><span class="co"># Diagnose issues</span></span>
 <span><span class="fu">fafbseg</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/fafbseg/man/dr_fafbseg.html" class="external-link">dr_fafbseg</a></span><span class="op">(</span><span class="op">)</span></span>
 <span></span>
-<span><span class="co"># Confirm functionality (should return FALSE)</span></span>
+<span><span class="co"># Confirm functionality</span></span>
 <span><span class="fu"><a href="reference/crant_islatest.html">crant_islatest</a></span><span class="op">(</span><span class="st">"576460752684030043"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -152,6 +155,9 @@
 <p>One of the initial projects with the CRANTb dataset is to explore the olfactory system of the ant, led by <a href="https://www.linkedin.com/in/lindsey-e-lopes-a16a3292" class="external-link">Lindsey E Lopes</a> in the <a href="https://www.rockefeller.edu/research/2280-kronauer-laboratory/" class="external-link">Laboratoy of Social Evolution and Behavior</a>.</p>
 <p>Let us look at some antennal lobe projection neurons.</p>
 <p>If you are a collaborator on the project and have access to our <a href="https://cloud.seatable.io/workspace/62919/dtable/CRANTb/?tid=0000&amp;vid=0000" class="external-link">seatable</a>, you can do this:</p>
+<div class="float">
+<img src="https://github.com/flyconnectome/crantr/blob/main/inst/images/ant_table.png?raw=true" alt="ant_table"><div class="figcaption">ant_table</div>
+</div>
 <pre><code><span><span class="co"># load library</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/flyconnectome/crantr" class="external-link">crantr</a></span><span class="op">)</span></span>
 <span></span>
@@ -189,10 +195,16 @@
 <span></span>
 <span><span class="co"># plot neurons</span></span>
 <span><span class="fu">plot3d</span><span class="op">(</span><span class="va">pn.meshes</span><span class="op">)</span></span></code></pre></div>
+<div class="float">
+<img src="https://github.com/flyconnectome/crantr/blob/main/inst/images/crantb_example_neuron_meshes.png?raw=true" alt="crantb_example_neuron_meshes"><div class="figcaption">crantb_example_neuron_meshes</div>
+</div>
 <p>We can also make this plot in 2D, in the popular <code>ggplot2</code> framework.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># ggplot</span></span>
 <span><span class="fu"><a href="reference/crant_ggneuron.html">crant_ggneuron</a></span><span class="op">(</span><span class="va">pn.meshes</span> , volume <span class="op">=</span> <span class="va">crantb.surf</span><span class="op">)</span></span></code></pre></div>
+<div class="float">
+<img src="https://github.com/flyconnectome/crantr/blob/main/inst/images/crantb_example_neuron_ggplot.png?raw=true" alt="crantb_example_neuron_ggplot"><div class="figcaption">crantb_example_neuron_ggplot</div>
+</div>
 <p>Sometimes it is also useful for work with skeletons, for example for NBLASTing neurons. We can swiftly fetch the L2 skeletons of a neuron, built from its super-voxel locations using the python library <a href="https://github.com/AllenInstitute/pcg_skel" class="external-link">pcg_skel</a>, as so:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># fetch</span></span>
@@ -204,8 +216,59 @@
 <span><span class="fu">plot3d</span><span class="op">(</span><span class="va">crantb.surf</span>, col <span class="op">=</span> <span class="st">"lightgrey"</span>, alpha <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># plot neurons</span></span>
-<span><span class="fu">plot3d</span><span class="op">(</span><span class="va">pn.skels</span>, lwd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span><span class="fu">plot3d</span><span class="op">(</span><span class="va">pn.meshes</span>, alpha <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">plot3d</span><span class="op">(</span><span class="va">pn.skels</span>, lwd <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></code></pre></div>
+<div class="float">
+<img src="https://github.com/flyconnectome/crantr/blob/main/inst/images/crantb_example_neuron_skeletons.png?raw=true" alt="crantb_example_neuron_skeletons"><div class="figcaption">crantb_example_neuron_skeletons</div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="meta-data-management-in-seatable">Meta data management in seatable<a class="anchor" aria-label="anchor" href="#meta-data-management-in-seatable"></a>
+</h2>
+<div class="float">
+<img src="https://github.com/flyconnectome/crantr/blob/main/inst/images/ant_table.png?raw=true" alt="ant_table"><div class="figcaption">ant_table</div>
+</div>
+<p>Seatable is a powerful way to make collaborative annotations in this connectome dataset and we encourage you to use it rather than keeping your own google sheets or similar to track neurons. It works similarly to google sheets, but has better filter views, data type management, programmatic access, etc. It should work in the browser and as an <a href="https://seatable.io/en" class="external-link">app</a>.</p>
+<p>See our seatable <a href="https://cloud.seatable.io/workspace/62919/dtable/CRANTb/?tid=0000&amp;vid=0000" class="external-link">here</a>. If this link does not work you can request access by contacting Lindsey Lopes.</p>
+<p>Each row is a <code>CRANTb</code> neuron. If you hover your tool-tip over the <strong>i</strong> icon in each column header, you can see what that column records. Each neuron is identified by its unique 16-digit integer <code>root_id</code>, which is modified each time the neuron is edited. As <code>CRANTb</code> is an active project, this happens frequently so our seatable needs to keep track of changes, which it does on a daily schedule.</p>
+<p>The update logic is <code>position</code> (voxel space) -&gt; <code>supervoxel_id</code> -&gt; <code>root_id</code>. If <code>position</code> and <code>supervoxel_id</code> are missing, <code>root_id</code> is updated directly but this is longer. It will also take the most up to date <code>root_id</code> with the most number of voxels from the previous root_id, so if a neuron is split this could be the incorrect choice. Updating from <code>position</code> gives you the neuron at that position, regardless of its size, merges or splits. Best practice is to add position always if you can, and <code>root_id</code> in addition if you want. You may want to add only <code>root_id</code> alone if you want to track a neuron but do not yet have a good position for it. A good position is a point on the neuron that you expect not to change during proofreading, e.g. the first branch point in the neuron where it splits from the primary neurite into axon and dendrite.</p>
+<div class="float">
+<img src="https://github.com/flyconnectome/crantr/blob/main/inst/images/ant_table_ids.png?raw=true" alt="ant_table_ids"><div class="figcaption">ant_table_ids</div>
+</div>
+<p>You can access the seatable programmatically using the <code>crantr</code>, if you have access.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">github_install</span><span class="op">(</span><span class="st">'flyconnectome/crantr'</span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/flyconnectome/crantr" class="external-link">crantr</a></span><span class="op">)</span></span></code></pre></div>
+<p>You will first need to obtain your authorised login credentials, you only need to do this once:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/crant_table_query.html">crant_table_set_token</a></span><span class="op">(</span>user<span class="op">=</span><span class="st">"MY_EMAIL_FOR_SEATABLE"</span>,</span>
+<span>               pwd<span class="op">=</span><span class="st">"MY_SEATABLE_PASSWORD"</span>,</span>
+<span>               url<span class="op">=</span><span class="st">"https://cloud.seatable.io/"</span><span class="op">)</span></span></code></pre></div>
+<p>And then you may read the data, and make nice plots from it!</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Read BANC meta seatable</span></span>
+<span><span class="va">ac</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/crant_table_query.html">crant_table_query</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>You can also update rows automatically. Be careful when doing this. If you want to be sure not to mess something up, you can take a ‘snapshot’ of the seatable before you edit it in the browser, which will save a historical version.</p>
+<p>You can then change columns in <code>ac</code>, keeping their names, as you like. Then to update via R:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Update</span></span>
+<span><span class="fu"><a href="reference/crant_table_query.html">crant_table_update_rows</a></span><span class="op">(</span>base<span class="op">=</span><span class="st">"CRANTb"</span>, </span>
+<span>                     table <span class="op">=</span> <span class="st">"CRANTb_meta"</span>, </span>
+<span>                     df <span class="op">=</span> <span class="va">ac.new</span>, </span>
+<span>                     append_allowed <span class="op">=</span> <span class="cn">FALSE</span>, </span>
+<span>                     chunksize <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></code></pre></div>
+<p>To update, you must have the seatable identifier for each column in <code>ac.new</code>, i.e. an <code>_id</code> column.</p>
+<p>This method is good for bulk uploads/changes.</p>
+<p>You can also make a quick, simpler update, replacing one column’s entries with a given <code>update</code> for a set of root IDs.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/crant_table_query.html">crant_table_annotate</a></span><span class="op">(</span>root_ids <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"576460752667713229"</span>,</span>
+<span>                               <span class="st">"576460752662519193"</span>,</span>
+<span>                               <span class="st">"576460752730083020"</span>,</span>
+<span>                               <span class="st">"576460752673660716"</span>,</span>
+<span>                               <span class="st">"576460752662521753"</span><span class="op">)</span>,</span>
+<span>                  update <span class="op">=</span> <span class="st">"lindsey_lopes"</span>,</span>
+<span>                  overwrite <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                  append <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>                  column <span class="op">=</span> <span class="st">"user_annotator"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="data-acknowledgment">Data Acknowledgment<a class="anchor" aria-label="anchor" href="#data-acknowledgment"></a>
@@ -222,7 +285,7 @@
 </li>
 <li>This R package:</li>
 </ol>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/citation.html" class="external-link">citation</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"crantr"</span><span class="op">)</span></span></code></pre></div>
 <p><strong>Bates A</strong> (2024). <em>crantr: R Client Access to the Brain And Nerve Cord (CRANT) Dataset</em>. R package version 0.1.0, <a href="https://github.com/flyconnectome/crantr" class="external-link uri">https://github.com/flyconnectome/crantr</a>.</p>
 </div>
