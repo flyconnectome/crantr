@@ -65,15 +65,15 @@
 #'
 #' # A simple way to add annotations to specific neurons in the table quickly
 #' # this is just for one entry type for one chosen column
-#' crant_table_annotate(root_ids = c("576460752667713229",
-#'                                "576460752662519193",
-#'                                "576460752730083020",
-#'                                "576460752673660716",
-#'                                "576460752662521753"),
-#'                   update = "lindsey_lopes",
-#'                   overwrite = FALSE,
-#'                   append = FALSE,
-#'                   column = "user_annotator")
+#'crant_table_annotate(root_ids = c("576460752667713229",
+#'                               "576460752662519193",
+#'                               "576460752730083020",
+#'                               "576460752673660716",
+#'                               "576460752662521753"),
+#'                  update = "lindsey_lopes",
+#'                  overwrite = FALSE,
+#'                  append = FALSE,
+#'                  column = "user_annotator")
 #' }
 #' @export
 #' @rdname crant_table_query

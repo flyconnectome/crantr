@@ -188,7 +188,6 @@ plot3d(pn.skels, lwd = 1)
 plot3d(pn.meshes, alpha = 0.1)
 ```
 
-
 ## Data Acknowledgment
 
 When using CRANT data, please acknowledge it in accordance with the [CRANT community guidelines](https://github.com/jasper-tms/the-CRANT-fly-connectome/wiki/) and in agreement with the CRANT consortium.

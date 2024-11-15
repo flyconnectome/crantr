@@ -227,13 +227,16 @@ crant_updateids <- function(x,
     # update based on position
     if(any(c("position","pt_position")%in%colnames(x)) && sum(old)){
       cat('updating root_ids with a position ...\n')
-      update <- unname(pbapply::pbsapply(x[old,][[position.column]], crant_xyz2id, rawcoords = TRUE, root = TRUE, ...))
+      update <- unname(pbapply::pbsapply(x[old,][[position.column]], function(row){
+        tryCatch(quiet_function(crant_xyz2id(row,rawcoords = TRUE, root = TRUE, ...)),
+                 error = function(e) NA)
+      }))
       bad <- is.na(update)|update=="0"
       update <- update[!bad]
       if(length(update)) x[old,][[root.column]][!bad] <- update
       old[!bad] <- FALSE
     }
-    old[is.na(old)] <- FALSE
+    old[is.na(old)] <- TRUE
 
     # update based on root Ids
     if(root.column%in%colnames(x) && sum(old)){
