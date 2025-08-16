@@ -12,17 +12,18 @@
 #' @seealso \code{\link[fafbseg]{flywire_cave_query}}
 #' @examples
 #' \dontrun{
-#' library(dplyr)
-#' cell_info=crant_cave_query('cell_info')
-#' cell_info %>%
-#'   filter(tag2=='anterior-posterior projection pattern') %>%
-#'   count(tag)
-#'
-#' # Another way to query a specific table
-#' crant_backbone_proofread <- with_crant(bancr:::get_cave_table_data("cell_info"))
+#' backbone.proofread=crant_cave_query('backbone_proofread')
+#' View(backbone.proofread)
 #' }
-crant_cave_query <- function(table, live=TRUE, ...) {
-  with_crant(fafbseg::flywire_cave_query(table = table, live=live, ...))
+crant_cave_query <- function(table, live=2, ...) {
+  with_crant(fafbseg::flywire_cave_query(table = table,
+                                         datastack_name = crant_datastack_name(),
+                                         live=live, ...))
+}
+
+#' @rdname crant_cave_query
+crant_backbone_proofread <- function(...){
+  crant_cave_query(table = "backbone_proofread", live = 2, ...)
 }
 
 #' Low level access to crant's CAVE annotation infrastructure

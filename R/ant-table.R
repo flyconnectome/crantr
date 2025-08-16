@@ -312,27 +312,39 @@ crant_table_update_tracing <- function(table = "CRANTb_meta",
     dplyr::select(!!rlang::sym("root_id"),
                   !!rlang::sym("status"),
                   !!rlang::sym("ngl_link"),
-                  !!rlang::sym("_id"))
+                  !!rlang::sym("_id")) %>%
+    dplyr::filter(!(is.na(!!rlang::sym("root_id"))))
   ac[ac=="0"] <- NA
   ac[ac==""] <- NA
 
   # Only add ngl_link for a certain set of statuses
   cat('generating neuroglancer links ...\n')
-  n_rows <- nrow(ac %>% dplyr::filter(grepl("TRACING_ISSUE$|TRACING_ISSUE,|PROOFREADING_ISSUE$|PROOFREADING_ISSUE,|PARTIALLY_PROOFREAD$|PARTIALLY_PROOFREAD,", status)))
+  n_rows <- nrow(ac)
   p <- dplyr::progress_estimated(n_rows)
+  duplicates <- unique(ac$root_id[duplicated(ac$root_id)])
+  duplicates <- na.omit(duplicates)
   ac.new <- ac %>%
-    dplyr::filter(grepl("TRACING_ISSUE$|PROOFREADING_ISSUE$|PARTIALLY_PROOFREAD$", !!rlang::sym("status"))) %>%
     dplyr::rowwise() %>%
     dplyr::mutate(
-      ngl_id = {
+      ngl_id = unlist({
         p$tick()$print() # Update progress bar
         tryCatch(paste(crant_ngl_segments(!!rlang::sym("ngl_link")),collapse="_"), error = function(e) NA)
-      }
+      })
     ) %>%
     dplyr::mutate(ngl_link = dplyr::case_when(
-      is.na(!!rlang::sym("ngl_link")) ~ crant_scene(!!rlang::sym("root_id"), shorten_url = TRUE),
-      !is.na(!!rlang::sym("ngl_id")) & !grepl(!!rlang::sym("root_id"),!!rlang::sym("ngl_id")) ~ crant_scene(!!rlang::sym("root_id"), shorten_url = TRUE),
+      is.na(!!rlang::sym("ngl_link")) ~  tryCatch(crant_scene(!!rlang::sym("root_id"), shorten_url = TRUE), error = function(e) NA),
+      !is.na(!!rlang::sym("ngl_id")) ~ !!rlang::sym("ngl_link"),
+      !is.na(!!rlang::sym("ngl_id")) & !grepl(!!rlang::sym("root_id"),!!rlang::sym("ngl_id")) ~ tryCatch(crant_scene(!!rlang::sym("root_id"), shorten_url = TRUE), error = function(e) NA),
       TRUE ~ ngl_link
+    )) %>%
+    dplyr::mutate(status = dplyr::case_when(
+      is.na(!!rlang::sym("status")) ~ "",
+      TRUE ~ status
+    )) %>%
+    dplyr::mutate(status = dplyr::case_when(
+      !!rlang::sym("root_id")%in%duplicates ~ append_status(status, "DUPLICATED"),
+      !(!!rlang::sym("root_id")%in%duplicates) ~ subtract_status(status, "DUPLICATED"),
+      TRUE ~ status
     )) %>%
     dplyr::ungroup() %>%
     dplyr::select(-!!rlang::sym("ngl_id")) %>%

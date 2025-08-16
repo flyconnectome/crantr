@@ -9,7 +9,7 @@ on:
     types: [published]
   workflow_dispatch:
 
-name: pkgdown.yaml
+name: pkgdown
 
 permissions: read-all
 
@@ -21,6 +21,11 @@ jobs:
       group: pkgdown-${{ github.event_name != 'pull_request' || github.run_id }}
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      CHUNKEDGRAPH_SECRET: ${{ secrets.CHUNKEDGRAPH_SECRET }}
+      CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      FLYTABLE_TOKEN: ${{ secrets.FLYTABLE_TOKEN }}
+      RETICULATE_MINICONDA_PYTHON_VERSION: 3.8
+      RGL_USE_NULL: TRUE
     permissions:
       contents: write
     steps:
@@ -34,8 +39,20 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: any::pkgdown, local::.
+          extra-packages: any::pkgdown, local::., catmaid=natverse/rcatmaid
           needs: website
+
+      - name: Install fafbseg + python
+        run: |
+          pak::local_install()
+          library(fafbseg)
+          simple_python()
+          dr_fafbseg()
+        shell: Rscript {0}
+
+      - name: writetoken
+        run: fafbseg::flywire_set_token(token=Sys.getenv("CHUNKEDGRAPH_SECRET"))
+        shell: Rscript {0}
 
       - name: Build site
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)

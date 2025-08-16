@@ -2,9 +2,12 @@
 % Please edit documentation in R/cave-tables.R
 \name{crant_cave_query}
 \alias{crant_cave_query}
+\alias{crant_backbone_proofread}
 \title{Query CRANT tables in the CAVE annotation system}
 \usage{
-crant_cave_query(table, live = TRUE, ...)
+crant_cave_query(table, live = 2, ...)
+
+crant_backbone_proofread(...)
 }
 \arguments{
 \item{table}{The name of the table (or view, see views section) to query}
@@ -27,14 +30,8 @@ Query CRANT tables in the CAVE annotation system
 }
 \examples{
 \dontrun{
-library(dplyr)
-cell_info=crant_cave_query('cell_info')
-cell_info \%>\%
-  filter(tag2=='anterior-posterior projection pattern') \%>\%
-  count(tag)
-
-# Another way to query a specific table
-crant_backbone_proofread <- with_crant(bancr:::get_cave_table_data("cell_info"))
+backbone.proofread=crant_cave_query('backbone_proofread')
+View(backbone.proofread)
 }
 }
 \seealso{

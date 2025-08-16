@@ -48,7 +48,7 @@ The **crantr** package serves as a wrapper over the [fafbseg](https://github.com
 You can install the development version of `crantr` from GitHub:
 
 ```r
-remotes::install_github('natverse/crantr')
+remotes::install_github('flyconnectome/crantr')
 remotes::install_github('natverse/fafbseg@asb-dev')
 ```
 
@@ -110,7 +110,7 @@ choose_crant()
 To update the package and all dependencies:
 
 ```r
-remotes::install_github('natverse/crantr')
+remotes::install_github('flyconnectome/crantr')
 ```
 
 To update a specific Python library dependency:
@@ -232,7 +232,7 @@ A good position is a point on the neuron that you expect not to change during pr
 You can access the seatable programmatically using the `crantr`, if you have access.
 
 ```r
-remotes::github_install('flyconnectome/crantr')
+remotes::install_github('flyconnectome/crantr')
 library(crantr)
 ```
 

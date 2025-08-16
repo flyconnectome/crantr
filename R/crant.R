@@ -166,10 +166,36 @@ cave_client <- function(datastack_name,
 }
 
 # Get datastack name
-crant_datastack_name <- memoise::memoise(function() {
-  cat("you are using CRANTb\n")
-  "kronauer_ant" # is CRANTb
-})
+crant_datastack_name <- function() {
+  if (requireNamespace("memoise", quietly = TRUE)) {
+    return(memoise::memoise(crant_datastack_name_impl)())
+  } else {
+    return(crant_datastack_name_impl())
+  }
+}
+
+crant_datastack_name_impl <- function() {
+  crant_name <- tryCatch({
+    cac=fafbseg::flywire_cave_client(NULL)
+    datastacks=cac$info$get_datastacks()
+    seldatastack=grep("kronauer_ant*", datastacks, value = T)
+    if(length(seldatastack)==0)
+      stop("Could not identify a crant production datastack amongst: ",
+           paste(datastacks, collapse=','),
+           "
+Have you been granted access to crant production?")
+    if(length(seldatastack)>1)
+      warning("Multiple crant datastacks available; ",
+              paste(seldatastack, collapse = ","),"
+",
+"choosing: ", seldatastack[1])
+    seldatastack[1]
+  }, error = function(e){
+    warning("using default setting")
+    "kronauer_ant"
+  })
+  crant_name
+}
 
 # hidden
 crant_fetch <- function(url, token=crant_token(), ...) {
