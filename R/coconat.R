@@ -124,7 +124,6 @@ crant_meta <- local({
     #     dplyr::mutate(id = as.character(id))
     }
   }
-
   list(
     create_cache = function(use_seatable=FALSE, return = FALSE) {
       meta <- .refresh_cache(use_seatable=use_seatable)
