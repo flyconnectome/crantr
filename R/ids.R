@@ -142,7 +142,9 @@ crant_supervoxels <- function(x,
 #' @export
 #' @family crant-ids
 #' @examples
+#' \dontrun{
 #' crant_islatest("576460752684030043")
+#' }
 crant_islatest <- function(x,
                            timestamp=NULL,
                            ...) {
