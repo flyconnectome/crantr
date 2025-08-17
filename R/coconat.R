@@ -163,10 +163,10 @@ extract_ids <- function (x) {
                                                                                                         x, perl = T)) {
     sx = gsub("[a-z:,\\s]+", " ", x, perl = T)
     x = scan(text = trimws(sx), sep = " ", what = "", quiet = T)
-    x <- id2int64(x)
+    x <- fafbseg:::id64(x)
   }
   if (is.numeric(x) || is.integer(x)) {
-    x <- id2int64(x)
+    x <- fafbseg:::id64(x)
   }
   x
 }

@@ -1,4 +1,8 @@
 test_that("crant_xyz2id works", {
+  skip_if_offline()
+  skip_if_not(crant_token_available(),
+              message="Unable to obtain a crant access token")
+  
   expect_equal(crant_xyz2id(cbind(37306, 31317, 1405), rawcoords=TRUE),
                "576460752679473795")
 
@@ -8,6 +12,10 @@ test_that("crant_xyz2id works", {
 })
 
 test_that("crant_islatest works", {
+  skip_if_offline()
+  skip_if_not(crant_token_available(),
+              message="Unable to obtain a crant access token")
+  
   expect_false(crant_islatest("576460752684030043"))
   expect_false(isTRUE(all.equal(
     crant_latestid("576460752684030043"), "576460752684030043")))
