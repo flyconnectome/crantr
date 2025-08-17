@@ -51,7 +51,12 @@ jobs:
         shell: Rscript {0}
 
       - name: writetoken
-        run: fafbseg::flywire_set_token(token=Sys.getenv("CHUNKEDGRAPH_SECRET"))
+        run: |
+          if(nzchar(Sys.getenv("CHUNKEDGRAPH_SECRET"))) {
+            fafbseg::flywire_set_token(token = Sys.getenv("CHUNKEDGRAPH_SECRET"))
+          } else {
+            message("CHUNKEDGRAPH_SECRET not set, skipping token configuration")
+          }
         shell: Rscript {0}
 
       - name: Build site
