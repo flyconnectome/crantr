@@ -127,7 +127,7 @@ crant_supervoxels <- function(x,
   }
   u="https://services.itanna.io/app/transform-service/query/dataset/crant_v1/s/2/values_array_string_response" #PLACEHOLDER
   body=jsonlite::toJSON(list(x=pts[,1], y=pts[,2], z=pts[,3]))
-  res=httr::POST(u, body = body)
+  res=httr::POST(u, body = body, httr::content_type("application/json"))
   httr::stop_for_status(res)
   j=httr::content(res, as='text', encoding = 'UTF-8')
   svids=unlist(jsonlite::fromJSON(j, simplifyVector = T), use.names = F)

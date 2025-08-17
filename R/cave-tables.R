@@ -88,3 +88,10 @@ crant_cave_tables <- function(datastack_name = "kronauer_ant",
   }
 }
 
+#' @rdname crant_cave_query
+#' @export
+crant_version <- function() {
+  bcc=crant_cave_client()
+  ver=bcc$materialize$version
+  ver
+}

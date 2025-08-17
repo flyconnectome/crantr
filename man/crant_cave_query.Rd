@@ -3,11 +3,14 @@
 \name{crant_cave_query}
 \alias{crant_cave_query}
 \alias{crant_backbone_proofread}
+\alias{crant_version}
 \title{Query CRANT tables in the CAVE annotation system}
 \usage{
 crant_cave_query(table, live = 2, ...)
 
 crant_backbone_proofread(...)
+
+crant_version()
 }
 \arguments{
 \item{table}{The name of the table (or view, see views section) to query}

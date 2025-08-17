@@ -157,6 +157,21 @@ coconat_crant_meta <- function(ids) {
 }
 
 # hidden
+extract_ids <- function (x) {
+  if (is.character(x) && length(x) == 1 && !fafbseg:::valid_id(x,
+                                                               na.ok = T) && !grepl("http", x) && grepl("^\\s*(([a-z:]{1,3}){0,1}[0-9,\\s]+)+$",
+                                                                                                        x, perl = T)) {
+    sx = gsub("[a-z:,\\s]+", " ", x, perl = T)
+    x = scan(text = trimws(sx), sep = " ", what = "", quiet = T)
+    x <- id2int64(x)
+  }
+  if (is.numeric(x) || is.integer(x)) {
+    x <- id2int64(x)
+  }
+  x
+}
+
+# hidden
 coconat_crant_ids <- function(ids=NULL) {
   if(is.null(ids)) return(NULL)
   # extract numeric ids if possible

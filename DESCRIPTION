@@ -3,6 +3,8 @@ Package: crantr
 Title: R Client Access to Clonal Raider ANT (CRANT) Datasets 
 Version: 0.1.0
 Date: 2024-10-01
+Author: Alexander Bates [aut, cre] (<https://orcid.org/0000-0002-1195-0445>)
+Maintainer: Alexander Bates <alexander.shakeel.bates@gmail.com>
 Authors@R: 
     c(person(given = "Alexander",
            family = "Bates",
@@ -61,7 +63,7 @@ Remotes:
     natverse/malevnc,
     flyconnectome/fancr,
     flyconnectome/bancr,
-    flyconnectome/coconat,
+    natverse/coconat,
     tidyverse/ggplot2
 Config/testthat/edition: 3
 LazyDataCompression: xz
