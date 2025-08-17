@@ -19,7 +19,9 @@ time will be ignored (see details).}
 Check if a CRANT root id is up to date
 }
 \examples{
+\dontrun{
 crant_islatest("576460752684030043")
+}
 }
 \seealso{
 Other crant-ids: 
