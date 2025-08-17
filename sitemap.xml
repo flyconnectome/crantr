@@ -1,10 +1,12 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://flyconnectome.github.io/crantr/404.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/LICENSE.html</loc></url>
+<url><loc>https://flyconnectome.github.io/crantr/SUPPORT.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/authors.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/index.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/news/index.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/choose_crant.html</loc></url>
+<url><loc>https://flyconnectome.github.io/crantr/reference/crant_add_synapses.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_cave_client.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_cave_query.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_cave_tables.html</loc></url>
@@ -14,6 +16,9 @@
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_islatest.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_latestid.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_leaves.html</loc></url>
+<url><loc>https://flyconnectome.github.io/crantr/reference/crant_meta.html</loc></url>
+<url><loc>https://flyconnectome.github.io/crantr/reference/crant_meta_create_cache.html</loc></url>
+<url><loc>https://flyconnectome.github.io/crantr/reference/crant_partner_summary.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_read_l2skel.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_read_neuroglancer_mesh.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_read_neuron_meshes.html</loc></url>
@@ -27,5 +32,6 @@
 <url><loc>https://flyconnectome.github.io/crantr/reference/crantb.surf.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/crantr-package.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/index.html</loc></url>
+<url><loc>https://flyconnectome.github.io/crantr/reference/register_crant_coconat.html</loc></url>
 </urlset>
 
