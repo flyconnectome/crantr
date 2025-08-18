@@ -39,9 +39,9 @@ relies on nat >= 1.10.4
 \dontrun{
 crant_voxdims()
 }
+\dontrun{
 crant_raw2nm(c(37306, 31317, 1405))
 crant_raw2nm('37306 31317 1405')
-\dontrun{
 crant_nm2raw(clipr::read_clip())
 }
 }
