@@ -11,7 +11,9 @@
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' crant_voxdims()
+#' }
 crant_voxdims <- memoise::memoise(function(url=choose_crant(set=FALSE)[['fafbseg.sampleurl']]) {
   fafbseg::flywire_voxdims(url)
 })
