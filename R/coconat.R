@@ -256,7 +256,7 @@ register_crant_coconat <- function(showerror=TRUE){
   if (!requireNamespace("coconat", quietly = TRUE)) {
     stop("Package 'coconat' is required for this function. Please install it with: devtools::install_github(natverse/coconat)")
   }
-  if(requireNamespace('coconatfly', quietly = !showerror))
+  if(requireNamespace('coconat', quietly = !showerror))
     coconat::register_dataset(
       name = 'crant',
       shortname = 'cr',
