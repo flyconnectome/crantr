@@ -219,13 +219,13 @@ coconat_crant_partners <- function(ids,
                             threshold = threshold-1L,
                             version=version,
                             ...)
-  partner_col=grep("_id", colnames(tres), value = T)
-  for(pc in partner_col){
-    tres[[pc]] <- as.character(tres[[pc]])
-  }
-  metadf=crant_meta()
-  colnames(metadf)[[1]]=partner_col
-  tres=left_join(tres, metadf, by = partner_col)
+  # partner_col=grep("_id", colnames(tres), value = T)
+  # for(pc in partner_col){
+  #   tres[[pc]] <- as.character(tres[[pc]])
+  # }
+  # metadf=crant_meta()
+  # colnames(metadf)[[1]]=partner_col
+  # tres=left_join(tres, metadf, by = partner_col)
   tres
 }
 
@@ -256,11 +256,11 @@ register_crant_coconat <- function(showerror=TRUE){
   if (!requireNamespace("coconat", quietly = TRUE)) {
     stop("Package 'coconat' is required for this function. Please install it with: devtools::install_github(natverse/coconat)")
   }
-  if(requireNamespace('coconat', quietly = !showerror))
+  if(requireNamespace('coconatfly', quietly = !showerror))
     coconat::register_dataset(
       name = 'crant',
       shortname = 'cr',
-      namespace = 'coconat',
+      namespace = 'coconatfly',
       metafun = coconat_crant_meta,
       idfun = coconat_crant_ids,
       partnerfun = coconat_crant_partners
