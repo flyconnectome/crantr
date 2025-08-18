@@ -29,9 +29,9 @@ crant_voxdims <- memoise::memoise(function(url=choose_crant(set=FALSE)[['fafbseg
 #' @rdname crant_voxdims
 #' @details relies on nat >= 1.10.4
 #' @examples
+#' \dontrun{
 #' crant_raw2nm(c(37306, 31317, 1405))
 #' crant_raw2nm('37306 31317 1405')
-#' \dontrun{
 #' crant_nm2raw(clipr::read_clip())
 #' }
 crant_nm2raw <- function(x, vd=crant_voxdims()) fancr::fanc_nm2raw(x, vd=vd)
