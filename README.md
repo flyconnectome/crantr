@@ -13,7 +13,7 @@ The project was founded as a collaboration between the laboratories of [Wei-Chun
 [Daniel Kronauer](https://www.rockefeller.edu/our-scientists/heads-of-laboratories/988-daniel-kronauer/) and [Hannah Haberkern](https://www.research-in-bavaria.de/research-news/details/article/new-junior-research-group-hannah-haberkern-investigates-navigation-in-flies-and-ants/),
 among others.
 
-This project has a community based in the [CRANT slack](https://app.slack.com/client/T07RC68DXQA/C07S10GRL9W). Equivalent python tools are available [here](https://social-evolution-and-behavior.github.io/crantpy/intro.html).
+This project has a community based in the [CRANT slack](https://app.slack.com/client/T07RC68DXQA/C07S10GRL9W). Equivalent python tools are available [here](https://social-evolution-and-behavior.github.io/crantpy/intro.html). Publication-quality plots can be made with [nat.ggplot](https://github.com/natverse/nat.ggplot?tab=readme-ov-file).
 
 ![crantb_example_neuron_ggplot](https://github.com/flyconnectome/crantr/blob/main/inst/images/crantb_example_neuron_ggplot.png?raw=true)
 
