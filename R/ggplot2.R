@@ -13,7 +13,7 @@
 #' @param cols2 A vector of two colors for the highest Z values. Default is c("grey75", "grey50").
 #' @param alpha Transparency of the neuron visualization. Default is 0.5.
 #' @param title.col Color of the plot title. Default is "darkgrey".
-#' @param ... Additional arguments passed to geom_neuron().
+#' @param ... Additional arguments passed to `nat.ggplot::geom_neuron().`
 #'
 #' @return A ggplot object representing the visualized neuron.
 #'
@@ -33,7 +33,7 @@ crant_ggneuron <-function(x,
   #crantr::crantb.surf
   view <- match.arg(view)
   rotation_matrix <- crant_rotation_matrices[[view]]
-  bancr::ggneuron(x,
+  nat.ggplot::ggneuron(x,
            volume = volume,
            info = info,
            rotation_matrix = rotation_matrix,

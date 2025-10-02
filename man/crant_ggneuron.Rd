@@ -35,7 +35,7 @@ Options are "front", "side", "back".}
 
 \item{title.col}{Color of the plot title. Default is "darkgrey".}
 
-\item{...}{Additional arguments passed to geom_neuron().}
+\item{...}{Additional arguments passed to \verb{nat.ggplot::geom_neuron().}}
 }
 \value{
 A ggplot object representing the visualized neuron.

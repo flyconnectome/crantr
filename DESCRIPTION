@@ -40,7 +40,8 @@ Imports:
     rlang (>= 0.4.0),
     memoise,
     stringr,
-    nabor
+    nabor,
+    nat.ggplot
 Suggests: 
     fancr,
     readr,
@@ -64,6 +65,7 @@ Remotes:
     flyconnectome/fancr,
     flyconnectome/bancr,
     natverse/coconat,
+    natverse/nat.ggplot,
     tidyverse/ggplot2
 Config/testthat/edition: 3
 LazyDataCompression: xz

@@ -3,8 +3,7 @@
 [![Docs](https://img.shields.io/badge/docs-100%25-brightgreen.svg)](https://flyconnectome.github.io/crantr/reference/)
 [![R-CMD-check](https://github.com/flyconnectome/crantr/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/flyconnectome/crantr/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
-
-crantr
+crantr <img src="man/figures/logo.png" align="right" height="139" alt="" />
 ===========
 
 **crantr** is an R package designed to support the analysis of connectome data sets for the clonal raider ant (*Ooceraea biroi*, formerly *Cerapachys biroi*). The package primarily focuses on proofread auto-segmentation data from the [CRANT (Clonal Raider Ant) project](https://proofreading.zetta.ai/info/api/v2/datastack/full/kronauer_ant?middle_auth_url=proofreading.zetta.ai%2Fsticky_auth).
