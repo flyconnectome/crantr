@@ -28,7 +28,7 @@ crant_partners(
 convenience this argument is passed to \code{\link{crant_ids}} allowing you
 to pass in data.frames, crant URLs or simple ids.}
 
-\item{partners}{Character vector, either "outputs" or "inputs" to specify the direction of synaptic connections to retrieve.}
+\item{partners}{Character vector, either "input" or "output" to specify the direction of synaptic connections to retrieve.}
 
 \item{synapse_table}{Character, the name of the synapse CAVE table you wish to use. Defaults to the latest.}
 

@@ -78,11 +78,8 @@ id <- crant_latestid(id)
 # Get the L2 skeletons
 n <- crant_read_l2skel(id)
 
-# Re-root to soma
-n.rerooted <- crant_reroot(n)
-
 # Add synapse information, stored at n.syn[[1]]$connectors
-n.syn <- crant_add_synapses(n.rerooted)
+n.syn <- crant_add_synapses(n)
 
 # Split neuron
 n.split <- hemibrainr::flow_centrality(n.syn)

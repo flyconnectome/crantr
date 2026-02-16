@@ -6,6 +6,8 @@
 \alias{crantr-package}
 \title{crantr: R Client Access to Clonal Raider ANT (CRANT) Datasets}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Access to the Clonal Raider ANT (CRANT) EM datasets, starting with CRANTb and focussing on support for autosegmentation. Organised as a wrapper around the fafbseg and bancr packages.
 }
 \seealso{

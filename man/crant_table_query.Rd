@@ -75,7 +75,7 @@ docs}.}
 
 \item{limit}{An optional limit, which only applies if you do not specify a
 limit directly in the \code{sql} query. By default seatable limits SQL
-queries to 100 rows. We increase the limit to 100000 rows by default.}
+queries to 100 rows. We increase the limit to 200000 rows by default.}
 
 \item{base}{Character vector specifying the \code{base}}
 
@@ -102,7 +102,7 @@ variable.}
 \item{df}{A data.frame containing the data to upload including an \verb{_id}
 column that can identify each row in the remote table.}
 
-\item{table}{Character vector specifying a table foe which you want a
+\item{table}{Character vector specifying a table for which you want a
 \code{base} object.}
 
 \item{append_allowed}{Logical. Whether rows without row identifiers can be appended.}
@@ -115,9 +115,9 @@ column that can identify each row in the remote table.}
 
 \item{update}{the replacement entries you want in the chosen \code{column} for the given \code{root_ids}.}
 
-\item{overwrite}{whether or to overwrite entries in the chosen \code{column} for the given \code{root_ids}.}
+\item{overwrite}{whether or not to overwrite entries in the chosen \code{column} for the given \code{root_ids}.}
 
-\item{append}{if \code{overwrite==FALSE}, then whether or to append (separated by a \verb{,}) entries in the chosen \code{column} for the given \code{root_ids}.}
+\item{append}{if \code{overwrite==FALSE}, then whether or not to append (separated by a \verb{,}) entries in the chosen \code{column} for the given \code{root_ids}.}
 
 \item{column}{the column in the seatable to update for the given \code{root_ids}.}
 }
