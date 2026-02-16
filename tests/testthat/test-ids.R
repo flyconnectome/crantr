@@ -2,7 +2,8 @@ test_that("crant_xyz2id works", {
   skip_if_offline()
   skip_if_not(crant_token_available(),
               message="Unable to obtain a crant access token")
-  
+  skip_if_not(crant_scene_available(),
+              message="Unable to build CRANT neuroglancer scene")
   expect_equal(crant_xyz2id(cbind(37306, 31317, 1405), rawcoords=TRUE),
                "576460752679473795")
 
