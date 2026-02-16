@@ -45,6 +45,8 @@ jobs:
           EOF
           cp ~/.cloudvolume/secrets/proofreading.zetta.ai-cave-secret.json \
              ~/.cloudvolume/secrets/data.proofreading.zetta.ai-cave-secret.json
+          cp ~/.cloudvolume/secrets/proofreading.zetta.ai-cave-secret.json \
+             ~/.cloudvolume/secrets/chunkedgraph-secret.json
 
       # Windows – PowerShell + Set-Content
       - name: Write CRANT cave secret (Windows)
@@ -58,6 +60,8 @@ jobs:
           $path2 = Join-Path $secretDir "data.proofreading.zetta.ai-cave-secret.json"
           Set-Content -Path $path1 -Value $secret -NoNewline
           Set-Content -Path $path2 -Value $secret -NoNewline
+          $path3 = Join-Path $secretDir "chunkedgraph-secret.json"
+          Set-Content -Path $path3 -Value $secret -NoNewline
 
       - uses: r-lib/actions/setup-pandoc@v2
 

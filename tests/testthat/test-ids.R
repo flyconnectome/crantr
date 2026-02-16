@@ -15,7 +15,8 @@ test_that("crant_islatest works", {
   skip_if_offline()
   skip_if_not(crant_token_available(),
               message="Unable to obtain a crant access token")
-  
+  skip_if_not(crant_scene_available(),
+              message="Unable to build CRANT neuroglancer scene")
   expect_false(crant_islatest("576460752684030043"))
   expect_false(isTRUE(all.equal(
     crant_latestid("576460752684030043"), "576460752684030043")))

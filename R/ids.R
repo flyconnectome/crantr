@@ -8,7 +8,7 @@
 #' @family crant-ids
 #' @seealso \code{\link{flywire_rootid}}
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' crant_rootid("576460752684030043")
 #' }
 crant_rootid <- function(x, integer64 = FALSE, ...) {

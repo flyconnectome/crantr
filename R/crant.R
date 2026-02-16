@@ -139,7 +139,7 @@ choose_crant <- function(set=TRUE) {
 #' @rdname choose_crant
 #' @export
 #' @examples
-#' \donttest{
+#' \dontrun{
 #' with_crant(fafbseg::flywire_islatest('576460752653449509'))
 #' }
 #' \dontrun{
