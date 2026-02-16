@@ -1,8 +1,8 @@
 Type: Package
 Package: crantr
 Title: R Client Access to Clonal Raider ANT (CRANT) Datasets 
-Version: 0.1.0
-Date: 2024-10-01
+Version: 0.2.0
+Date: 2026-02-16
 Author: Alexander Bates [aut, cre] (<https://orcid.org/0000-0002-1195-0445>)
 Maintainer: Alexander Bates <alexander.shakeel.bates@gmail.com>
 Authors@R: 
