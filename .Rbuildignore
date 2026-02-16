@@ -5,3 +5,4 @@
 ^LICENSE\.md$
 ^pkgdown$
 ^\.github$
+^\.claude$
