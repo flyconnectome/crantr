@@ -7,12 +7,12 @@ append_status <- function(status, update){
 
 # hidden
 subtract_status <- function(status, update, invert = FALSE){
-  satuses <- sort(unique(unlist(strsplit(status,split=",|, "))))
+  statuses <- sort(unique(unlist(strsplit(status,split=",|, "))))
   if(invert){
-    satuses <- sort(unique(intersect(satuses,update)))
+    statuses <- sort(unique(intersect(statuses,update)))
   }else{
-    satuses <- sort(unique(setdiff(satuses,update)))
+    statuses <- sort(unique(setdiff(statuses,update)))
   }
-  update.col<-paste0(satuses,collapse=",")
+  update.col<-paste0(statuses,collapse=",")
   gsub("^,| ","",update.col)
 }

@@ -159,9 +159,35 @@ crant_add_synapses.default <- function(x,
   stop("No method for class ", class(x))
 }
 
+# hidden
+add_field_seq <- function (x, entries, field = "id", ...) {
+  x = nat::as.neuronlist(x)
+  if (length(entries) != length(x)) {
+    stop("The length of the entries to add must be the same as the length of the neuronlist, x")
+  }
+  nl = nat::neuronlist()
+  nams = names(x)
+  for (i in 1:length(x)) {
+    y = x[[i]]
+    entry = entries[i]
+    y = add_field(y, entry = entry, field = field, ...)
+    y = nat::as.neuronlist(y)
+    names(y) = nams[i]
+    nl = c(nl, y)
+  }
+  names(nl) = names(x)
+  nl[, ] = x[, ]
+  nl
+}
 
+add_field <- function (x, entry, field = "id", ...)
+  UseMethod("add_field")
 
-
+#' @export
+add_field.neuron <- function (x, entry, field = "id", ...) {
+  x[[field]] = entry
+  x
+}
 
 
 

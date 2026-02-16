@@ -176,7 +176,7 @@ crant_datastack_name <- function() {
 
 crant_datastack_name_impl <- function() {
   crant_name <- tryCatch({
-    cac=fafbseg::flywire_cave_client(NULL)
+    cac=cave_client("kronauer_ant")
     datastacks=cac$info$get_datastacks()
     seldatastack=grep("kronauer_ant*", datastacks, value = T)
     if(length(seldatastack)==0)

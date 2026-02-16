@@ -230,7 +230,7 @@ crant_updateids <- function(x,
     if(any(c("position","pt_position")%in%colnames(x)) && sum(old)){
       cat('updating root_ids with a position ...\n')
       update <- unname(pbapply::pbsapply(x[old,][[position.column]], function(row){
-        tryCatch(quiet_function(crant_xyz2id(row,rawcoords = TRUE, root = TRUE, ...)),
+        tryCatch(quiet_function(crant_xyz2id, row, rawcoords = TRUE, root = TRUE, ...),
                  error = function(e) NA)
       }))
       bad <- is.na(update)|update=="0"
@@ -267,5 +267,17 @@ crant_updateids <- function(x,
     warning("failed to update: ", sum(old),"\n")
   }
   x
+}
+
+# hidden
+quiet_function <- function(func, ...) {
+  suppressMessages(
+    suppressWarnings(
+      capture.output(
+        func(...),
+        file = nullfile()
+      )
+    )
+  )
 }
 

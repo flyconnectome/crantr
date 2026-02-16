@@ -169,7 +169,6 @@ crant_table_append_rows <- function (df,
     chunksize = chunksize,
     workspace_id = workspace_id,
     token_name = token_name,
-    workspace_id = workspace_id,
     ...
   )
 }
