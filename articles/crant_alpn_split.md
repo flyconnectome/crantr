@@ -1,0 +1,125 @@
+# Plot examples from the CRANT connectome
+
+Load packages
+
+``` r
+library(crantr)
+library(ggplot2)
+library(dplyr)
+library(hemibrainr)
+```
+
+------------------------------------------------------------------------
+
+### 1 — Get CRANTb meta data
+
+Read CRANT meta data from the seatable database (not yet public access,
+enquire by email for access)
+
+``` r
+crant.meta <- crant_table_query()
+```
+
+------------------------------------------------------------------------
+
+### 2 — Choose olfactory projection neurons
+
+Subset the meta data to olfactory projection neurons
+
+``` r
+crant.meta.alpns <- crant.meta %>%
+  dplyr::filter(cell_class == "olfactory_projection_neuron", 
+                side = "right",
+                proofread) %>%
+  dplyr::distinct(root_id, .keep_all = TRUE)
+crant.meta.alpns.ids <- na.omit(crant.meta.alpns$root_id)
+```
+
+------------------------------------------------------------------------
+
+### 3 — Get neuron skeletons with synapses
+
+Now we want to read CRANTb skeletons, re-root them, add synapse and use
+the flow centrality algorithm to make an axon-dendrite split
+
+``` r
+# Get the L2 skeletons
+# crant.skels <- crant_read_l2skel(crant.meta.alpns.ids)
+
+# Gethigh resolution skeletons
+choose_crant()
+crant.skels <- skeletor(segment = crant.meta.alpns.ids, 
+                   clean = TRUE,
+                   method = "wavefront",
+                   save.obj = NULL, 
+                   mesh3d = FALSE,
+                   waves = 1,
+                   k.soma.search = 100,
+                   radius.soma.search = 10000,
+                   heal = TRUE,
+                   reroot = TRUE,
+                   heal.threshold = 1000000,
+                   heal.k = 10L,
+                   reroot_method = "density",
+                   brain = bancr::banc_neuropil.surf,
+                   elapsed = 10000,
+                   resample = 1000)
+
+# Add synapse information, stored at n.syn[[1]]$connectors
+crant.skels.syns <- crant_add_synapses(crant.skels)
+
+# Split neuron
+crant.neurons.flow <- hemibrainr::flow_centrality(crant.skels.syns)
+```
+
+------------------------------------------------------------------------
+
+### 4 — Get neuron meshes and plot our neuroanatomical data
+
+Lets see this data together with the segmentation mesh. First, let’s get
+those meshes.
+
+``` r
+# read meshes
+crant.meshes <- crant_read_neuron_meshes(crant.meta.alpns.ids)
+
+# High res skeletons
+# crant.skels <- fafbseg::skeletor(crant.meta.alpns.ids, OmitFailures = TRUE)
+```
+
+And now let’s make a pretty ggplot2 plot.
+
+``` r
+# read meshes
+g <- nat.ggplot::gganat +
+  nat.ggplot::geom_neuron(
+    crantb.surf,
+    rotation_matrix = crantr:::crant_rotation_matrices[["front"]],
+    cols = c("grey95", "grey85"),
+    alpha = 0.3
+  ) +
+  nat.ggplot::geom_neuron(
+    crant.meshes,
+    rotation_matrix = crantr:::crant_rotation_matrices[["front"]],
+    cols = c("grey60", "grey40"),
+    alpha = 0.8
+  ) +
+  nat.ggplot::geom_neuron(
+    crant.neurons.flow,
+    threshold = 15000,
+    root = 2,
+    size = 0.1,
+    rotation_matrix = crantr:::crant_rotation_matrices[["front"]]
+  ) +
+  ggplot2::labs(
+    title = "antennal lobe projection neurons",
+    subtitle = "proofread, axon-dendrite split, CRANTb data"
+  )
+
+# Show
+print(g)
+
+# Save
+ggsave(g,
+       filename = "inst/crantb_antennal_lobe_projection_neurons.png")
+```

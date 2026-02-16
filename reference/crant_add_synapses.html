@@ -9,7 +9,7 @@ It retrieves synaptic connections and attaches them to the neuron object(s)."><m
 
     <a class="navbar-brand me-2" href="../index.html">crantr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -19,6 +19,10 @@ It retrieves synaptic connections and attaches them to the neuron object(s)."><m
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../index.html" aria-label="Home"><span class="fa fas fa-home fa-lg"></span></a></li>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/crant_alpn_split.html">Plot examples from the CRANT connectome</a></li>
+  </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
 <li class="nav-item"><a class="nav-link" href="../SUPPORT.html">Help</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><a class="external-link nav-link" href="https://natverse.github.io">natverse</a></li>
@@ -133,11 +137,8 @@ It retrieves synaptic connections and attaches them to the neuron object(s).</p>
 <span class="r-in"><span><span class="co"># Get the L2 skeletons</span></span></span>
 <span class="r-in"><span><span class="va">n</span> <span class="op">&lt;-</span> <span class="fu"><a href="crant_read_l2skel.html">crant_read_l2skel</a></span><span class="op">(</span><span class="va">id</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># Re-root to soma</span></span></span>
-<span class="r-in"><span><span class="va">n.rerooted</span> <span class="op">&lt;-</span> <span class="fu">crant_reroot</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Add synapse information, stored at n.syn[[1]]$connectors</span></span></span>
-<span class="r-in"><span><span class="va">n.syn</span> <span class="op">&lt;-</span> <span class="fu">crant_add_synapses</span><span class="op">(</span><span class="va">n.rerooted</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">n.syn</span> <span class="op">&lt;-</span> <span class="fu">crant_add_synapses</span><span class="op">(</span><span class="va">n</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Split neuron</span></span></span>
 <span class="r-in"><span><span class="va">n.split</span> <span class="op">&lt;-</span> <span class="fu">hemibrainr</span><span class="fu">::</span><span class="fu">flow_centrality</span><span class="op">(</span><span class="va">n.syn</span><span class="op">)</span></span></span>
@@ -154,7 +155,7 @@ It retrieves synaptic connections and attaches them to the neuron object(s).</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

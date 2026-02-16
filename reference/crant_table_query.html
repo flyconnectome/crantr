@@ -33,7 +33,7 @@ crant_table_update_rows updates existing rows in a table, returning TRUE on succ
 
     <a class="navbar-brand me-2" href="../index.html">crantr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -43,6 +43,10 @@ crant_table_update_rows updates existing rows in a table, returning TRUE on succ
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../index.html" aria-label="Home"><span class="fa fas fa-home fa-lg"></span></a></li>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/crant_alpn_split.html">Plot examples from the CRANT connectome</a></li>
+  </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
 <li class="nav-item"><a class="nav-link" href="../SUPPORT.html">Help</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><a class="external-link nav-link" href="https://natverse.github.io">natverse</a></li>
@@ -150,7 +154,7 @@ docs</a>.</p></dd>
 <dt id="arg-limit">limit<a class="anchor" aria-label="anchor" href="#arg-limit"></a></dt>
 <dd><p>An optional limit, which only applies if you do not specify a
 limit directly in the <code>sql</code> query. By default seatable limits SQL
-queries to 100 rows. We increase the limit to 100000 rows by default.</p></dd>
+queries to 100 rows. We increase the limit to 200000 rows by default.</p></dd>
 
 
 <dt id="arg-base">base<a class="anchor" aria-label="anchor" href="#arg-base"></a></dt>
@@ -199,7 +203,7 @@ column that can identify each row in the remote table.</p></dd>
 
 
 <dt id="arg-table">table<a class="anchor" aria-label="anchor" href="#arg-table"></a></dt>
-<dd><p>Character vector specifying a table foe which you want a
+<dd><p>Character vector specifying a table for which you want a
 <code>base</code> object.</p></dd>
 
 
@@ -224,11 +228,11 @@ column that can identify each row in the remote table.</p></dd>
 
 
 <dt id="arg-overwrite">overwrite<a class="anchor" aria-label="anchor" href="#arg-overwrite"></a></dt>
-<dd><p>whether or to overwrite entries in the chosen <code>column</code> for the given <code>root_ids</code>.</p></dd>
+<dd><p>whether or not to overwrite entries in the chosen <code>column</code> for the given <code>root_ids</code>.</p></dd>
 
 
 <dt id="arg-append">append<a class="anchor" aria-label="anchor" href="#arg-append"></a></dt>
-<dd><p>if <code>overwrite==FALSE</code>, then whether or to append (separated by a <code>,</code>) entries in the chosen <code>column</code> for the given <code>root_ids</code>.</p></dd>
+<dd><p>if <code>overwrite==FALSE</code>, then whether or not to append (separated by a <code>,</code>) entries in the chosen <code>column</code> for the given <code>root_ids</code>.</p></dd>
 
 
 <dt id="arg-column">column<a class="anchor" aria-label="anchor" href="#arg-column"></a></dt>
@@ -279,7 +283,7 @@ matched query.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

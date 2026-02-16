@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">crantr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.1.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -17,6 +17,10 @@
     <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto"><li class="nav-item"><a class="nav-link" href="../index.html" aria-label="Home"><span class="fa fas fa-home fa-lg"></span></a></li>
 <li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/crant_alpn_split.html">Plot examples from the CRANT connectome</a></li>
+  </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
 <li class="nav-item"><a class="nav-link" href="../SUPPORT.html">Help</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><a class="external-link nav-link" href="https://natverse.github.io">natverse</a></li>
@@ -36,8 +40,7 @@
 
 
 
-
-    </div><div class="section level2">
+      <dl></dl></div><div class="section level2">
 
 
 
@@ -48,151 +51,183 @@
 
         </dt>
         <dd>Choose or (temporarily) use the CRANT autosegmentation</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_add_synapses.html">crant_add_synapses()</a></code>
 
         </dt>
         <dd>Add synapses to neuron objects</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_cave_client.html">crant_cave_client()</a></code>
 
         </dt>
         <dd>Low level access to crant's CAVE annotation infrastructure</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_cave_query.html">crant_cave_query()</a></code> <code><a href="crant_cave_query.html">crant_backbone_proofread()</a></code> <code><a href="crant_cave_query.html">crant_version()</a></code>
 
         </dt>
         <dd>Query CRANT tables in the CAVE annotation system</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_cave_tables.html">crant_cave_tables()</a></code>
 
         </dt>
         <dd>Read CRANT CAVE-tables, good sources of metadata</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_change_log.html">crant_change_log()</a></code>
 
         </dt>
         <dd>Fetch change log information for one or more neurons</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_ggneuron.html">crant_ggneuron()</a></code>
 
         </dt>
         <dd>Plot a neuron in the CRANT connectomic dataset using ggplot2</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_ids.html">crant_ids()</a></code>
 
         </dt>
         <dd>Make sure given root IDs look like CRANT root IDs</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_islatest.html">crant_islatest()</a></code>
 
         </dt>
         <dd>Check if a CRANT root id is up to date</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_latestid.html">crant_latestid()</a></code> <code><a href="crant_latestid.html">crant_updateids()</a></code>
 
         </dt>
         <dd>Find the latest id for a CRANT root id</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_leaves.html">crant_leaves()</a></code>
 
         </dt>
         <dd>Find the supervoxel identifiers of a CRANT neuron</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_meta.html">crant_meta()</a></code>
 
         </dt>
         <dd>Query cached CRANTb meta data</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_meta_create_cache.html">crant_meta_create_cache()</a></code>
 
         </dt>
         <dd>Create or refresh cache of CRANTb meta information</dd>
-      </dl><dl><dt>
+
+        <dt>
+
+          <code><a href="crant_neuron_volume.html">crant_neuron_volume()</a></code>
+
+        </dt>
+        <dd>Calculate neuron volume from CAVE L2 cache</dd>
+
+        <dt>
 
           <code><a href="crant_partner_summary.html">crant_partner_summary()</a></code> <code><a href="crant_partner_summary.html">crant_partners()</a></code>
 
         </dt>
         <dd>Summarise the connectivity of CRANTb neurons</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_read_l2skel.html">crant_read_l2skel()</a></code>
 
         </dt>
         <dd>Read L2 skeleton for crant neurons using pcg_skel</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_read_neuroglancer_mesh.html">crant_read_neuroglancer_mesh()</a></code>
 
         </dt>
         <dd>Read CRANT neuroglancer meshes, e.g., ROI meshes</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_read_neuron_meshes.html">crant_read_neuron_meshes()</a></code> <code><a href="crant_read_neuron_meshes.html">crant_read_nuclei_mesh()</a></code>
 
         </dt>
         <dd>Read one or more CRANT neuron and nuclei meshes</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_rootid.html">crant_rootid()</a></code>
 
         </dt>
         <dd>Find the root identifier of a CRANT neuron</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_scene.html">crant_scene()</a></code>
 
         </dt>
         <dd>Return a sample Neuroglancer scene URL for crant dataset</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_set_token.html">crant_set_token()</a></code>
 
         </dt>
         <dd>Set the token to be used to authenticate to CRANT autosegmentation resources</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_table_query.html">crant_table_query()</a></code> <code><a href="crant_table_query.html">crant_table_set_token()</a></code> <code><a href="crant_table_query.html">crant_table_login()</a></code> <code><a href="crant_table_query.html">crant_table_update_rows()</a></code> <code><a href="crant_table_query.html">crant_table_append_rows()</a></code> <code><a href="crant_table_query.html">crant_table_updateids()</a></code> <code><a href="crant_table_query.html">crant_table_annotate()</a></code>
 
         </dt>
         <dd>Read and write to the seatable for draft CRANT annotations</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_view.html">crant_view()</a></code> <code><a href="crant_view.html">crant_side_view()</a></code> <code><a href="crant_view.html">crant_back_view()</a></code>
 
         </dt>
         <dd>Set Default View for CRANT EM Dataset</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_voxdims.html">crant_voxdims()</a></code> <code><a href="crant_voxdims.html">crant_nm2raw()</a></code> <code><a href="crant_voxdims.html">crant_raw2nm()</a></code>
 
         </dt>
         <dd>Handle raw and nm calibrated CRANT coordinates</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crant_xyz2id.html">crant_xyz2id()</a></code>
 
         </dt>
         <dd>Convert xyz locations to CRANT root or supervoxel ids</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="crantb.surf.html">crantb.surf</a></code>
 
         </dt>
         <dd>Simplified tissue surface for crant</dd>
-      </dl><dl><dt>
+
+        <dt>
 
           <code><a href="register_crant_coconat.html">register_crant_coconat()</a></code>
 
@@ -207,7 +242,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>
