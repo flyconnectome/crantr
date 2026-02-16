@@ -57,13 +57,29 @@ Now we want to read CRANTb skeletons, re-root them, add synapse and use the flow
 
 ```{r crantb_spits}
 # Get the L2 skeletons
-crant.skels <- crant_read_l2skel(crant.meta.alpns.ids)
+# crant.skels <- crant_read_l2skel(crant.meta.alpns.ids)
 
-# Re-root to soma
-crant.skels.rerooted <- crant_reroot(crant.skels)
+# Gethigh resolution skeletons
+choose_crant()
+crant.skels <- skeletor(segment = crant.meta.alpns.ids, 
+                   clean = TRUE,
+                   method = "wavefront",
+                   save.obj = NULL, 
+                   mesh3d = FALSE,
+                   waves = 1,
+                   k.soma.search = 100,
+                   radius.soma.search = 10000,
+                   heal = TRUE,
+                   reroot = TRUE,
+                   heal.threshold = 1000000,
+                   heal.k = 10L,
+                   reroot_method = "density",
+                   brain = bancr::banc_neuropil.surf,
+                   elapsed = 10000,
+                   resample = 1000)
 
 # Add synapse information, stored at n.syn[[1]]$connectors
-crant.skels.syns <- crant_add_synapses(crant.skels.rerooted)
+crant.skels.syns <- crant_add_synapses(crant.skels)
 
 # Split neuron
 crant.neurons.flow <- hemibrainr::flow_centrality(crant.skels.syns)
@@ -119,6 +135,10 @@ print(g)
 ggsave(g,
        filename = "inst/crantb_antennal_lobe_projection_neurons.png")
 ```
+
+
+
+
 
 
 

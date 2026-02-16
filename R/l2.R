@@ -108,17 +108,20 @@ def meshparty_skeleton_to_swc_dataframe(skel):
  # Run pcg_skel
  pcg <- check_pcg_skel()
 
+ # Initialise CAVE client (once, reused for all IDs)
+ client <- crant_cave_client()
+
  # Convert into natverse neuron
  py <- reticulate::py
- neurons <- nat::nlapply(ids, meshparty_to_nat, pcg=pcg, py=py, datastack_name=datastack_name, ...)
+ neurons <- nat::nlapply(ids, meshparty_to_nat, pcg=pcg, py=py, client=client, datastack_name=datastack_name, ...)
  nams <- unlist(lapply(neurons,function(x) x$id))
  names(neurons) <- nams
  neurons
 }
 
 # hidden
-meshparty_to_nat <- function(id, pcg, py, datastack_name){
-  skel <- pcg$pcg_skeleton(id,datastack_name=datastack_name)
+meshparty_to_nat <- function(id, pcg, py, client, datastack_name){
+  skel <- pcg$pcg_skeleton(id, client=client, datastack_name=datastack_name)
   swc_df <- py$meshparty_skeleton_to_swc_dataframe(skel)
   a <- nat::as.neuron(swc_df)
   neuron <- nat::stitch_neurons_mst(a)
