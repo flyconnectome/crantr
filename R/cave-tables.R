@@ -38,7 +38,7 @@ crant_backbone_proofread <- function(...){
 #' fcc$materialize$get_table_metadata(tables[1])
 #' }
 crant_cave_client <- function() {
-  with_crant(fafbseg::flywire_cave_client())
+  cave_client(crant_datastack_name())
 }
 
 #' Read CRANT CAVE-tables, good sources of metadata
@@ -69,7 +69,7 @@ crant_cave_tables <- function(datastack_name = "kronauer_ant",
                               ...){
   if(is.null(datastack_name))
     datastack_name=crant_datastack_name()
-  fac <- fafbseg::flywire_cave_client(datastack_name = datastack_name, ...)
+  fac <- cave_client(datastack_name)
   dsinfo <- fac$info$get_datastack_info()
   tt <- fac$annotation$get_tables()
   if(!is.null(select)){

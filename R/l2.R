@@ -109,7 +109,8 @@ def meshparty_skeleton_to_swc_dataframe(skel):
  pcg <- check_pcg_skel()
 
  # Initialise CAVE client (once, reused for all IDs)
- client <- crant_cave_client()
+ # Use cave_client() directly to connect to proofreading.zetta.ai
+ client <- cave_client(datastack_name)
 
  # Convert into natverse neuron
  py <- reticulate::py
