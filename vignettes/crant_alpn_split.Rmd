@@ -1,9 +1,9 @@
 
 ---
-title: "Plot examples from the BANC connectome"
+title: "Plot examples from the CRANT connectome"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Plot examples from the BANC connectome}
+  %\VignetteIndexEntry{Plot examples from the CRANT connectome}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

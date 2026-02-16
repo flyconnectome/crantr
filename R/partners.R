@@ -9,7 +9,7 @@
 #' @param rootids Character vector specifying one or more crant rootids. As a
 #'   convenience this argument is passed to \code{\link{crant_ids}} allowing you
 #'   to pass in data.frames, crant URLs or simple ids.
-#' @param partners Character vector, either "outputs" or "inputs" to specify the direction of synaptic connections to retrieve.
+#' @param partners Character vector, either "input" or "output" to specify the direction of synaptic connections to retrieve.
 #' @param threshold Integer threshold for minimum number of synapses (default 0).
 #' @param remove_autapses Logical, whether to remove self-connections (default TRUE).
 #' @param cleft.threshold Numeric threshold for cleft filtering (default 0).

@@ -20,13 +20,13 @@
 #'   docs}.
 #' @param limit An optional limit, which only applies if you do not specify a
 #'   limit directly in the \code{sql} query. By default seatable limits SQL
-#'   queries to 100 rows. We increase the limit to 100000 rows by default.
+#'   queries to 100 rows. We increase the limit to 200000 rows by default.
 #' @param convert Expert use only: Whether or not to allow the Python seatable
 #'   module to process raw output from the database. This is is principally for
 #'   debugging purposes. NB this imposes a requirement of seatable_api >=2.4.0.
 #' @param python Logical. Whether to return a Python pandas DataFrame. The default of FALSE returns an R data.frame
 #' @param base Character vector specifying the \code{base}
-#' @param table Character vector specifying a table foe which you want a
+#' @param table Character vector specifying a table for which you want a
 #'   \code{base} object.
 #' @param workspace_id A numeric id specifying the workspace. Advanced use only
 #   since we can normally figure this out from \code{base_name}.
@@ -45,8 +45,8 @@
 #' @param root_ids the CRANTb root ids to update, must be present in the seatable.
 #' @param column the column in the seatable to update for the given `root_ids`.
 #' @param update the replacement entries you want in the chosen `column` for the given `root_ids`.
-#' @param overwrite whether or to overwrite entries in the chosen `column` for the given `root_ids`.
-#' @param append if `overwrite==FALSE`, then whether or to append (separated by a `,`) entries in the chosen `column` for the given `root_ids`.
+#' @param overwrite whether or not to overwrite entries in the chosen `column` for the given `root_ids`.
+#' @param append if `overwrite==FALSE`, then whether or not to append (separated by a `,`) entries in the chosen `column` for the given `root_ids`.
 #' @param ... additional arguments passed to pbsapply which might include cl=2 to specify a number of parallel jobs to run.
 #'
 #' @return a \code{data.frame} of results. There should be 0 rows if no rows
