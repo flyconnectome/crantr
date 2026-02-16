@@ -11,7 +11,8 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  eval = FALSE
 )
 ```
 
@@ -135,10 +136,6 @@ print(g)
 ggsave(g,
        filename = "inst/crantb_antennal_lobe_projection_neurons.png")
 ```
-
-
-
-
 
 
 
