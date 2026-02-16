@@ -270,6 +270,7 @@ crant_updateids <- function(x,
 }
 
 # hidden
+#' @importFrom utils capture.output
 quiet_function <- function(func, ...) {
   suppressMessages(
     suppressWarnings(

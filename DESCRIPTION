@@ -67,6 +67,7 @@ Remotes:
     natverse/coconat,
     natverse/nat.ggplot,
     tidyverse/ggplot2
+VignetteBuilder: knitr
 Config/testthat/edition: 3
 LazyDataCompression: xz
 Encoding: UTF-8
