@@ -132,7 +132,7 @@ If you are a collaborator on the project and have access to our [seatable](https
 # load library
 library(crantr)
 
-# get meta data, will one dya be available via CAVE tables
+# get meta data, will one day be available via CAVE tables
 ac <- crant_table_query()
 
 # have a look at it!
@@ -203,6 +203,17 @@ plot3d(pn.skels, lwd = 1)
 
 ![crantb_example_neuron_skeletons](https://github.com/flyconnectome/crantr/blob/main/inst/images/crantb_example_neuron_skeletons.png?raw=true)
 
+We can also query synaptic connectivity and neuron volumes directly from CAVE:
+
+```r
+# Synaptic partners
+crant_partner_summary(pn.ids[1])
+crant_partners(pn.ids[1], partners = "output")
+
+# Neuron volume (nm³) via L2 cache — no mesh download required
+crant_neuron_volume(pn.ids)
+```
+
 ## Meta data management in seatable
 
 ![ant_table](https://github.com/flyconnectome/crantr/blob/main/inst/images/ant_table.png?raw=true)
@@ -246,7 +257,7 @@ crant_table_set_token(user="MY_EMAIL_FOR_SEATABLE",
 And then you may read the data, and make nice plots from it!
 
 ```r
-# Read BANC meta seatable
+# Read CRANTb meta seatable
 ac <- crant_table_query()
 ```
 
@@ -299,7 +310,7 @@ If you use this package, please cite:
 citation(package = "crantr")
 ```
 
-**Bates A** (2024). _crantr: R Client Access to the Brain And Nerve Cord (CRANT) Dataset_. R package version 0.1.0, <https://github.com/flyconnectome/crantr>.
+**Bates A** (2024). _crantr: R Client Access to the Clonal Raider ANT (CRANT) Dataset_. R package version 0.2.0, <https://github.com/flyconnectome/crantr>.
 
 Note, a similar python-based tool is available [here](https://social-evolution-and-behavior.github.io/crantpy/intro.html).
 
