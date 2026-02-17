@@ -4,9 +4,12 @@ test_that("crant_xyz2id works", {
               message="Unable to obtain a crant access token")
   skip_if_not(crant_scene_available(),
               message="Unable to build CRANT neuroglancer scene")
-  expect_equal(crant_xyz2id(cbind(37306, 31317, 1405), rawcoords=TRUE),
-               "576460752679473795")
+  # root_id changes with proofreading edits, so just check we get a valid ID
+  rid <- crant_xyz2id(cbind(37306, 31317, 1405), rawcoords=TRUE)
+  expect_type(rid, "character")
+  expect_true(nchar(rid) >= 15)
 
+  # supervoxel_id is stable
   expect_equal(
     crant_xyz2id(cbind(37306, 31317, 1405), rawcoords=TRUE, root=F),
     "74452055821276049")

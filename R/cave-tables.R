@@ -22,6 +22,7 @@ crant_cave_query <- function(table, live=2, ...) {
 }
 
 #' @rdname crant_cave_query
+#' @export
 crant_backbone_proofread <- function(...){
   crant_cave_query(table = "backbone_proofread", live = 2, ...)
 }

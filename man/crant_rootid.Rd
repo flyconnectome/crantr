@@ -22,7 +22,7 @@ A vector of root ids (by default character)
 Find the root identifier of a CRANT neuron
 }
 \examples{
-\donttest{
+\dontrun{
 crant_rootid("576460752684030043")
 }
 }

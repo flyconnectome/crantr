@@ -85,7 +85,14 @@ crant_partners <- function(rootids,
   } else {
     reticulate::py_call(fcc$materialize$synapse_query, pre_ids=pyids, synapse_table=synapse_table, ...)
   }
-  fafbseg:::pandas2df(res)
+  tryCatch(
+    fafbseg:::pandas2df(res),
+    error = function(e) {
+      # Arrow conversion can fail for some neurons (e.g. mixed column types);
+      # fall back to reticulate conversion
+      reticulate::py_to_r(res)
+    }
+  )
 }
 
 

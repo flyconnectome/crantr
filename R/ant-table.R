@@ -321,7 +321,7 @@ crant_table_update_tracing <- function(table = "CRANTb_meta",
   n_rows <- nrow(ac)
   p <- dplyr::progress_estimated(n_rows)
   duplicates <- unique(ac$root_id[duplicated(ac$root_id)])
-  duplicates <- na.omit(duplicates)
+  duplicates <- stats::na.omit(duplicates)
   ac.new <- ac %>%
     dplyr::rowwise() %>%
     dplyr::mutate(

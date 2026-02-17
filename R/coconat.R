@@ -1,3 +1,6 @@
+# Suppress R CMD check NOTEs for NSE column references and piped dplyr verbs
+utils::globalVariables(c(".data", "filter", "pull", "glue", "id", "size"))
+
 #' Create or refresh cache of CRANTb meta information
 #'
 #' @description
