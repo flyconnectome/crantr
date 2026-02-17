@@ -42,10 +42,7 @@ Other crant-ids:
 ## Examples
 
 ``` r
-# \donttest{
+if (FALSE) { # \dontrun{
 crant_rootid("576460752684030043")
-#> Error in flywire_errorhandle(req) : Unauthorized (HTTP 401).
-#> Error in crant_scene(): You have a token but it doesn't seem to be authorised for CAVE or global.daf-apis.com.
-#> Have you definitely used `flywire_set_token()` to make a token for the CAVE datasets?Note you may have to do this in addition to `crantr_set_token()`
-# }
+} # }
 ```
