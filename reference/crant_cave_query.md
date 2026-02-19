@@ -7,7 +7,7 @@ Query CRANT tables in the CAVE annotation system
 ``` r
 crant_cave_query(table, live = 2, ...)
 
-crant_backbone_proofread(...)
+crant_backbone_proofread(live = 2, ...)
 
 crant_version()
 ```

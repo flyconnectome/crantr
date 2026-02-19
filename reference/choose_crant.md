@@ -42,3 +42,16 @@ For banc this is the neuroglancer scene returned by
 [`crant_scene`](https://flyconnectome.github.io/crantr/reference/crant_scene.md).
 
 ## Examples
+
+``` r
+if (FALSE) { # \dontrun{
+choose_crant()
+options()[grep("^fafbseg.*url", names(options()))]
+} # }
+if (FALSE) { # \dontrun{
+with_crant(fafbseg::flywire_islatest('576460752653449509'))
+} # }
+if (FALSE) { # \dontrun{
+with_crant(fafbseg::flywire_latestid('576460752653449509'))
+} # }
+```
