@@ -143,7 +143,7 @@ choose_crant <- function(set=TRUE) {
 #' with_crant(fafbseg::flywire_islatest('576460752653449509'))
 #' }
 #' \dontrun{
-#' with_crant(fafbseg::flywire_latestid('576460752653449509')
+#' with_crant(fafbseg::flywire_latestid('576460752653449509'))
 #' }
 with_crant <- function(expr) {
   op <- choose_crant(set = TRUE)

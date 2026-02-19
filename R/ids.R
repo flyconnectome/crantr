@@ -243,11 +243,17 @@ crant_updateids <- function(x,
     # update based on root Ids
     if(root.column%in%colnames(x) && sum(old)){
       cat('updating root_ids without a supervoxel_id...\n')
-      update <- crant_latestid(x[old,][[root.column]], ...)
-      bad <- is.na(update)|update=="0"
-      update <- update[!bad]
-      if(length(update)) x[old,][[root.column]][!bad] <- update
-      old[old][!bad] <- FALSE
+      rids <- x[old,][[root.column]]
+      # Skip NAs/invalid IDs — a single invalid ID triggers ngl_segments URL parsing
+      valid <- !is.na(rids) & grepl("^\\d+$", rids)
+      if (any(valid)) {
+        update <- rep(NA_character_, length(rids))
+        update[valid] <- crant_latestid(rids[valid], ...)
+        bad <- is.na(update)|update=="0"
+        update <- update[!bad]
+        if(length(update)) x[old,][[root.column]][!bad] <- update
+        old[old][!bad] <- FALSE
+      }
     }
     old[is.na(old)] <- FALSE
 
