@@ -48,7 +48,6 @@ You can install the development version of `crantr` from GitHub:
 
 ```r
 remotes::install_github('flyconnectome/crantr')
-remotes::install_github('natverse/fafbseg@asb-dev')
 ```
 
 ### Authorisation
