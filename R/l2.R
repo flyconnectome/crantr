@@ -114,9 +114,8 @@ def meshparty_skeleton_to_swc_dataframe(skel):
 
  # Convert into natverse neuron
  py <- reticulate::py
- neurons <- nat::nlapply(ids, meshparty_to_nat, pcg=pcg, py=py, client=client, datastack_name=datastack_name, ...)
- nams <- unlist(lapply(neurons,function(x) x$id))
- names(neurons) <- nams
+ neurons <- nat::nlapply(ids, meshparty_to_nat, pcg=pcg, py=py, client=client, datastack_name=datastack_name, OmitFailures=OmitFailures, ...)
+ names(neurons) <- sapply(neurons, function(x) x$id)
  neurons
 }
 
