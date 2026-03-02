@@ -194,9 +194,9 @@ crant_updateids <- function(x,
       no.sp <- is.na(x[[supervoxel.column]])|x[[supervoxel.column]]=="0"
       if(sum(no.sp)){
         cat('determining missing supervoxel_ids ...\n')
-        x[no.sp,][[supervoxel.column]] <- unname(pbapply::pbsapply(x[no.sp,][[position.column]], function(row){
+        x[no.sp,][[supervoxel.column]] <- unlist(unname(pbapply::pbsapply(x[no.sp,][[position.column]], function(row){
           tryCatch(crant_xyz2id(row,rawcoords = TRUE, root = FALSE, ...), error = function(e) NA)
-        }))
+        })))
       }
     }
 
@@ -218,7 +218,7 @@ crant_updateids <- function(x,
     # update based on supervoxels
     if(supervoxel.column%in%colnames(x)){
       cat('updating root_ids with a supervoxel_id...\n')
-      update <- unname(pbapply::pbsapply(x[old,][[supervoxel.column]], crant_rootid, ...))
+      update <- unlist(unname(pbapply::pbsapply(x[old,][[supervoxel.column]], crant_rootid, ...)))
       bad <- is.na(update)|update=="0"
       update <- update[!bad]
       if(length(update)) x[old,][[root.column]][!bad] <- update
@@ -229,10 +229,10 @@ crant_updateids <- function(x,
     # update based on position
     if(any(c("position","pt_position")%in%colnames(x)) && sum(old)){
       cat('updating root_ids with a position ...\n')
-      update <- unname(pbapply::pbsapply(x[old,][[position.column]], function(row){
+      update <- unlist(unname(pbapply::pbsapply(x[old,][[position.column]], function(row){
         tryCatch(quiet_function(crant_xyz2id, row, rawcoords = TRUE, root = TRUE, ...),
                  error = function(e) NA)
-      }))
+      })))
       bad <- is.na(update)|update=="0"
       update <- update[!bad]
       if(length(update)) x[old,][[root.column]][!bad] <- update
