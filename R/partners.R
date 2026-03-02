@@ -85,6 +85,16 @@ crant_partners <- function(rootids,
   } else {
     reticulate::py_call(fcc$materialize$synapse_query, pre_ids=pyids, synapse_table=synapse_table, ...)
   }
+  # Flatten array-valued position columns to strings before R conversion
+  # to avoid REAL()/character type mismatch in Arrow/reticulate (numpy arrays
+  # in position columns can't be directly converted to R numeric vectors)
+  tryCatch({
+    cols <- res$columns$tolist()
+    pos_cols <- grep("_position$", cols, value = TRUE)
+    for (col in pos_cols) {
+      res[[col]] <- res[[col]]$astype("str")
+    }
+  }, error = function(e) NULL)
   tryCatch(
     fafbseg:::pandas2df(res),
     error = function(e) {
