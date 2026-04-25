@@ -17,5 +17,5 @@ crant_ids(x, integer64 = NA)
 - integer64:
 
   Whether to return ids as
-  [`bit64::integer64`](https://rdrr.io/pkg/bit64/man/bit64-package.html)
+  [`bit64::integer64`](https://bit64.r-lib.org/reference/bit64-package.html)
   or character vectors. Default value of NA leaves the ids unmodified.
