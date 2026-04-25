@@ -264,6 +264,7 @@ register_crant_coconat <- function(showerror=TRUE){
       name = 'crant',
       shortname = 'cr',
       namespace = 'coconatfly',
+      sex='F',
       metafun = coconat_crant_meta,
       idfun = coconat_crant_ids,
       partnerfun = coconat_crant_partners
