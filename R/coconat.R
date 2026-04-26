@@ -133,15 +133,18 @@ crant_meta <- local({
     }
   }
   list(
-    create_cache = function(use_seatable=FALSE, return = FALSE) {
+    create_cache = function(use_seatable=nzchar(Sys.getenv("CRANTTABLE_TOKEN")), return = FALSE) {
+      if (!use_seatable)
+        warning("No CRANTTABLE_TOKEN found; seatable access unavailable. ",
+                "Set token with crant_table_set_token().")
       meta <- .refresh_cache(use_seatable=use_seatable)
       .crant_meta_cache <<- meta
       if (return) meta else invisible()
     },
     get_meta = function(ids = NULL) {
       if (is.null(.crant_meta_cache)){
-        warning("No CRANTb meta cache loaded. Creating with crant_meta_create_cache(use_seatable=FALSE)")
-        crant_meta_create_cache(use_seatable=FALSE)
+        warning("No CRANTb meta cache loaded. Run crant_meta_create_cache() to populate it.")
+        crant_meta_create_cache()
       }
       meta <- .crant_meta_cache
       if (!is.null(ids)) {
