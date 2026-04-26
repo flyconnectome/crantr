@@ -4,7 +4,10 @@
 \alias{crant_meta_create_cache}
 \title{Create or refresh cache of CRANTb meta information}
 \usage{
-crant_meta_create_cache(use_seatable = FALSE, return = FALSE)
+crant_meta_create_cache(
+  use_seatable = nzchar(Sys.getenv("CRANTTABLE_TOKEN")),
+  return = FALSE
+)
 }
 \arguments{
 \item{use_seatable}{Whether to build CRANTb meta data from the \code{cell_info} CAVE table
@@ -27,11 +30,9 @@ Whenever labels are updated, simply rerun this function to update the cache.
 }
 \examples{
 \dontrun{
-#' # Requires authenticated access to CRANTb CAVE
-crant_meta_cache(use_seatable=FALSE)
-
-crant_meta_create_cache(use_seatable=TRUE) # create cache
-## CRANTbTABLE_TOKEN must be set, see crantr package
+## NB CRANTTABLE_TOKEN must be set, see crantr readme
+# create cache
+crant_meta_create_cache(use_seatable=TRUE)
 result <- crant_meta() # use cache
 
 # use cache to quickly make plot

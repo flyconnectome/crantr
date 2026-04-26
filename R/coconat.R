@@ -22,11 +22,9 @@ utils::globalVariables(c(".data", "filter", "pull", "glue", "id", "size"))
 #'
 #' @examples
 #' \dontrun{
-#' #' # Requires authenticated access to CRANTb CAVE
-#' crant_meta_cache(use_seatable=FALSE)
-#'
-#' crant_meta_create_cache(use_seatable=TRUE) # create cache
-#' ## CRANTbTABLE_TOKEN must be set, see crantr package
+#' ## NB CRANTTABLE_TOKEN must be set, see crantr readme
+#' # create cache
+#' crant_meta_create_cache(use_seatable=TRUE)
 #' result <- crant_meta() # use cache
 #'
 #' # use cache to quickly make plot
