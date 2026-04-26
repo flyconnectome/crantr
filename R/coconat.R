@@ -66,17 +66,22 @@ crant_meta <- local({
     if (use_seatable) {
       # Read from seatable
       crant.meta <- crant_table_query(
-        "SELECT root_id, side, cell_type, cell_class, cell_subtype from CRANTb_meta"
+        "SELECT root_id, super_class, cell_class, cell_type, cell_subtype, cell_instance, hemilineage, side, nerve, tract from CRANTb_meta"
       )
       crant.meta %>%
         dplyr::rename(
           id = root_id,
-          class = cell_class,
+          class = super_class,
+          subclass = cell_class,
           type = cell_type,
-          side = side,
-          subclass = cell_subtype
+          subtype = cell_subtype,
+          instance = cell_instance,
+          lineage = hemilineage
         ) %>%
-        dplyr::mutate(id = as.character(id))
+        dplyr::mutate(
+          id = as.character(id),
+          side = dplyr::recode(side, left="L", right="R")
+        )
     } else {
       stop("Meta data CAVE table not yet implemented")
     #   crant.community.meta <- crant_cell_info() %>%
