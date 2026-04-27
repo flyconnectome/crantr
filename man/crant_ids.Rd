@@ -4,14 +4,20 @@
 \alias{crant_ids}
 \title{Make sure given root IDs look like CRANT root IDs}
 \usage{
-crant_ids(x, integer64 = NA)
+crant_ids(x, integer64 = NA, unique = FALSE)
 }
 \arguments{
 \item{x}{A data.frame, URL or vector of ids}
 
 \item{integer64}{Whether to return ids as \code{bit64::integer64} or
 character vectors. Default value of NA leaves the ids unmodified.}
+
+\item{unique}{For query inputs only, whether to drop rows with duplicate
+\code{id} (passed to \code{\link[=crant_meta]{crant_meta()}}). Ignored for non-query inputs.}
 }
 \description{
-Make sure given root IDs look like CRANT root IDs
+If \code{x} is a single character query (e.g. \code{"/type:ExR1"},
+\code{"class:descending"}, or a bare type name like \code{"ExR1"}), it is looked up
+in the CRANTb seatable via \code{\link[=crant_meta]{crant_meta()}} and the matching root ids are
+returned. Otherwise validation is delegated to \code{\link[bancr:banc_ids]{bancr::banc_ids()}}.
 }

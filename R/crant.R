@@ -127,16 +127,25 @@ crant_token_available <- function() {
 #' }
 choose_crant <- function(set=TRUE) {
   fafbseg::choose_segmentation(
-    release <- crant_scene(),
-    set <- set,
-    moreoptions=list(
-      fafbseg.cave.datastack_name=crant_datastack_name()
+    crant_scene(),
+    set = set,
+    moreoptions = list(
+      fafbseg.cave.datastack_name = crant_datastack_name(),
+      fafbseg.flytable.url = "https://cloud.seatable.io/"
     ))
 }
 
 #' @param expr An expression to evaluate while CRANT is the default
 #'   autosegmentation
 #' @rdname choose_crant
+#' @details \code{with_crant} and \code{choose_crant} also redirect the
+#'   `fafbseg` flytable infrastructure (see \code{\link[fafbseg]{cam_meta}})
+#'   at the CRANTb seatable instance via the \code{fafbseg.flytable.url}
+#'   option (requires \code{fafbseg >= 0.15.7}). Inside \code{with_crant()}
+#'   the \code{FLYTABLE_TOKEN} environment variable is temporarily replaced
+#'   with the value of \code{CRANTTABLE_TOKEN} so that
+#'   \code{\link[fafbseg]{flytable_login}} authenticates against the CRANTb
+#'   seatable; the original value is restored on exit.
 #' @export
 #' @examples
 #' \dontrun{
@@ -144,10 +153,18 @@ choose_crant <- function(set=TRUE) {
 #' }
 #' \dontrun{
 #' with_crant(fafbseg::flywire_latestid('576460752653449509'))
+#' with_crant(fafbseg::cam_meta('/super_class:descending', table='CRANTb_meta'))
 #' }
 with_crant <- function(expr) {
   op <- choose_crant(set = TRUE)
-  on.exit(options(op))
+  oldtok <- Sys.getenv("FLYTABLE_TOKEN", unset = NA_character_)
+  newtok <- Sys.getenv("CRANTTABLE_TOKEN", unset = NA_character_)
+  if (!is.na(newtok)) Sys.setenv(FLYTABLE_TOKEN = newtok)
+  on.exit({
+    options(op)
+    if (is.na(oldtok)) Sys.unsetenv("FLYTABLE_TOKEN")
+    else Sys.setenv(FLYTABLE_TOKEN = oldtok)
+  })
   force(expr)
 }
 
@@ -203,10 +220,27 @@ crant_fetch <- function(url, token=crant_token(), ...) {
 }
 
 #' Make sure given root IDs look like CRANT root IDs
+#'
+#' @description If `x` is a single character query (e.g. `"/type:ExR1"`,
+#'   `"class:descending"`, or a bare type name like `"ExR1"`), it is looked up
+#'   in the CRANTb seatable via [crant_meta()] and the matching root ids are
+#'   returned. Otherwise validation is delegated to [bancr::banc_ids()].
+#'
 #' @inheritParams bancr::banc_ids
+#' @param unique For query inputs only, whether to drop rows with duplicate
+#'   `id` (passed to [crant_meta()]). Ignored for non-query inputs.
 #' @rdname crant_ids
 #' @export
-crant_ids <- function(x, integer64 = NA){
-  bancr::banc_ids(x=x, integer64=integer64)
+crant_ids <- function(x, integer64 = NA, unique = FALSE){
+  if (is.character(x) && length(x) == 1 && !is.na(x) &&
+      !fafbseg:::valid_id(x) &&
+      (substr(x, 1, 1) == "/" || grepl(":", x, fixed = TRUE) ||
+       grepl("^[A-Za-z]", x))) {
+    ids <- crant_meta(x, unique = unique)$id
+    if (isTRUE(integer64)) return(bit64::as.integer64(ids))
+    if (isFALSE(integer64)) return(as.character(ids))
+    return(ids)
+  }
+  bancr::banc_ids(x = x, integer64 = integer64)
 }
 

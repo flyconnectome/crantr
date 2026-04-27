@@ -32,6 +32,15 @@ containing URLs pointing to voxel-wise segmentation, mesh etc data. These
 are normally contained within a single neuroglancer URL which points to
 multiple data layers. For banc this is the neuroglancer scene returned by
 \code{\link{crant_scene}}.
+
+\code{with_crant} and \code{choose_crant} also redirect the
+\code{fafbseg} flytable infrastructure (see \code{\link[fafbseg]{cam_meta}})
+at the CRANTb seatable instance via the \code{fafbseg.flytable.url}
+option (requires \code{fafbseg >= 0.15.7}). Inside \code{with_crant()}
+the \code{FLYTABLE_TOKEN} environment variable is temporarily replaced
+with the value of \code{CRANTTABLE_TOKEN} so that
+\code{\link[fafbseg]{flytable_login}} authenticates against the CRANTb
+seatable; the original value is restored on exit.
 }
 \examples{
 \dontrun{
@@ -43,5 +52,6 @@ with_crant(fafbseg::flywire_islatest('576460752653449509'))
 }
 \dontrun{
 with_crant(fafbseg::flywire_latestid('576460752653449509'))
+with_crant(fafbseg::cam_meta('/super_class:descending', table='CRANTb_meta'))
 }
 }
