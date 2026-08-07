@@ -44,6 +44,23 @@ test_that("crant_meta_normalise renames metadata columns", {
   expect_equal(df$super_class, c("descending", "glia"))
 })
 
+test_that("crant_meta passes translate_ids through to cam_meta", {
+  withr::local_envvar(c(CRANTTABLE_TOKEN = "dummy"))
+  captured <- NULL
+  testthat::local_mocked_bindings(
+    cam_meta = function(..., translate_ids) {
+      captured <<- translate_ids
+      data.frame()
+    },
+    .package = "fafbseg"
+  )
+  crant_meta("576460752684030043", translate_ids = TRUE)
+  expect_true(captured)
+
+  crant_meta("576460752684030043")
+  expect_equal(captured, NA)
+})
+
 test_that("legacy cache compatibility wrapper remains available", {
   expect_true(exists("crant_meta_create_cache", mode = "function"))
   expect_true(exists("crant_meta_legacy", mode = "function"))

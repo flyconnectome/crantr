@@ -46,6 +46,11 @@
 #'   coconat/crantr schema (`root_id` -> `id`, `super_class` -> `class`, etc.)
 #'   and translate query aliases such as `class:` -> `super_class:` and bare
 #'   tokens like `"NSC"` -> `"cell_type:NSC"`.
+#' @param translate_ids Whether to bring explicitly supplied `ids` forward to
+#'   the requested `version`/`timestamp` before matching, so stale ids don't
+#'   silently drop out of the result (see [fafbseg::cam_meta()] for details).
+#'   `NA` (the default) enables this automatically whenever `version` or
+#'   `timestamp` is supplied.
 #' @param ... Passed to [fafbseg::cam_meta()] (and via that to
 #'   [fafbseg::flytable_cached_table()]).
 #'
@@ -67,7 +72,7 @@
 #' }
 crant_meta <- function(ids = NULL, ignore.case = FALSE, fixed = FALSE,
                        version = NULL, timestamp = NULL, unique = FALSE,
-                       normalise_colnames = FALSE, ...) {
+                       normalise_colnames = FALSE, translate_ids = NA, ...) {
   flytable_token <- Sys.getenv("CRANTTABLE_TOKEN", unset = NA_character_)
   if (is.na(flytable_token) || !nzchar(flytable_token))
     stop("CRANTTABLE_TOKEN not set. Use crant_table_set_token().")
@@ -82,6 +87,7 @@ crant_meta <- function(ids = NULL, ignore.case = FALSE, fixed = FALSE,
     version = version,
     timestamp = timestamp,
     unique = unique,
+    translate_ids = translate_ids,
     ...
   )
   if (isTRUE(normalise_colnames)) crant_meta_normalise(df) else df

@@ -12,6 +12,7 @@ crant_meta(
   timestamp = NULL,
   unique = FALSE,
   normalise_colnames = FALSE,
+  translate_ids = NA,
   ...
 )
 }
@@ -34,6 +35,12 @@ to which root ids in the returned table should be mapped.}
 coconat/crantr schema (\code{root_id} -> \code{id}, \code{super_class} -> \code{class}, etc.)
 and translate query aliases such as \code{class:} -> \code{super_class:} and bare
 tokens like \code{"NSC"} -> \code{"cell_type:NSC"}.}
+
+\item{translate_ids}{Whether to bring explicitly supplied \code{ids} forward to
+the requested \code{version}/\code{timestamp} before matching, so stale ids don't
+silently drop out of the result (see \code{\link[fafbseg:cam_meta]{fafbseg::cam_meta()}} for details).
+\code{NA} (the default) enables this automatically whenever \code{version} or
+\code{timestamp} is supplied.}
 
 \item{...}{Passed to \code{\link[fafbseg:cam_meta]{fafbseg::cam_meta()}} (and via that to
 \code{\link[fafbseg:flytable_cached_table]{fafbseg::flytable_cached_table()}}).}
