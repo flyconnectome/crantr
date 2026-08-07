@@ -4,20 +4,28 @@
 \alias{crant_ids}
 \title{Make sure given root IDs look like CRANT root IDs}
 \usage{
-crant_ids(x, integer64 = NA, unique = FALSE)
+crant_ids(x, integer64 = NA, unique = FALSE, normalise_colnames = FALSE)
 }
 \arguments{
-\item{x}{A data.frame, URL or vector of ids}
+\item{x}{A character or bit64::integer64 vector or a dataframe specifying
+ids, or a single character query (see description).}
 
-\item{integer64}{Whether to return ids as \code{bit64::integer64} or
+\item{integer64}{Whether to return ids as 64 bit integers rather than
 character vectors. Default value of NA leaves the ids unmodified.}
 
 \item{unique}{For query inputs only, whether to drop rows with duplicate
-\code{id} (passed to \code{\link[=crant_meta]{crant_meta()}}). Ignored for non-query inputs.}
+root ids (passed to \code{\link[=crant_meta]{crant_meta()}}). Ignored for non-query inputs.}
+
+\item{normalise_colnames}{Logical; if \code{TRUE}, pass
+\code{normalise_colnames = TRUE} to \code{\link[=crant_meta]{crant_meta()}} so query aliases such as
+\code{class:}/\code{type:} and bare type tokens are translated to the underlying
+seatable schema before lookup.}
 }
 \description{
-If \code{x} is a single character query (e.g. \code{"/type:ExR1"},
-\code{"class:descending"}, or a bare type name like \code{"ExR1"}), it is looked up
-in the CRANTb seatable via \code{\link[=crant_meta]{crant_meta()}} and the matching root ids are
-returned. Otherwise validation is delegated to \code{\link[bancr:banc_ids]{bancr::banc_ids()}}.
+If \code{x} is a single character query (e.g.
+\code{"/cell_type:ExR1"} or \code{"/super_class:descending"}), it is looked up in
+the CRANTb seatable via \code{\link[=crant_meta]{crant_meta()}} and the matching root ids are
+returned. Set \code{normalise_colnames = TRUE} to enable coconat-style aliases
+such as \code{"/type:ExR1"}, \code{"class:descending"}, or a bare type name like
+\code{"ExR1"}. Otherwise validation is delegated to \code{\link[fafbseg:flywire_ids]{fafbseg::flywire_ids()}}.
 }

@@ -221,26 +221,48 @@ crant_fetch <- function(url, token=crant_token(), ...) {
 
 #' Make sure given root IDs look like CRANT root IDs
 #'
-#' @description If `x` is a single character query (e.g. `"/type:ExR1"`,
-#'   `"class:descending"`, or a bare type name like `"ExR1"`), it is looked up
-#'   in the CRANTb seatable via [crant_meta()] and the matching root ids are
-#'   returned. Otherwise validation is delegated to [bancr::banc_ids()].
+#' @description If `x` is a single character query (e.g.
+#'   `"/cell_type:ExR1"` or `"/super_class:descending"`), it is looked up in
+#'   the CRANTb seatable via [crant_meta()] and the matching root ids are
+#'   returned. Set `normalise_colnames = TRUE` to enable coconat-style aliases
+#'   such as `"/type:ExR1"`, `"class:descending"`, or a bare type name like
+#'   `"ExR1"`. Otherwise validation is delegated to [fafbseg::flywire_ids()].
 #'
-#' @inheritParams bancr::banc_ids
+#' @param x A character or bit64::integer64 vector or a dataframe specifying
+#'   ids, or a single character query (see description).
+#' @param integer64 Whether to return ids as 64 bit integers rather than
+#'   character vectors. Default value of NA leaves the ids unmodified.
 #' @param unique For query inputs only, whether to drop rows with duplicate
-#'   `id` (passed to [crant_meta()]). Ignored for non-query inputs.
+#'   root ids (passed to [crant_meta()]). Ignored for non-query inputs.
+#' @param normalise_colnames Logical; if `TRUE`, pass
+#'   `normalise_colnames = TRUE` to [crant_meta()] so query aliases such as
+#'   `class:`/`type:` and bare type tokens are translated to the underlying
+#'   seatable schema before lookup.
 #' @rdname crant_ids
 #' @export
-crant_ids <- function(x, integer64 = NA, unique = FALSE){
+crant_ids <- function(x, integer64 = NA, unique = FALSE,
+                      normalise_colnames = FALSE){
   if (is.character(x) && length(x) == 1 && !is.na(x) &&
       !fafbseg:::valid_id(x) &&
       (substr(x, 1, 1) == "/" || grepl(":", x, fixed = TRUE) ||
        grepl("^[A-Za-z]", x))) {
-    ids <- crant_meta(x, unique = unique)$id
-    if (isTRUE(integer64)) return(bit64::as.integer64(ids))
-    if (isFALSE(integer64)) return(as.character(ids))
-    return(ids)
+      md = crant_meta(x, unique = unique, normalise_colnames = normalise_colnames)
+      x = if (isTRUE(normalise_colnames)) md$id else md$root_id
   }
-  bancr::banc_ids(x = x, integer64 = integer64)
+  if(is.na(integer64)) integer64=bit64::is.integer64(.crant_ids_col(x))
+  fafbseg::flywire_ids(x = x, integer64 = integer64, unique = unique)
 }
 
+# Mirror fafbseg::flywire_ids's own data.frame column-detection logic just
+# enough to infer a sensible integer64 default (NA -> "leave unmodified")
+# before delegating. Non-data.frame input is passed through untouched.
+# @noRd
+.crant_ids_col <- function(x) {
+  if (!is.data.frame(x)) return(x)
+  poss_cols <- c("rootid", "root_id", "flywire.id", "flywire_id", "id")
+  cwh <- intersect(poss_cols, colnames(x))
+  if (length(cwh) > 0) return(x[[cwh[1]]])
+  i64 <- sapply(x, bit64::is.integer64)
+  if (sum(i64) == 1) return(x[[which(i64)]])
+  x
+}
