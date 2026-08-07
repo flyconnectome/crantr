@@ -141,7 +141,7 @@ choose_crant <- function(set=TRUE) {
 #' @details \code{with_crant} and \code{choose_crant} also redirect the
 #'   `fafbseg` flytable infrastructure (see \code{\link[fafbseg]{cam_meta}})
 #'   at the CRANTb seatable instance via the \code{fafbseg.flytable.url}
-#'   option (requires \code{fafbseg >= 0.15.7}). Inside \code{with_crant()}
+#'   option (requires \code{fafbseg >= 0.15.10}). Inside \code{with_crant()}
 #'   the \code{FLYTABLE_TOKEN} environment variable is temporarily replaced
 #'   with the value of \code{CRANTTABLE_TOKEN} so that
 #'   \code{\link[fafbseg]{flytable_login}} authenticates against the CRANTb
@@ -240,6 +240,17 @@ crant_fetch <- function(url, token=crant_token(), ...) {
 #'   seatable schema before lookup.
 #' @rdname crant_ids
 #' @export
+#' @examples
+#' \dontrun{
+#' # all descending neuron root ids
+#' crant_ids("/super_class:descending")
+#' # a specific cell type, as integer64
+#' crant_ids("/cell_type:MDN", integer64 = TRUE)
+#' # coconat-friendly query aliases (requires normalise_colnames = TRUE)
+#' crant_ids("/class:descending", normalise_colnames = TRUE)
+#' # a bare type name, likewise treated as a cell_type/type query
+#' crant_ids("ExR1", normalise_colnames = TRUE)
+#' }
 crant_ids <- function(x, integer64 = NA, unique = FALSE,
                       normalise_colnames = FALSE){
   if (is.character(x) && length(x) == 1 && !is.na(x) &&

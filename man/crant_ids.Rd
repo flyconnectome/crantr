@@ -29,3 +29,15 @@ returned. Set \code{normalise_colnames = TRUE} to enable coconat-style aliases
 such as \code{"/type:ExR1"}, \code{"class:descending"}, or a bare type name like
 \code{"ExR1"}. Otherwise validation is delegated to \code{\link[fafbseg:flywire_ids]{fafbseg::flywire_ids()}}.
 }
+\examples{
+\dontrun{
+# all descending neuron root ids
+crant_ids("/super_class:descending")
+# a specific cell type, as integer64
+crant_ids("/cell_type:MDN", integer64 = TRUE)
+# coconat-friendly query aliases (requires normalise_colnames = TRUE)
+crant_ids("/class:descending", normalise_colnames = TRUE)
+# a bare type name, likewise treated as a cell_type/type query
+crant_ids("ExR1", normalise_colnames = TRUE)
+}
+}

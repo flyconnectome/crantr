@@ -75,9 +75,22 @@ Internally \code{crant_meta()} uses \code{\link[withr:local_options]{withr::loca
 }
 \examples{
 \dontrun{
+# all descending neurons
 crant_meta("/super_class:descending")
-crant_meta("/cell_type:NSC")
+# a specific descending neuron type
+crant_meta("/cell_type:MDN")
+# regex queries match anywhere in the field, e.g. all central complex
+# (CX) neuron classes
+crant_meta("/super_class:CX.+")
+
+# the coconat-friendly schema and its query aliases
 crant_meta("/class:descending", normalise_colnames = TRUE)
+crant_meta("/type:MDN", normalise_colnames = TRUE)
+# a bare token is treated as a cell_type/type query
+crant_meta("ExR1", normalise_colnames = TRUE)
+# ... equivalently, on the raw seatable schema
+crant_meta("/cell_class:olfactory_projection_neuron")
+
 crant_meta(c("576460752684030043", "576460752653449509"))
 }
 }
