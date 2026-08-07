@@ -1,18 +1,26 @@
-test_that("crant_meta_translate_query maps crantr query aliases", {
+test_that("crant_meta_translate_query only maps aliases when requested", {
   expect_equal(
     crant_meta_translate_query("/class:descending"),
-    "/super_class:descending"
-  )
-  expect_equal(
-    crant_meta_translate_query("type:NSC"),
-    "cell_type:NSC"
+    "/class:descending"
   )
   expect_equal(
     crant_meta_translate_query("ExR1"),
+    "ExR1"
+  )
+  expect_equal(
+    crant_meta_translate_query("/class:descending", normalise_colnames = TRUE),
+    "/super_class:descending"
+  )
+  expect_equal(
+    crant_meta_translate_query("type:NSC", normalise_colnames = TRUE),
+    "cell_type:NSC"
+  )
+  expect_equal(
+    crant_meta_translate_query("ExR1", normalise_colnames = TRUE),
     "cell_type:ExR1"
   )
   expect_equal(
-    crant_meta_translate_query("576460752684030043"),
+    crant_meta_translate_query("576460752684030043", normalise_colnames = TRUE),
     "576460752684030043"
   )
 })
@@ -32,6 +40,8 @@ test_that("crant_meta_normalise renames metadata columns", {
   expect_equal(out$class, c("descending", "glia"))
   expect_equal(out$type, c("NSC", "GliaType"))
   expect_equal(out$side, c("L", "R"))
+  expect_equal(df$root_id, c("1", "2"))
+  expect_equal(df$super_class, c("descending", "glia"))
 })
 
 test_that("legacy cache compatibility wrapper remains available", {

@@ -15,10 +15,12 @@
 #'
 #' @description
 #' `crant_meta()` is a thin wrapper around [fafbseg::cam_meta()] that points it
-#' at the CRANTb seatable instance (`cloud.seatable.io`, table `CRANTb_meta`)
-#' and normalises the returned column names. It supports the same query
-#' grammar as `cam_meta()`, e.g. `crant_meta("/class:descending")` or
-#' `crant_meta("/type:NSC")`. Plain root id vectors are also accepted.
+#' at the CRANTb seatable instance (`cloud.seatable.io`, table `CRANTb_meta`).
+#' By default it returns the underlying seatable column names unchanged. Set
+#' `normalise_colnames = TRUE` to translate them to the coconat-friendly
+#' schema (`id`, `class`, `type`, etc.), which also enables query aliases such
+#' as `"/class:descending"` or `"/type:NSC"`. Plain root id vectors are also
+#' accepted.
 #'
 #' @details
 #' Disk caching with delta sync is handled by
@@ -40,30 +42,38 @@
 #' @param version,timestamp Optional CAVE materialisation version / timestamp
 #'   to which root ids in the returned table should be mapped.
 #' @param unique Whether to drop duplicate `id` rows.
+#' @param normalise_colnames Logical; if `TRUE`, rename metadata columns to the
+#'   coconat/crantr schema (`root_id` -> `id`, `super_class` -> `class`, etc.)
+#'   and translate query aliases such as `class:` -> `super_class:` and bare
+#'   tokens like `"NSC"` -> `"cell_type:NSC"`.
 #' @param ... Passed to [fafbseg::cam_meta()] (and via that to
 #'   [fafbseg::flytable_cached_table()]).
 #'
-#' @return A data.frame with at least an `id` column. Other columns include
-#'   `class`, `subclass`, `type`, `subtype`, `instance`, `lineage`, `side`,
-#'   `nerve`, `tract` (renamed from the underlying seatable columns; see
-#'   `.crant_meta_field_map`). `side` is normalised to `"L"`/`"R"`.
+#' @return By default, a data.frame with the underlying seatable columns such
+#'   as `root_id`, `super_class`, `cell_class`, `cell_type`, `cell_subtype`,
+#'   `cell_instance`, `hemilineage`, `side`, `nerve`, `tract`. When
+#'   `normalise_colnames = TRUE`, these are renamed to the crantr/coconat
+#'   schema (`id`, `class`, `subclass`, `type`, `subtype`, `instance`,
+#'   `lineage`) and `side` is normalised to `"L"`/`"R"`.
 #' @export
 #' @seealso [fafbseg::cam_meta()], [crant_ids()], [crant_table_set_token()]
 #'
 #' @examples
 #' \dontrun{
-#' crant_meta("/class:descending")
-#' crant_meta("/type:NSC")
+#' crant_meta("/super_class:descending")
+#' crant_meta("/cell_type:NSC")
+#' crant_meta("/class:descending", normalise_colnames = TRUE)
 #' crant_meta(c("576460752684030043", "576460752653449509"))
 #' }
 crant_meta <- function(ids = NULL, ignore.case = FALSE, fixed = FALSE,
-                       version = NULL, timestamp = NULL, unique = FALSE, ...) {
+                       version = NULL, timestamp = NULL, unique = FALSE,
+                       normalise_colnames = FALSE, ...) {
   flytable_token <- Sys.getenv("CRANTTABLE_TOKEN", unset = NA_character_)
   if (is.na(flytable_token) || !nzchar(flytable_token))
     stop("CRANTTABLE_TOKEN not set. Use crant_table_set_token().")
   withr::local_options(list(fafbseg.flytable.url = "https://cloud.seatable.io/"))
   withr::local_envvar(c(FLYTABLE_TOKEN = flytable_token))
-  ids <- crant_meta_translate_query(ids)
+  ids <- crant_meta_translate_query(ids, normalise_colnames = normalise_colnames)
   df <- fafbseg::cam_meta(
     ids = ids,
     ignore.case = ignore.case,
@@ -74,7 +84,7 @@ crant_meta <- function(ids = NULL, ignore.case = FALSE, fixed = FALSE,
     unique = unique,
     ...
   )
-  crant_meta_normalise(df)
+  if (isTRUE(normalise_colnames)) crant_meta_normalise(df) else df
 }
 
 # Translate `/<normalised_field>:<value>` queries to the seatable column name
@@ -83,8 +93,9 @@ crant_meta <- function(ids = NULL, ignore.case = FALSE, fixed = FALSE,
 # respecting the CRANTb_meta column naming. Pass-through for vectors of root
 # ids and any query whose field is already a seatable column.
 # @noRd
-crant_meta_translate_query <- function(ids) {
+crant_meta_translate_query <- function(ids, normalise_colnames = FALSE) {
   if (!(is.character(ids) && length(ids) == 1)) return(ids)
+  if (!isTRUE(normalise_colnames)) return(ids)
   has_slash <- substr(ids, 1, 1) == "/"
   q <- if (has_slash) substr(ids, 2, nchar(ids)) else ids
   if (!grepl(":", q, fixed = TRUE)) {

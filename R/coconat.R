@@ -5,7 +5,7 @@
 # coconat metafun: receives resolved root ids (or NULL) and returns metadata.
 # @noRd
 coconat_crant_meta <- function(ids = NULL, ...) {
-  crant_meta(ids = ids, ...)
+  crant_meta(ids = ids, normalise_colnames = TRUE, ...)
 }
 
 # coconat idfun: accepts root ids, query strings (`/class:descending`),
@@ -16,9 +16,9 @@ coconat_crant_ids <- function(ids = NULL, ...) {
   if (is.null(ids)) return(NULL)
   if (is.character(ids) && length(ids) == 1) {
     if (identical(ids, "all"))
-      return(crant_ids(crant_meta()$id, integer64 = FALSE))
+      return(crant_ids(crant_meta(normalise_colnames = TRUE)$id, integer64 = FALSE))
     if (identical(ids, "neurons")) {
-      md <- crant_meta()
+      md <- crant_meta(normalise_colnames = TRUE)
       keep <- is.na(md$class) | md$class != "glia"
       return(crant_ids(md$id[keep], integer64 = FALSE))
     }
@@ -26,7 +26,7 @@ coconat_crant_ids <- function(ids = NULL, ...) {
       warning("All CRANTb queries are regex queries. ",
               "Use an initial / to suppress this warning!")
   }
-  md <- crant_meta(ids = ids, ...)
+  md <- crant_meta(ids = ids, normalise_colnames = TRUE, ...)
   crant_ids(md$id, integer64 = FALSE)
 }
 

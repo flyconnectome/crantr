@@ -11,12 +11,13 @@ crant_meta(
   version = NULL,
   timestamp = NULL,
   unique = FALSE,
+  normalise_colnames = FALSE,
   ...
 )
 }
 \arguments{
 \item{ids}{Root ids (character/int64 vector) or a single query string such
-as \code{"/class:descending"} (see \code{\link[fafbseg:cam_meta]{fafbseg::cam_meta()}}). \code{NULL} returns the
+as \code{"/super_class:descending"} (see \code{\link[fafbseg:cam_meta]{fafbseg::cam_meta()}}). \code{NULL} returns the
 full table.}
 
 \item{ignore.case}{For query strings, whether to ignore case.}
@@ -29,21 +30,30 @@ to which root ids in the returned table should be mapped.}
 
 \item{unique}{Whether to drop duplicate \code{id} rows.}
 
+\item{normalise_colnames}{Logical; if \code{TRUE}, rename metadata columns to the
+coconat/crantr schema (\code{root_id} -> \code{id}, \code{super_class} -> \code{class}, etc.)
+and translate query aliases such as \code{class:} -> \code{super_class:} and bare
+tokens like \code{"NSC"} -> \code{"cell_type:NSC"}.}
+
 \item{...}{Passed to \code{\link[fafbseg:cam_meta]{fafbseg::cam_meta()}} (and via that to
 \code{\link[fafbseg:flytable_cached_table]{fafbseg::flytable_cached_table()}}).}
 }
 \value{
-A data.frame with at least an \code{id} column. Other columns include
-\code{class}, \code{subclass}, \code{type}, \code{subtype}, \code{instance}, \code{lineage}, \code{side},
-\code{nerve}, \code{tract} (renamed from the underlying seatable columns; see
-\code{.crant_meta_field_map}). \code{side} is normalised to \code{"L"}/\code{"R"}.
+By default, a data.frame with the underlying seatable columns such
+as \code{root_id}, \code{super_class}, \code{cell_class}, \code{cell_type}, \code{cell_subtype},
+\code{cell_instance}, \code{hemilineage}, \code{side}, \code{nerve}, \code{tract}. When
+\code{normalise_colnames = TRUE}, these are renamed to the crantr/coconat
+schema (\code{id}, \code{class}, \code{subclass}, \code{type}, \code{subtype}, \code{instance},
+\code{lineage}) and \code{side} is normalised to \code{"L"}/\code{"R"}.
 }
 \description{
 \code{crant_meta()} is a thin wrapper around \code{\link[fafbseg:cam_meta]{fafbseg::cam_meta()}} that points it
-at the CRANTb seatable instance (\code{cloud.seatable.io}, table \code{CRANTb_meta})
-and normalises the returned column names. It supports the same query
-grammar as \code{cam_meta()}, e.g. \code{crant_meta("/class:descending")} or
-\code{crant_meta("/type:NSC")}. Plain root id vectors are also accepted.
+at the CRANTb seatable instance (\code{cloud.seatable.io}, table \code{CRANTb_meta}).
+By default it returns the underlying seatable column names unchanged. Set
+\code{normalise_colnames = TRUE} to translate them to the coconat-friendly
+schema (\code{id}, \code{class}, \code{type}, etc.), which also enables query aliases such
+as \code{"/class:descending"} or \code{"/type:NSC"}. Plain root id vectors are also
+accepted.
 }
 \details{
 Disk caching with delta sync is handled by
@@ -54,13 +64,13 @@ Internally \code{crant_meta()} uses \code{\link[withr:local_options]{withr::loca
 \code{fafbseg}'s flytable client at the CRANTb seatable and
 \code{\link[withr:local_envvar]{withr::local_envvar()}} to temporarily pass \code{CRANTTABLE_TOKEN} through as
 \code{FLYTABLE_TOKEN} before calling \code{\link[fafbseg:cam_meta]{fafbseg::cam_meta()}}. Requires
-\code{CRANTTABLE_TOKEN} to be set; see
-\code{\link[=crant_table_set_token]{crant_table_set_token()}}.
+\code{CRANTTABLE_TOKEN} to be set; see \code{\link[=crant_table_set_token]{crant_table_set_token()}}.
 }
 \examples{
 \dontrun{
-crant_meta("/class:descending")
-crant_meta("/type:NSC")
+crant_meta("/super_class:descending")
+crant_meta("/cell_type:NSC")
+crant_meta("/class:descending", normalise_colnames = TRUE)
 crant_meta(c("576460752684030043", "576460752653449509"))
 }
 }
