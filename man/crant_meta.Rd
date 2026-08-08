@@ -13,12 +13,13 @@ crant_meta(
   unique = FALSE,
   normalise_colnames = FALSE,
   translate_ids = NA,
+  drop_status = "DUPLICATED",
   ...
 )
 }
 \arguments{
 \item{ids}{Root ids (character/int64 vector) or a single query string such
-as \code{"/super_class:descending"} (see \code{\link[fafbseg:cam_meta]{fafbseg::cam_meta()}}). \code{NULL} returns the
+as \code{"/class:descending"} (see \code{\link[fafbseg:cam_meta]{fafbseg::cam_meta()}}). \code{NULL} returns the
 full table.}
 
 \item{ignore.case}{For query strings, whether to ignore case.}
@@ -41,6 +42,11 @@ the requested \code{version}/\code{timestamp} before matching, so stale ids don'
 silently drop out of the result (see \code{\link[fafbseg:cam_meta]{fafbseg::cam_meta()}} for details).
 \code{NA} (the default) enables this automatically whenever \code{version} or
 \code{timestamp} is supplied.}
+
+\item{drop_status}{Character vector of \code{status} tokens whose rows are
+dropped before any query/join/\code{unique} step. Defaults to CRANT's
+capitalised multi-select duplicate marker \code{"DUPLICATED"}; pass \code{NULL} to
+keep known duplicates. See \code{\link[fafbseg:cam_meta]{fafbseg::cam_meta()}}.}
 
 \item{...}{Passed to \code{\link[fafbseg:cam_meta]{fafbseg::cam_meta()}} (and via that to
 \code{\link[fafbseg:flytable_cached_table]{fafbseg::flytable_cached_table()}}).}

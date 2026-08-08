@@ -51,6 +51,10 @@
 #'   silently drop out of the result (see [fafbseg::cam_meta()] for details).
 #'   `NA` (the default) enables this automatically whenever `version` or
 #'   `timestamp` is supplied.
+#' @param drop_status Character vector of `status` tokens whose rows are
+#'   dropped before any query/join/`unique` step. Defaults to CRANT's
+#'   capitalised multi-select duplicate marker `"DUPLICATED"`; pass `NULL` to
+#'   keep known duplicates. See [fafbseg::cam_meta()].
 #' @param ... Passed to [fafbseg::cam_meta()] (and via that to
 #'   [fafbseg::flytable_cached_table()]).
 #'
@@ -85,7 +89,8 @@
 #' }
 crant_meta <- function(ids = NULL, ignore.case = FALSE, fixed = FALSE,
                        version = NULL, timestamp = NULL, unique = FALSE,
-                       normalise_colnames = FALSE, translate_ids = NA, ...) {
+                       normalise_colnames = FALSE, translate_ids = NA,
+                       drop_status = "DUPLICATED", ...) {
   flytable_token <- Sys.getenv("CRANTTABLE_TOKEN", unset = NA_character_)
   if (is.na(flytable_token) || !nzchar(flytable_token))
     stop("CRANTTABLE_TOKEN not set. Use crant_table_set_token().")
@@ -101,6 +106,7 @@ crant_meta <- function(ids = NULL, ignore.case = FALSE, fixed = FALSE,
     timestamp = timestamp,
     unique = unique,
     translate_ids = translate_ids,
+    drop_status = drop_status,
     ...
   )
   if (isTRUE(normalise_colnames)) crant_meta_normalise(df) else df
