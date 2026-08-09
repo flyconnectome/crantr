@@ -16,18 +16,19 @@ coconat_crant_ids <- function(ids = NULL, ...) {
   if (is.null(ids)) return(NULL)
   if (is.character(ids) && length(ids) == 1) {
     if (identical(ids, "all"))
-      return(crant_ids(crant_meta(normalise_colnames = TRUE)$id, integer64 = FALSE))
+      return(crant_ids(crant_meta(normalise_colnames = TRUE)$id,
+                       integer64 = FALSE, na.rm = TRUE))
     if (identical(ids, "neurons")) {
       md <- crant_meta(normalise_colnames = TRUE)
       keep <- is.na(md$class) | md$class != "glia"
-      return(crant_ids(md$id[keep], integer64 = FALSE))
+      return(crant_ids(md$id[keep], integer64 = FALSE, na.rm = TRUE))
     }
     if (!fafbseg:::valid_id(ids) && !grepl("^/", ids))
       warning("All CRANTb queries are regex queries. ",
               "Use an initial / to suppress this warning!")
   }
   md <- crant_meta(ids = ids, normalise_colnames = TRUE, ...)
-  crant_ids(md$id, integer64 = FALSE)
+  crant_ids(md$id, integer64 = FALSE, na.rm = TRUE)
 }
 
 # coconat partnerfun. Behaviour preserved from the previous implementation:

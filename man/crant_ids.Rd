@@ -4,7 +4,13 @@
 \alias{crant_ids}
 \title{Make sure given root IDs look like CRANT root IDs}
 \usage{
-crant_ids(x, integer64 = NA, unique = FALSE, normalise_colnames = FALSE)
+crant_ids(
+  x,
+  integer64 = NA,
+  unique = FALSE,
+  normalise_colnames = FALSE,
+  na.rm = FALSE
+)
 }
 \arguments{
 \item{x}{A character or bit64::integer64 vector or a dataframe specifying
@@ -20,6 +26,10 @@ root ids (passed to \code{\link[=crant_meta]{crant_meta()}}). Ignored for non-qu
 \code{normalise_colnames = TRUE} to \code{\link[=crant_meta]{crant_meta()}} so query aliases such as
 \code{class:}/\code{type:} and bare type tokens are translated to the underlying
 seatable schema before lookup.}
+
+\item{na.rm}{Whether to drop missing (\code{NA}) root ids rather than returning
+them as the null segment \code{"0"} (passed to \code{\link[fafbseg:flywire_ids]{fafbseg::flywire_ids()}}).
+CRANTb_meta contains some incomplete rows with no root id.}
 }
 \description{
 If \code{x} is a single character query (e.g.

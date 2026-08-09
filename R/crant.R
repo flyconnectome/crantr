@@ -238,6 +238,9 @@ crant_fetch <- function(url, token=crant_token(), ...) {
 #'   `normalise_colnames = TRUE` to [crant_meta()] so query aliases such as
 #'   `class:`/`type:` and bare type tokens are translated to the underlying
 #'   seatable schema before lookup.
+#' @param na.rm Whether to drop missing (`NA`) root ids rather than returning
+#'   them as the null segment `"0"` (passed to [fafbseg::flywire_ids()]).
+#'   CRANTb_meta contains some incomplete rows with no root id.
 #' @rdname crant_ids
 #' @export
 #' @examples
@@ -252,7 +255,7 @@ crant_fetch <- function(url, token=crant_token(), ...) {
 #' crant_ids("ExR1", normalise_colnames = TRUE)
 #' }
 crant_ids <- function(x, integer64 = NA, unique = FALSE,
-                      normalise_colnames = FALSE){
+                      normalise_colnames = FALSE, na.rm = FALSE){
   if (is.character(x) && length(x) == 1 && !is.na(x) &&
       !fafbseg:::valid_id(x) &&
       (substr(x, 1, 1) == "/" || grepl(":", x, fixed = TRUE) ||
@@ -261,7 +264,8 @@ crant_ids <- function(x, integer64 = NA, unique = FALSE,
       x = if (isTRUE(normalise_colnames)) md$id else md$root_id
   }
   if(is.na(integer64)) integer64=bit64::is.integer64(.crant_ids_col(x))
-  fafbseg::flywire_ids(x = x, integer64 = integer64, unique = unique)
+  fafbseg::flywire_ids(x = x, integer64 = integer64, unique = unique,
+                       na.rm = na.rm)
 }
 
 # Mirror fafbseg::flywire_ids's own data.frame column-detection logic just
