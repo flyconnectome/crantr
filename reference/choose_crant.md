@@ -41,6 +41,17 @@ within a single neuroglancer URL which points to multiple data layers.
 For banc this is the neuroglancer scene returned by
 [`crant_scene`](https://flyconnectome.github.io/crantr/reference/crant_scene.md).
 
+`with_crant` and `choose_crant` also redirect the `fafbseg` flytable
+infrastructure (see
+[`cam_meta`](https://rdrr.io/pkg/fafbseg/man/cam_meta.html)) at the
+CRANTb seatable instance via the `fafbseg.flytable.url` option (requires
+`fafbseg >= 0.15.7`). Inside `with_crant()` the `FLYTABLE_TOKEN`
+environment variable is temporarily replaced with the value of
+`CRANTTABLE_TOKEN` so that
+[`flytable_login`](https://rdrr.io/pkg/fafbseg/man/flytable_login.html)
+authenticates against the CRANTb seatable; the original value is
+restored on exit.
+
 ## Examples
 
 ``` r
@@ -53,5 +64,6 @@ with_crant(fafbseg::flywire_islatest('576460752653449509'))
 } # }
 if (FALSE) { # \dontrun{
 with_crant(fafbseg::flywire_latestid('576460752653449509'))
+with_crant(fafbseg::cam_meta('/super_class:descending', table='CRANTb_meta'))
 } # }
 ```

@@ -3,6 +3,7 @@
 Load packages
 
 ``` r
+
 library(crantr)
 library(ggplot2)
 library(dplyr)
@@ -17,6 +18,7 @@ Read CRANT meta data from the seatable database (not yet public access,
 enquire by email for access)
 
 ``` r
+
 crant.meta <- crant_table_query()
 ```
 
@@ -27,6 +29,7 @@ crant.meta <- crant_table_query()
 Subset the meta data to olfactory projection neurons
 
 ``` r
+
 crant.meta.alpns <- crant.meta %>%
   dplyr::filter(cell_class == "olfactory_projection_neuron", 
                 side = "right",
@@ -43,6 +46,7 @@ Now we want to read CRANTb skeletons, re-root them, add synapse and use
 the flow centrality algorithm to make an axon-dendrite split
 
 ``` r
+
 # Get the L2 skeletons
 # crant.skels <- crant_read_l2skel(crant.meta.alpns.ids)
 
@@ -80,6 +84,7 @@ Lets see this data together with the segmentation mesh. First, let’s get
 those meshes.
 
 ``` r
+
 # read meshes
 crant.meshes <- crant_read_neuron_meshes(crant.meta.alpns.ids)
 
@@ -90,6 +95,7 @@ crant.meshes <- crant_read_neuron_meshes(crant.meta.alpns.ids)
 And now let’s make a pretty ggplot2 plot.
 
 ``` r
+
 # read meshes
 g <- nat.ggplot::gganat +
   nat.ggplot::geom_neuron(

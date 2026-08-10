@@ -72,6 +72,7 @@ crantb_example_neuron
 You can install the development version of `crantr` from GitHub:
 
 ``` r
+
 remotes::install_github('flyconnectome/crantr')
 ```
 
@@ -84,6 +85,7 @@ Follow these steps to set up your access CAVE token, if you have been
 given authorisation:
 
 ``` r
+
 # Set up token - will open your browser to generate a new token
 crant_set_token()
 
@@ -96,6 +98,7 @@ crant_set_token()
 To ensure everything is set up correctly, run:
 
 ``` r
+
 # Diagnose issues
 fafbseg::dr_fafbseg()
 
@@ -109,12 +112,14 @@ Some functions rely on underlying Python code. To install the full set
 of recommended libraries, including `fafbseg-py`, run:
 
 ``` r
+
 fafbseg::simple_python("full")
 ```
 
 If you encounter errors related to cloud-volume, update it with:
 
 ``` r
+
 fafbseg::simple_python('none', pkgs='cloud-volume~=8.32.1')
 ```
 
@@ -130,6 +135,7 @@ to set all `flywire_*` functions from `fafbseg` to target CRANT.
 Example:
 
 ``` r
+
 library(crantr)
 choose_crant()
 
@@ -141,12 +147,14 @@ choose_crant()
 To update the package and all dependencies:
 
 ``` r
+
 remotes::install_github('flyconnectome/crantr')
 ```
 
 To update a specific Python library dependency:
 
 ``` r
+
 fafbseg::simple_python(pkgs='fafbseg')
 ```
 
@@ -187,6 +195,7 @@ ant_table
 If not, here are some neuron IDs to get started:
 
 ``` r
+
 # load library
 library(crantr)
 
@@ -202,6 +211,7 @@ Now we can read mesh data for these reconstructions and plot them
 together with a surface model of the `CRANTb` brain, using `rgl`!
 
 ``` r
+
 # fetch
 pn.meshes <- crant_read_neuron_meshes(pn.ids)
 
@@ -220,6 +230,7 @@ crantb_example_neuron_meshes
 We can also make this plot in 2D, in the popular `ggplot2` framework.
 
 ``` r
+
 # ggplot
 crant_ggneuron(pn.meshes , volume = crantb.surf)
 ```
@@ -234,6 +245,7 @@ built from its super-voxel locations using the python library
 [pcg_skel](https://github.com/AllenInstitute/pcg_skel), as so:
 
 ``` r
+
 # fetch
 pn.skels <- crant_read_l2skel(pn.ids)
 
@@ -254,6 +266,7 @@ We can also query synaptic connectivity and neuron volumes directly from
 CAVE:
 
 ``` r
+
 # Synaptic partners
 crant_partner_summary(pn.ids[1])
 crant_partners(pn.ids[1], partners = "output")
@@ -309,6 +322,7 @@ You can access the seatable programmatically using the `crantr`, if you
 have access.
 
 ``` r
+
 remotes::install_github('flyconnectome/crantr')
 library(crantr)
 ```
@@ -317,6 +331,7 @@ You will first need to obtain your authorised login credentials, you
 only need to do this once:
 
 ``` r
+
 crant_table_set_token(user="MY_EMAIL_FOR_SEATABLE",
                pwd="MY_SEATABLE_PASSWORD",
                url="https://cloud.seatable.io/")
@@ -325,6 +340,7 @@ crant_table_set_token(user="MY_EMAIL_FOR_SEATABLE",
 And then you may read the data, and make nice plots from it!
 
 ``` r
+
 # Read CRANTb meta seatable
 ac <- crant_table_query()
 ```
@@ -338,6 +354,7 @@ You can then change columns in `ac`, keeping their names, as you like.
 Then to update via R:
 
 ``` r
+
 # Update
 crant_table_update_rows(base="CRANTb", 
                      table = "CRANTb_meta", 
@@ -355,6 +372,7 @@ You can also make a quick, simpler update, replacing one column’s
 entries with a given `update` for a set of root IDs.
 
 ``` r
+
 crant_table_annotate(root_ids = c("576460752667713229",
                                "576460752662519193",
                                "576460752730083020",
@@ -383,6 +401,7 @@ If you use this package, please cite:
 3.  This R package:
 
 ``` r
+
 citation(package = "crantr")
 ```
 
@@ -452,9 +471,7 @@ Analysing Neuroanatomical Data.* eLife 9 (April).
 - [`crant_leaves()`](https://flyconnectome.github.io/crantr/reference/crant_leaves.md)
   : Find the supervoxel identifiers of a CRANT neuron
 - [`crant_meta()`](https://flyconnectome.github.io/crantr/reference/crant_meta.md)
-  : Query cached CRANTb meta data
-- [`crant_meta_create_cache()`](https://flyconnectome.github.io/crantr/reference/crant_meta_create_cache.md)
-  : Create or refresh cache of CRANTb meta information
+  : Return metadata about CRANTb neurons from the project seatable
 - [`crant_neuron_volume()`](https://flyconnectome.github.io/crantr/reference/crant_neuron_volume.md)
   : Calculate neuron volume from CAVE L2 cache
 - [`crant_partner_summary()`](https://flyconnectome.github.io/crantr/reference/crant_partner_summary.md)

@@ -29,9 +29,7 @@
 - [`crant_leaves()`](https://flyconnectome.github.io/crantr/reference/crant_leaves.md)
   : Find the supervoxel identifiers of a CRANT neuron
 - [`crant_meta()`](https://flyconnectome.github.io/crantr/reference/crant_meta.md)
-  : Query cached CRANTb meta data
-- [`crant_meta_create_cache()`](https://flyconnectome.github.io/crantr/reference/crant_meta_create_cache.md)
-  : Create or refresh cache of CRANTb meta information
+  : Return metadata about CRANTb neurons from the project seatable
 - [`crant_neuron_volume()`](https://flyconnectome.github.io/crantr/reference/crant_neuron_volume.md)
   : Calculate neuron volume from CAVE L2 cache
 - [`crant_partner_summary()`](https://flyconnectome.github.io/crantr/reference/crant_partner_summary.md)
