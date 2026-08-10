@@ -7,26 +7,29 @@
 register_crant_coconat(showerror = TRUE)
 }
 \arguments{
-\item{showerror}{Logically, error-out silently or not.}
+\item{showerror}{Logical; if \code{FALSE}, return invisibly when dependencies are
+missing instead of erroring.}
 }
 \description{
 Register the CRANTb dataset with \href{https://github.com/natverse/coconat}{coconat},
-a natverse R package for between and within dataset connectivity comparisons using cosine similarity.
+a natverse R package for between- and within-dataset connectivity comparisons
+using cosine similarity. Once registered, CRANTb participates in
+\code{coconatfly::cf_*()} calls under the dataset name \code{"crant"}.
 }
 \details{
-\code{register_crant_coconat()} registers \code{crantr}-backed functionality for use with
+Metadata access goes through \code{\link[=crant_meta]{crant_meta()}}, which is itself a wrapper
+around \code{\link[fafbseg:cam_meta]{fafbseg::cam_meta()}} with the seatable URL/token set locally for
+the duration of each call. There is no separate cache to populate before
+registering.
 }
 \examples{
 \dontrun{
 library(coconatfly)
-library(bancr)
-crant_meta_create_cache(use_seatable=TRUE)
-banc_meta_create_cache(use_seatable=TRUE)
 register_crant_coconat()
-register_banc_coconat()
-cf_cosine_plot(cf_ids('/type:NSC', datasets = c("crant", "banc")))
+cf_meta(cf_ids(crant = "/class:descending"))
+cf_cosine_plot(cf_ids("/type:NSC", datasets = c("crant", "flywire")))
 }
 }
 \seealso{
-\code{\link[=crant_meta_create_cache]{crant_meta_create_cache()}}
+\code{\link[=crant_meta]{crant_meta()}}, \code{\link[=crant_table_set_token]{crant_table_set_token()}}
 }

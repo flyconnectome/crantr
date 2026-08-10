@@ -4,14 +4,50 @@
 \alias{crant_ids}
 \title{Make sure given root IDs look like CRANT root IDs}
 \usage{
-crant_ids(x, integer64 = NA)
+crant_ids(
+  x,
+  integer64 = NA,
+  unique = FALSE,
+  normalise_colnames = FALSE,
+  na.rm = FALSE
+)
 }
 \arguments{
-\item{x}{A data.frame, URL or vector of ids}
+\item{x}{A character or bit64::integer64 vector or a dataframe specifying
+ids, or a single character query (see description).}
 
-\item{integer64}{Whether to return ids as \code{bit64::integer64} or
+\item{integer64}{Whether to return ids as 64 bit integers rather than
 character vectors. Default value of NA leaves the ids unmodified.}
+
+\item{unique}{For query inputs only, whether to drop rows with duplicate
+root ids (passed to \code{\link[=crant_meta]{crant_meta()}}). Ignored for non-query inputs.}
+
+\item{normalise_colnames}{Logical; if \code{TRUE}, pass
+\code{normalise_colnames = TRUE} to \code{\link[=crant_meta]{crant_meta()}} so query aliases such as
+\code{class:}/\code{type:} and bare type tokens are translated to the underlying
+seatable schema before lookup.}
+
+\item{na.rm}{Whether to drop missing (\code{NA}) root ids rather than returning
+them as the null segment \code{"0"} (passed to \code{\link[fafbseg:flywire_ids]{fafbseg::flywire_ids()}}).
+CRANTb_meta contains some incomplete rows with no root id.}
 }
 \description{
-Make sure given root IDs look like CRANT root IDs
+If \code{x} is a single character query (e.g.
+\code{"/cell_type:ExR1"} or \code{"/super_class:descending"}), it is looked up in
+the CRANTb seatable via \code{\link[=crant_meta]{crant_meta()}} and the matching root ids are
+returned. Set \code{normalise_colnames = TRUE} to enable coconat-style aliases
+such as \code{"/type:ExR1"}, \code{"class:descending"}, or a bare type name like
+\code{"ExR1"}. Otherwise validation is delegated to \code{\link[fafbseg:flywire_ids]{fafbseg::flywire_ids()}}.
+}
+\examples{
+\dontrun{
+# all descending neuron root ids
+crant_ids("/super_class:descending")
+# a specific cell type, as integer64
+crant_ids("/cell_type:MDN", integer64 = TRUE)
+# coconat-friendly query aliases (requires normalise_colnames = TRUE)
+crant_ids("/class:descending", normalise_colnames = TRUE)
+# a bare type name, likewise treated as a cell_type/type query
+crant_ids("ExR1", normalise_colnames = TRUE)
+}
 }

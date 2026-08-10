@@ -91,7 +91,10 @@ crant_xyz2id <- function(xyz,
     cv = crant_cloudvolume()
     pycode = sprintf("\nfrom cloudvolume import Vec\n\ndef py_flywire_xyz2id(cv, xyz, agglomerate):\n  pt = Vec(*xyz) // cv.meta.resolution(0)\n  img = cv.download_point(pt, mip=0, size=1, agglomerate=agglomerate)\n  return str(img[0,0,0,0])\n")
     pydict = reticulate::py_run_string(pycode)
-    safexyz2id <- function(pt) {
+    # absorb any ... (e.g. version/timestamp) here: pbapply forwards them to
+    # FUN, but the supervoxel lookup does not use them. They are still passed
+    # on to crant_rootid() below for root-id resolution.
+    safexyz2id <- function(pt, ...) {
       tryCatch(pydict$py_flywire_xyz2id(cv, pt, agglomerate = root &&
                                           !fast_root), error = function(e) {
                                             warning(e)

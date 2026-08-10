@@ -30,6 +30,10 @@ jobs:
       R_KEEP_PKG_SOURCE: yes
       RGL_USE_NULL: "TRUE"
       CRANT_ON_CI: "true"
+      # Avoid macOS "OMP: Error #15: ... libomp.dylib already initialized"
+      # aborts when reticulate/numpy and an OpenMP-linked R dep both load a
+      # copy of libomp. No effect on Windows/Linux runners.
+      KMP_DUPLICATE_LIB_OK: "TRUE"
 
     steps:
       - uses: actions/checkout@v4

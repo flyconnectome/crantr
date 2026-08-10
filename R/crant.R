@@ -127,16 +127,25 @@ crant_token_available <- function() {
 #' }
 choose_crant <- function(set=TRUE) {
   fafbseg::choose_segmentation(
-    release <- crant_scene(),
-    set <- set,
-    moreoptions=list(
-      fafbseg.cave.datastack_name=crant_datastack_name()
+    crant_scene(),
+    set = set,
+    moreoptions = list(
+      fafbseg.cave.datastack_name = crant_datastack_name(),
+      fafbseg.flytable.url = "https://cloud.seatable.io/"
     ))
 }
 
 #' @param expr An expression to evaluate while CRANT is the default
 #'   autosegmentation
 #' @rdname choose_crant
+#' @details \code{with_crant} and \code{choose_crant} also redirect the
+#'   `fafbseg` flytable infrastructure (see \code{\link[fafbseg]{cam_meta}})
+#'   at the CRANTb seatable instance via the \code{fafbseg.flytable.url}
+#'   option (requires \code{fafbseg >= 0.15.10}). Inside \code{with_crant()}
+#'   the \code{FLYTABLE_TOKEN} environment variable is temporarily replaced
+#'   with the value of \code{CRANTTABLE_TOKEN} so that
+#'   \code{\link[fafbseg]{flytable_login}} authenticates against the CRANTb
+#'   seatable; the original value is restored on exit.
 #' @export
 #' @examples
 #' \dontrun{
@@ -144,10 +153,18 @@ choose_crant <- function(set=TRUE) {
 #' }
 #' \dontrun{
 #' with_crant(fafbseg::flywire_latestid('576460752653449509'))
+#' with_crant(fafbseg::cam_meta('/super_class:descending', table='CRANTb_meta'))
 #' }
 with_crant <- function(expr) {
   op <- choose_crant(set = TRUE)
-  on.exit(options(op))
+  oldtok <- Sys.getenv("FLYTABLE_TOKEN", unset = NA_character_)
+  newtok <- Sys.getenv("CRANTTABLE_TOKEN", unset = NA_character_)
+  if (!is.na(newtok)) Sys.setenv(FLYTABLE_TOKEN = newtok)
+  on.exit({
+    options(op)
+    if (is.na(oldtok)) Sys.unsetenv("FLYTABLE_TOKEN")
+    else Sys.setenv(FLYTABLE_TOKEN = oldtok)
+  })
   force(expr)
 }
 
@@ -203,10 +220,64 @@ crant_fetch <- function(url, token=crant_token(), ...) {
 }
 
 #' Make sure given root IDs look like CRANT root IDs
-#' @inheritParams bancr::banc_ids
+#'
+#' @description If `x` is a single character query (e.g.
+#'   `"/cell_type:ExR1"` or `"/super_class:descending"`), it is looked up in
+#'   the CRANTb seatable via [crant_meta()] and the matching root ids are
+#'   returned. Set `normalise_colnames = TRUE` to enable coconat-style aliases
+#'   such as `"/type:ExR1"`, `"class:descending"`, or a bare type name like
+#'   `"ExR1"`. Otherwise validation is delegated to [fafbseg::flywire_ids()].
+#'
+#' @param x A character or bit64::integer64 vector or a dataframe specifying
+#'   ids, or a single character query (see description).
+#' @param integer64 Whether to return ids as 64 bit integers rather than
+#'   character vectors. Default value of NA leaves the ids unmodified.
+#' @param unique For query inputs only, whether to drop rows with duplicate
+#'   root ids (passed to [crant_meta()]). Ignored for non-query inputs.
+#' @param normalise_colnames Logical; if `TRUE`, pass
+#'   `normalise_colnames = TRUE` to [crant_meta()] so query aliases such as
+#'   `class:`/`type:` and bare type tokens are translated to the underlying
+#'   seatable schema before lookup.
+#' @param na.rm Whether to drop missing (`NA`) root ids rather than returning
+#'   them as the null segment `"0"` (passed to [fafbseg::flywire_ids()]).
+#'   CRANTb_meta contains some incomplete rows with no root id.
 #' @rdname crant_ids
 #' @export
-crant_ids <- function(x, integer64 = NA){
-  bancr::banc_ids(x=x, integer64=integer64)
+#' @examples
+#' \dontrun{
+#' # all descending neuron root ids
+#' crant_ids("/super_class:descending")
+#' # a specific cell type, as integer64
+#' crant_ids("/cell_type:MDN", integer64 = TRUE)
+#' # coconat-friendly query aliases (requires normalise_colnames = TRUE)
+#' crant_ids("/class:descending", normalise_colnames = TRUE)
+#' # a bare type name, likewise treated as a cell_type/type query
+#' crant_ids("ExR1", normalise_colnames = TRUE)
+#' }
+crant_ids <- function(x, integer64 = NA, unique = FALSE,
+                      normalise_colnames = FALSE, na.rm = FALSE){
+  if (is.character(x) && length(x) == 1 && !is.na(x) &&
+      !fafbseg:::valid_id(x) &&
+      (substr(x, 1, 1) == "/" || grepl(":", x, fixed = TRUE) ||
+       grepl("^[A-Za-z]", x))) {
+      md = crant_meta(x, unique = unique, normalise_colnames = normalise_colnames)
+      x = if (isTRUE(normalise_colnames)) md$id else md$root_id
+  }
+  if(is.na(integer64)) integer64=bit64::is.integer64(.crant_ids_col(x))
+  fafbseg::flywire_ids(x = x, integer64 = integer64, unique = unique,
+                       na.rm = na.rm)
 }
 
+# Mirror fafbseg::flywire_ids's own data.frame column-detection logic just
+# enough to infer a sensible integer64 default (NA -> "leave unmodified")
+# before delegating. Non-data.frame input is passed through untouched.
+# @noRd
+.crant_ids_col <- function(x) {
+  if (!is.data.frame(x)) return(x)
+  poss_cols <- c("rootid", "root_id", "flywire.id", "flywire_id", "id")
+  cwh <- intersect(poss_cols, colnames(x))
+  if (length(cwh) > 0) return(x[[cwh[1]]])
+  i64 <- sapply(x, bit64::is.integer64)
+  if (sum(i64) == 1) return(x[[which(i64)]])
+  x
+}
