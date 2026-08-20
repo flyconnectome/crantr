@@ -1,5 +1,20 @@
 # Changelog
 
+## crantr 0.2.1
+
+- New
+  [`crant_key_point()`](https://flyconnectome.github.io/crantr/reference/crant_key_point.md)
+  returns a “good” annotation point on a neuron: the principal branch
+  point of its L2 skeleton, with the neuron optionally rerooted onto its
+  furthest endpoint first. Shares the dataset-agnostic
+  [`fafbseg::key_point_from_neuron()`](https://rdrr.io/pkg/fafbseg/man/key_point_from_neuron.html)
+  helper but reads via
+  [`crant_read_l2skel()`](https://flyconnectome.github.io/crantr/reference/crant_read_l2skel.md)
+  because the CRANT segmentation is hosted on a separate CAVE server
+  that
+  [`fafbseg::read_l2skel()`](https://rdrr.io/pkg/fafbseg/man/read_l2skel.html)
+  cannot currently reach (requires `fafbseg (>= 0.15.15)`).
+
 ## crantr 0.2.0
 
 Metadata rework, now backed by

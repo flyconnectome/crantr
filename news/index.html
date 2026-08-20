@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">crantr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,6 +36,10 @@
       <small>Source: <a href="https://github.com/flyconnectome/crantr/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.2.1" id="crantr-021">crantr 0.2.1<a class="anchor" aria-label="anchor" href="#crantr-021"></a></h2>
+<ul><li>New <code><a href="../reference/crant_key_point.html">crant_key_point()</a></code> returns a “good” annotation point on a neuron: the principal branch point of its L2 skeleton, with the neuron optionally rerooted onto its furthest endpoint first. Shares the dataset-agnostic <code><a href="https://rdrr.io/pkg/fafbseg/man/key_point_from_neuron.html" class="external-link">fafbseg::key_point_from_neuron()</a></code> helper but reads via <code><a href="../reference/crant_read_l2skel.html">crant_read_l2skel()</a></code> because the CRANT segmentation is hosted on a separate CAVE server that <code><a href="https://rdrr.io/pkg/fafbseg/man/read_l2skel.html" class="external-link">fafbseg::read_l2skel()</a></code> cannot currently reach (requires <code>fafbseg (&gt;= 0.15.15)</code>).</li>
+</ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.0" id="crantr-020">crantr 0.2.0<a class="anchor" aria-label="anchor" href="#crantr-020"></a></h2>
 <p>Metadata rework, now backed by <code><a href="https://rdrr.io/pkg/fafbseg/man/cam_meta.html" class="external-link">fafbseg::cam_meta()</a></code> (requires <code>fafbseg (&gt;= 0.15.12)</code>):</p>

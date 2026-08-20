@@ -11,13 +11,13 @@ Source:
 [`DESCRIPTION`](https://github.com/flyconnectome/crantr/blob/main/DESCRIPTION)
 
 Bates A (2026). *crantr: R Client Access to Clonal Raider ANT (CRANT)
-Datasets*. R package version 0.2.0,
+Datasets*. R package version 0.2.1,
 <https://github.com/flyconnectome/crantr>.
 
     @Manual{,
       title = {crantr: R Client Access to Clonal Raider ANT (CRANT) Datasets},
       author = {Alexander Bates},
       year = {2026},
-      note = {R package version 0.2.0},
+      note = {R package version 0.2.1},
       url = {https://github.com/flyconnectome/crantr},
     }

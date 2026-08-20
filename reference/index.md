@@ -23,6 +23,9 @@
   : Make sure given root IDs look like CRANT root IDs
 - [`crant_islatest()`](https://flyconnectome.github.io/crantr/reference/crant_islatest.md)
   : Check if a CRANT root id is up to date
+- [`crant_key_point()`](https://flyconnectome.github.io/crantr/reference/crant_key_point.md)
+  : Find a good "key" point on a CRANT neuron to associate with
+  annotations
 - [`crant_latestid()`](https://flyconnectome.github.io/crantr/reference/crant_latestid.md)
   [`crant_updateids()`](https://flyconnectome.github.io/crantr/reference/crant_latestid.md)
   : Find the latest id for a CRANT root id
