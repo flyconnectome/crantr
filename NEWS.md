@@ -1,3 +1,13 @@
+# crantr 0.2.1
+
+* New `crant_key_point()` returns a "good" annotation point on a neuron: the
+  principal branch point of its L2 skeleton, with the neuron optionally
+  rerooted onto its furthest endpoint first. Shares the dataset-agnostic
+  `fafbseg::key_point_from_neuron()` helper but reads via `crant_read_l2skel()`
+  because the CRANT segmentation is hosted on a separate CAVE server that
+  `fafbseg::read_l2skel()` cannot currently reach (requires
+  `fafbseg (>= 0.15.15)`).
+
 # crantr 0.2.0
 
 Metadata rework, now backed by `fafbseg::cam_meta()` (requires
