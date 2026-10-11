@@ -66,6 +66,38 @@ test_that("crant_synapse_data", {
   expect_equal(d$post_x[d$id == 3], 28L)
 })
 
+test_that("local partner queries", {
+  skip_if_no_synsnap()
+  root <- make_crant_snapshot(withr::local_tempdir())
+  withr::local_options(crantr.synapse_snapshot_root = root,
+                       crantr.synapse_snapshot = "s1",
+                       crantr.snapshot_check_hours = Inf)
+  local_mocked_bindings(crant_synsnap_ctx = quiet_ctx)
+  t1 <- as.POSIXct("2026-01-01", tz = "UTC")
+
+  ps <- crant_partner_summary("10", timestamp = t1, method = "local")
+  expect_equal(ps$post_id, c("20", "30"))
+  expect_equal(ps$weight, c(3L, 1L))
+  ps <- crant_partner_summary("10", partners = "inputs", timestamp = t1)
+  expect_equal(ps$pre_id, c("20", "30"))
+  expect_equal(ps$weight, c(2L, 1L))
+
+  p <- crant_partners("30", partners = "output", timestamp = t1, method = "local")
+  expect_equal(p$id, c(7L, 10L))
+  expect_equal(p$pre_pt_position, c("56,1000,42", "80,1000,42"))
+  expect_equal(as.character(p$post_pt_root_id), c("10", "0"))
+  p <- crant_partners("30", partners = "input", timestamp = "now", method = "local")
+  expect_equal(p$id, 4L)
+
+  expect_error(crant_partner_summary("10", timestamp = t1, cleft.threshold = 5,
+                                     method = "local"), "cleft.threshold")
+  expect_error(crant_partner_summary("10", timestamp = t1 - 3600, method = "local"),
+               "before snapshot")
+  withr::local_options(crantr.synapse_snapshot = NULL)
+  expect_error(crant_partner_summary("10", method = "local"),
+               "No local synapse snapshot")
+})
+
 test_that("snapshot address", {
   skip_if_offline()
   skip_if_not_installed("aedes")
