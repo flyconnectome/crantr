@@ -72,11 +72,12 @@ n <- DBI::dbGetQuery(con, sprintf(
 message(format(n$pairs, big.mark = ","), " pairs, ", format(n$svs, big.mark = ","),
         " supervoxels, ", format(n$roots, big.mark = ","), " roots")
 
-# is_latest for every root, in resumable batches
+# is_latest for every root, in resumable batches. Root 0 (no segment) is never
+# stale, and is_latest gives NA for it.
 latest <- file.path(stage, "latest")
 dir.create(latest, showWarnings = FALSE)
 roots <- DBI::dbGetQuery(con, sprintf(
-  "SELECT DISTINCT root_id FROM %s ORDER BY root_id", pq))$root_id
+  "SELECT DISTINCT root_id FROM %s WHERE root_id != 0 ORDER BY root_id", pq))$root_id
 batch <- split(seq_along(roots), ceiling(seq_along(roots) / 1e5))
 step(sprintf("Checking %s roots are the latest", format(length(roots), big.mark = ",")), {
   for (i in seq_along(batch)) {
@@ -84,9 +85,11 @@ step(sprintf("Checking %s roots are the latest", format(length(roots), big.mark 
     if (file.exists(f)) next
     r <- roots[batch[[i]]]
     ok <- aedes:::synsnap_retry(function() ctx$is_latest(r, when))
-    if (length(ok) != length(r) || anyNA(ok))
-      stop("is_latest returned ", length(ok), " values (", sum(is.na(ok)),
-           " NA) for ", length(r), " roots")
+    if (length(ok) != length(r))
+      stop("is_latest returned ", length(ok), " values for ", length(r), " roots")
+    if (anyNA(ok))
+      stop("is_latest returned NA for root(s) ",
+           paste(as.character(r[is.na(ok)]), collapse = ", "))
     arrow::write_parquet(data.frame(root_id = r, latest = ok), paste0(f, ".tmp"))
     file.rename(paste0(f, ".tmp"), f)
     if (i %% 10 == 0) message(format(Sys.time(), "%H:%M:%S "), i, "/", length(batch))
