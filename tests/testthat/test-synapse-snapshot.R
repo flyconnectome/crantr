@@ -108,3 +108,16 @@ test_that("snapshot address", {
   expect_match(crant_snapshot_url_cave(),
                "^https://flyemdev.mrc-lmb.cam.ac.uk/flyconnectome/crant/[0-9a-f]{64}/snapshot$")
 })
+
+test_that("materialisation versions for the snapshot server", {
+  t1 <- as.POSIXct("2026-10-10 04:00:01", tz = "UTC")
+  client <- list(materialize = list(get_versions_metadata = function() list(
+    list(version = 521L, time_stamp = t1, expires_on = t1 + 86400 * 2,
+         valid = TRUE, status = "AVAILABLE"),
+    list(version = 522L, time_stamp = t1 + 86400, expires_on = t1 + 86400 * 3,
+         valid = FALSE, status = "EXPIRED"))))
+  vv <- crant_synsnap_versions(client)
+  expect_equal(vv$version, 521:522)
+  expect_equal(vv$timestamp, c(t1, t1 + 86400))
+  expect_equal(vv$ok, c(TRUE, FALSE))
+})
