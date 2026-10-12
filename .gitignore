@@ -7,3 +7,5 @@ inst/doc
 data-raw/*
 data/crant_data.sqlite
 python/
+!data-raw/synapse-cave-download.py
+!data-raw/synsnap-build.R
