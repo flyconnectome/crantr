@@ -154,3 +154,57 @@ check_pcg_skel <- function (min_version = NULL, convert = FALSE){
 # )
 # root_id = 576460752653449509
 # skel = pcg_skel.pcg_skeleton(root_id=root_id, client=client)
+
+#' Read L2 dotprops for CRANT neurons
+#'
+#' @description Fetches dotprops (points with tangent vectors) for CRANT
+#'   neurons from the L2 cache. These are fast to fetch and suitable for NBLAST.
+#'
+#' @details Each L2 chunk contributes one point (its representative
+#'   coordinate) and one vector (the first principal component of its voxels).
+#'   Chunks missing from the L2 cache or without a `pca` attribute (very small
+#'   chunks) are ignored.
+#'
+#'   This uses `get_l2_dotprops()` from the python fafbseg package (as does
+#'   [fafbseg::read_l2dp()]), which fetches L2 ids and cache data in parallel.
+#'   fafbseg does not know about the CRANT CAVE server, so a CRANT client is
+#'   placed in its client cache before the call.
+#'
+#' @param units Units for the returned dotprops.
+#' @param ... Additional arguments passed to python
+#'   `fafbseg.flywire.get_l2_dotprops()`, e.g. `max_threads` or `min_size`.
+#' @inheritParams crant_read_l2skel
+#'
+#' @return A `neuronlist` of `dotprops` objects named by root id.
+#' @seealso [crant_read_l2skel()], [crant_mirror()]
+#' @export
+#'
+#' @examples
+#' \dontrun{
+#' dps <- crant_read_l2dp(crant_ids("cell_type:ExR1"), units = "microns")
+#' }
+crant_read_l2dp <- function(ids, units = c("nm", "microns"),
+                            OmitFailures = TRUE,
+                            datastack_name = crant_datastack_name(), ...) {
+  units <- match.arg(units)
+  ids <- crant_ids(ids, unique = TRUE)
+  fw <- fafbsegpy4crant(datastack_name)
+  dps <- fw$get_l2_dotprops(ids, omit_failures = OmitFailures,
+                            dataset = datastack_name, ...)
+  dps <- fafbseg:::navis2nat_neuronlist(dps)
+  # python fafbseg returns microns
+  if (identical(units, "nm")) dps * 1e3 else dps
+}
+
+# fafbseg.flywire with a CRANT CAVE client in its client cache, so that its
+# functions accept dataset=datastack_name
+fafbsegpy4crant <- function(datastack_name = crant_datastack_name()) {
+  fafbseg:::check_fafbsegpy()
+  fw <- reticulate::import("fafbseg.flywire", convert = FALSE)
+  client <- cave_client(datastack_name)
+  # fafbseg replaces cached clients older than 30 min on Mondays
+  dt <- reticulate::import("datetime", convert = FALSE)
+  reticulate::py_set_attr(client, "_created_at", dt$datetime$now())
+  reticulate::py_set_item(fw$utils$cave_clients, datastack_name, client)
+  fw
+}
