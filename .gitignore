@@ -9,3 +9,7 @@ data/crant_data.sqlite
 python/
 !data-raw/synapse-cave-download.py
 !data-raw/synsnap-build.R
+!data-raw/crant-synapse-density.R
+!data-raw/crant-mirror-warpfield.py
+!data-raw/crant-mirror-warpfield.yml
+!data-raw/crant-mirror-tps.R

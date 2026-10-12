@@ -21,3 +21,27 @@
 # crant.mesh <- malevnc:::decode_neuroglancer_mesh(bytes)
 # crantb.surf <- as.hxsurf(crant.mesh)
 # usethis::use_data(crantb.surf, overwrite = TRUE)
+
+#' Thin plate spline mirror registration for CRANT
+#'
+#' @name crant_mirror_tps
+#' @docType data
+#' @description A [nat::tpsreg()] registration that maps points in the CRANT
+#'   brain (in microns) to their mirror image on the opposite side. Use it via
+#'   [crant_mirror()].
+#'
+#' @details The registration was made by registering an X-flipped image of
+#'   CRANT synapse density (1 um voxels, synapse snapshot v523) onto the
+#'   original with warpfield (\url{https://github.com/danionella/warpfield}).
+#'   Points on a 12 um grid in neuropil were mapped through this registration
+#'   to give mirror landmarks; the TPS was fitted to those left of the midline
+#'   (x ~ 202 um) in both directions, so that it is very nearly its own
+#'   inverse. On held out grid points it agrees with the warpfield mirror to
+#'   ~1 um (median; 90% < 3.3 um) and mirroring twice returns points to within
+#'   0.1 um (median). See `data-raw/crant-synapse-density.R`,
+#'   `data-raw/crant-mirror-warpfield.py` and `data-raw/crant-mirror-tps.R`.
+#'
+#' @seealso [crant_mirror()]
+#' @examples
+#' crant_mirror_tps
+"crant_mirror_tps"
