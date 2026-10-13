@@ -206,5 +206,19 @@ fafbsegpy4crant <- function(datastack_name = crant_datastack_name()) {
   dt <- reticulate::import("datetime", convert = FALSE)
   reticulate::py_set_attr(client, "_created_at", dt$datetime$now())
   reticulate::py_set_item(fw$utils$cave_clients, datastack_name, client)
+  # fafbseg also replaces a cached client when a materialization version
+  # expires, using the default (flywire) token. Make it use the CRANT token.
+  l2 <- reticulate::import("fafbseg.flywire.l2", convert = FALSE)
+  wrap <- reticulate::py_run_string(paste(
+    "def crant_token_wrapper(f, datastack, token):",
+    "    if getattr(f, '_crant_wrapped', None) == datastack: return f",
+    "    def g(*args, **kwargs):",
+    "        if kwargs.get('dataset') == datastack and not kwargs.get('token'):",
+    "            kwargs['token'] = token",
+    "        return f(*args, **kwargs)",
+    "    g._crant_wrapped = datastack",
+    "    return g", sep = "\n"), local = TRUE, convert = FALSE)
+  reticulate::py_set_attr(l2, "get_cave_client", wrap$crant_token_wrapper(
+    l2$get_cave_client, datastack_name, crant_token()))
   fw
 }
