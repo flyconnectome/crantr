@@ -13,6 +13,9 @@ crant_partner_summary(
   remove_autapses = TRUE,
   cleft.threshold = 0,
   datastack_name = NULL,
+  version = NULL,
+  timestamp = NULL,
+  method = c("auto", "cave", "local"),
   ...
 )
 
@@ -20,6 +23,9 @@ crant_partners(
   rootids,
   partners = c("input", "output"),
   synapse_table = c("synapses_v2"),
+  version = NULL,
+  timestamp = NULL,
+  method = c("auto", "cave", "local"),
   ...
 )
 }
@@ -41,7 +47,17 @@ to pass in data.frames, crant URLs or simple ids.}
 \item{datastack_name}{An optional CAVE \code{datastack_name}. If unset a
 sensible default is chosen.}
 
-\item{...}{Additional arguments passed to \code{\link[fafbseg]{flywire_partner_summary}}}
+\item{version, timestamp}{A CAVE materialisation version or a timestamp
+(including \code{"now"}) for the query. The default (both \code{NULL}) is the
+current time.}
+
+\item{method}{Whether to query CAVE or a local synapse snapshot (see
+\code{\link[=crant_use_snapshot]{crant_use_snapshot()}}). \code{"auto"} (the default) uses the selected local
+snapshot when there is one and the query can be answered from it,
+otherwise CAVE.}
+
+\item{...}{Additional arguments passed to \code{\link[fafbseg]{flywire_partner_summary}}
+(CAVE queries only)}
 }
 \value{
 a data.frame
@@ -56,6 +72,13 @@ connection (including its xyz location).
 }
 \details{
 note that the rootids you pass in must be up to date. See example.
+
+Local queries (\code{method = "local"}) give the same results from a downloaded
+synapse snapshot without contacting CAVE for synapses, when the query
+time is no earlier than the snapshot. Edits made since the snapshot are
+fetched from CAVE (see \code{\link[=crant_synapse_data]{crant_synapse_data()}}). They support the
+\code{synapses_v2} table with \code{cleft.threshold = 0} and the default
+\code{datastack_name} only.
 }
 \examples{
 \dontrun{
