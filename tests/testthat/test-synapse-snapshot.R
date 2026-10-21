@@ -121,3 +121,118 @@ test_that("materialisation versions for the snapshot server", {
   expect_equal(vv$timestamp, c(t1, t1 + 86400))
   expect_equal(vv$ok, c(TRUE, FALSE))
 })
+
+test_that("selecting a snapshot by version or timestamp", {
+  skip_if_no_synsnap()
+  root <- make_crant_snapshot(withr::local_tempdir())
+  withr::local_options(crantr.synapse_snapshot = NULL,
+                       crantr.snapshot_check_hours = Inf)
+  t1 <- as.POSIXct("2026-01-02", tz = "UTC")
+  local_mocked_bindings(crant_version_timestamp = function(version) t1)
+  expect_equal(crant_use_snapshot(version = 1, root = root, set = FALSE)$tag, "s1")
+  expect_equal(crant_use_snapshot(timestamp = "now", root = root, set = FALSE)$tag,
+               "s1")
+  expect_message(
+    s <- crant_use_snapshot(timestamp = as.POSIXct("2025-12-01", tz = "UTC"),
+                            root = root, set = FALSE),
+    "No synapse snapshot is as old as 2025-12-01 00:00:00 UTC")
+  expect_equal(s$tag, "s1")
+  expect_error(crant_synsnap_time(1, t1), "only one")
+  expect_equal(crant_synsnap_time(), "now")
+  expect_equal(crant_synsnap_time(version = 1), t1)
+})
+
+test_that("offering to download a missing snapshot", {
+  skip_if_no_synsnap()
+  root <- withr::local_tempdir()
+  local_mocked_bindings(is_interactive = function() TRUE, .package = "rlang")
+  local_mocked_bindings(crant_ask_yes_no = function(msg) FALSE)
+  expect_error(crant_snapshot_check(root), "crant_download_snapshot")
+  got <- NULL
+  local_mocked_bindings(crant_ask_yes_no = function(msg) TRUE,
+                        crant_download_snapshot = function(url = NULL, root) got <<- root)
+  expect_true(crant_snapshot_check(root))
+  expect_equal(got, root)
+})
+
+test_that("publishing, downloading and refreshing snapshots", {
+  skip_if_no_synsnap()
+  skip_if(!nzchar(Sys.which("curl")), "needs curl")
+  root <- make_crant_snapshot(withr::local_tempdir())
+  withr::local_options(crantr.synapse_snapshot = NULL)
+  local_mocked_bindings(crant_synsnap_ctx = quiet_ctx)
+  update <- function(when) suppressMessages(
+    crant_update_snapshot(when, root = root, set = FALSE))
+  update("2026-01-01 00:00:10")
+  pub <- withr::local_tempdir()
+  m <- crant_publish_snapshot(pub, root = root)
+  expect_equal(m$snapshots$tag, c("s1", "20260101T000010"))
+  url <- paste0("file://", normalizePath(pub))
+  withr::local_options(crantr.snapshot_url = url)
+  expect_equal(crant_snapshot_url(), url)
+
+  local <- withr::local_tempdir()
+  expect_message(tags <- crant_download_snapshot(root = local),
+                 "Downloaded synapse snapshot\\(s\\) s1, 20260101T000010")
+  expect_equal(tags, c("s1", "20260101T000010"))
+  expect_message(crant_download_snapshot(url, root = local), "already up to date")
+
+  # refresh: picks up a new checkpoint, then waits `hours` before checking again
+  update("2026-01-01 00:00:20")
+  crant_publish_snapshot(pub, root = root)
+  expect_length(crant_snapshot_refresh(local, hours = Inf), 0)
+  expect_equal(suppressMessages(crant_snapshot_refresh(local, hours = 0)),
+               "20260101T000020")
+  expect_true(file.exists(file.path(local, ".last_check.json")))
+  expect_length(crant_snapshot_refresh(local, hours = 1), 0)
+
+  # failures are quiet for a day
+  withr::local_options(crantr.snapshot_url = paste0(url, "/missing"))
+  expect_silent(crant_snapshot_refresh(local, hours = 0))
+  st <- jsonlite::read_json(file.path(local, ".last_check.json"))
+  expect_false(is.null(st$failing_since))
+  st$failing_since <- "2025-01-01T00:00:00Z"
+  jsonlite::write_json(st, file.path(local, ".last_check.json"), auto_unbox = TRUE)
+  expect_message(crant_snapshot_refresh(local, hours = 0),
+                 "Could not check for new synapse snapshots")
+})
+
+test_that("updating a snapshot", {
+  skip_if_no_synsnap()
+  root <- make_crant_snapshot(withr::local_tempdir())
+  withr::local_options(crantr.synapse_snapshot = NULL,
+                       crantr.snapshot_check_hours = Inf)
+  local_mocked_bindings(crant_synsnap_ctx = quiet_ctx)
+  expect_message(crant_update_snapshot("now", root = root),
+                 "to 2026-01-01 00:00:30 UTC \\(now\\)")
+  expect_equal(getOption("crantr.synapse_snapshot"), "20260101T000030")
+  expect_message(crant_update_snapshot("2026-01-01 00:00:30", root = root,
+                                       set = FALSE),
+                 "already at")
+  local_mocked_bindings(crant_version_timestamp = function(version)
+    as.POSIXct("2026-01-01 00:00:10.5", tz = "UTC"))
+  expect_message(s <- crant_update_snapshot("latest", from = "s1", tag = "v1",
+                                            root = root, set = FALSE),
+                 "latest materialisation")
+  expect_equal(s$tag, "v1")
+  expect_error(crant_update_snapshot("2025-01-01", root = root), "is as old as")
+})
+
+test_that("snapshot server", {
+  skip_if_no_synsnap()
+  root <- make_crant_snapshot(withr::local_tempdir())
+  pub <- withr::local_tempdir()
+  now <- as.POSIXct("2026-01-02 12:00:00", tz = "UTC")
+  ctx <- quiet_ctx()
+  ctx$now <- function() now
+  local_mocked_bindings(
+    crant_synsnap_ctx = function() ctx,
+    crant_synsnap_versions = function() data.frame(
+      version = 1:2, timestamp = now - c(8, 2) * 3600, ok = c(TRUE, FALSE)))
+  st <- crant_synsnap_server(root, dest = pub)
+  expect_true(st$ok)
+  expect_true("v1" %in% st$built)
+  expect_false("v2" %in% st$built)
+  expect_true(file.exists(file.path(pub, "status.json")))
+  expect_true(file.exists(file.path(pub, "manifest.json")))
+})
