@@ -478,6 +478,10 @@ Analysing Neuroanatomical Data.* eLife 9 (April).
   : Find the supervoxel identifiers of a CRANT neuron
 - [`crant_meta()`](https://flyconnectome.github.io/crantr/reference/crant_meta.md)
   : Return metadata about CRANTb neurons from the project seatable
+- [`crant_mirror()`](https://flyconnectome.github.io/crantr/reference/crant_mirror.md)
+  : Mirror CRANT neurons or points to the opposite side of the brain
+- [`crant_mirror_tps`](https://flyconnectome.github.io/crantr/reference/crant_mirror_tps.md)
+  : Thin plate spline mirror registration for CRANT
 - [`crant_neuron_volume()`](https://flyconnectome.github.io/crantr/reference/crant_neuron_volume.md)
   : Calculate neuron volume from CAVE L2 cache
 - [`crant_partner_summary()`](https://flyconnectome.github.io/crantr/reference/crant_partner_summary.md)

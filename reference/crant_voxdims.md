@@ -24,7 +24,7 @@ crant_raw2nm(x, vd = crant_voxdims())
 - x:
 
   3D coordinates in any form compatible with
-  [`xyzmatrix`](https://rdrr.io/pkg/fafbseg/man/xyzmatrix.html)
+  [`xyzmatrix`](https://rdrr.io/pkg/nat/man/xyzmatrix.html)
 
 - vd:
 
