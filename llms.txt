@@ -459,6 +459,9 @@ Analysing Neuroanatomical Data.* eLife 9 (April).
   : Read CRANT CAVE-tables, good sources of metadata
 - [`crant_change_log()`](https://flyconnectome.github.io/crantr/reference/crant_change_log.md)
   : Fetch change log information for one or more neurons
+- [`crant_download_snapshot()`](https://flyconnectome.github.io/crantr/reference/crant_download_snapshot.md)
+  [`crant_publish_snapshot()`](https://flyconnectome.github.io/crantr/reference/crant_download_snapshot.md)
+  : Download or publish CRANT synapse snapshots
 - [`crant_ggneuron()`](https://flyconnectome.github.io/crantr/reference/crant_ggneuron.md)
   : Plot a neuron in the CRANT connectomic dataset using ggplot2
 - [`crant_ids()`](https://flyconnectome.github.io/crantr/reference/crant_ids.md)
@@ -494,6 +497,10 @@ Analysing Neuroanatomical Data.* eLife 9 (April).
 - [`crant_set_token()`](https://flyconnectome.github.io/crantr/reference/crant_set_token.md)
   : Set the token to be used to authenticate to CRANT autosegmentation
   resources
+- [`crant_snapshot_root()`](https://flyconnectome.github.io/crantr/reference/crant_snapshot_root.md)
+  : Folder for local CRANT synapse snapshots
+- [`crant_synapse_data()`](https://flyconnectome.github.io/crantr/reference/crant_synapse_data.md)
+  : Lazy access to all synapses in a local snapshot
 - [`crant_table_query()`](https://flyconnectome.github.io/crantr/reference/crant_table_query.md)
   [`crant_table_set_token()`](https://flyconnectome.github.io/crantr/reference/crant_table_query.md)
   [`crant_table_login()`](https://flyconnectome.github.io/crantr/reference/crant_table_query.md)
@@ -502,6 +509,10 @@ Analysing Neuroanatomical Data.* eLife 9 (April).
   [`crant_table_updateids()`](https://flyconnectome.github.io/crantr/reference/crant_table_query.md)
   [`crant_table_annotate()`](https://flyconnectome.github.io/crantr/reference/crant_table_query.md)
   : Read and write to the seatable for draft CRANT annotations
+- [`crant_update_snapshot()`](https://flyconnectome.github.io/crantr/reference/crant_update_snapshot.md)
+  : Bring a local CRANT synapse snapshot up to date
+- [`crant_use_snapshot()`](https://flyconnectome.github.io/crantr/reference/crant_use_snapshot.md)
+  : Use a local snapshot of the CRANT synapse table
 - [`crant_view()`](https://flyconnectome.github.io/crantr/reference/crant_view.md)
   [`crant_side_view()`](https://flyconnectome.github.io/crantr/reference/crant_view.md)
   [`crant_back_view()`](https://flyconnectome.github.io/crantr/reference/crant_view.md)

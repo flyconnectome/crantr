@@ -18,6 +18,9 @@ crant_partner_summary(
   remove_autapses = TRUE,
   cleft.threshold = 0,
   datastack_name = NULL,
+  version = NULL,
+  timestamp = NULL,
+  method = c("auto", "cave", "local"),
   ...
 )
 
@@ -25,6 +28,9 @@ crant_partners(
   rootids,
   partners = c("input", "output"),
   synapse_table = c("synapses_v2"),
+  version = NULL,
+  timestamp = NULL,
+  method = c("auto", "cave", "local"),
   ...
 )
 ```
@@ -65,10 +71,23 @@ crant_partners(
   An optional CAVE `datastack_name`. If unset a sensible default is
   chosen.
 
+- version, timestamp:
+
+  A CAVE materialisation version or a timestamp (including `"now"`) for
+  the query. The default (both `NULL`) is the current time.
+
+- method:
+
+  Whether to query CAVE or a local synapse snapshot (see
+  [`crant_use_snapshot()`](https://flyconnectome.github.io/crantr/reference/crant_use_snapshot.md)).
+  `"auto"` (the default) uses the selected local snapshot when there is
+  one and the query can be answered from it, otherwise CAVE.
+
 - ...:
 
   Additional arguments passed to
   [`flywire_partner_summary`](https://rdrr.io/pkg/fafbseg/man/flywire_partners.html)
+  (CAVE queries only)
 
 ## Value
 
@@ -77,6 +96,14 @@ a data.frame
 ## Details
 
 note that the rootids you pass in must be up to date. See example.
+
+Local queries (`method = "local"`) give the same results from a
+downloaded synapse snapshot without contacting CAVE for synapses, when
+the query time is no earlier than the snapshot. Edits made since the
+snapshot are fetched from CAVE (see
+[`crant_synapse_data()`](https://flyconnectome.github.io/crantr/reference/crant_synapse_data.md)).
+They support the `synapses_v2` table with `cleft.threshold = 0` and the
+default `datastack_name` only.
 
 ## See also
 

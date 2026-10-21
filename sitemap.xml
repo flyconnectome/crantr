@@ -13,6 +13,7 @@
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_cave_query.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_cave_tables.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_change_log.html</loc></url>
+<url><loc>https://flyconnectome.github.io/crantr/reference/crant_download_snapshot.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_ggneuron.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_ids.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_islatest.html</loc></url>
@@ -29,7 +30,11 @@
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_rootid.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_scene.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_set_token.html</loc></url>
+<url><loc>https://flyconnectome.github.io/crantr/reference/crant_snapshot_root.html</loc></url>
+<url><loc>https://flyconnectome.github.io/crantr/reference/crant_synapse_data.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_table_query.html</loc></url>
+<url><loc>https://flyconnectome.github.io/crantr/reference/crant_update_snapshot.html</loc></url>
+<url><loc>https://flyconnectome.github.io/crantr/reference/crant_use_snapshot.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_view.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_voxdims.html</loc></url>
 <url><loc>https://flyconnectome.github.io/crantr/reference/crant_xyz2id.html</loc></url>
