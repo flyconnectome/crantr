@@ -45,6 +45,8 @@
 - [`crant_partner_summary()`](https://flyconnectome.github.io/crantr/reference/crant_partner_summary.md)
   [`crant_partners()`](https://flyconnectome.github.io/crantr/reference/crant_partner_summary.md)
   : Summarise the connectivity of CRANTb neurons
+- [`crant_read_l2dp()`](https://flyconnectome.github.io/crantr/reference/crant_read_l2dp.md)
+  : Read L2 dotprops for CRANT neurons
 - [`crant_read_l2skel()`](https://flyconnectome.github.io/crantr/reference/crant_read_l2skel.md)
   : Read L2 skeleton for crant neurons using pcg_skel
 - [`crant_read_neuroglancer_mesh()`](https://flyconnectome.github.io/crantr/reference/crant_read_neuroglancer_mesh.md)
