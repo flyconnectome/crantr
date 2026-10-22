@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">crantr</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">0.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,6 +37,22 @@
       <small>Source: <a href="https://github.com/flyconnectome/crantr/blob/main/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="0.3.0" id="crantr-030">crantr 0.3.0<a class="anchor" aria-label="anchor" href="#crantr-030"></a></h2>
+<p>Fast local synapse snapshots for connectivity queries at any time up to the present, plus mirroring across the midline and fast L2 dotprops for mirrored NBLAST. See <code><a href="../articles/synapse-snapshots.html">vignette("synapse-snapshots")</a></code>.</p>
+<ul><li>New local synapse snapshot functions, using the snapshot code in aedes (Suggests): <code><a href="../reference/crant_use_snapshot.html">crant_use_snapshot()</a></code>, <code><a href="../reference/crant_download_snapshot.html">crant_download_snapshot()</a></code>, <code><a href="../reference/crant_update_snapshot.html">crant_update_snapshot()</a></code>, <code><a href="../reference/crant_synapse_data.html">crant_synapse_data()</a></code>, <code><a href="../reference/crant_snapshot_root.html">crant_snapshot_root()</a></code> and <code><a href="../reference/crant_download_snapshot.html">crant_publish_snapshot()</a></code>. The first download is about 1.8 GB; daily checkpoints are then fetched automatically (<a href="https://github.com/flyconnectome/crantr/issues/4" class="external-link">#4</a>).</li>
+<li>
+<code><a href="../reference/crant_partner_summary.html">crant_partner_summary()</a></code> and <code><a href="../reference/crant_partner_summary.html">crant_partners()</a></code> gain <code>method = c("auto", "cave", "local")</code> and explicit <code>version</code>/<code>timestamp</code>; <code>"auto"</code> answers from the selected snapshot when possible, otherwise CAVE as before (<a href="https://github.com/flyconnectome/crantr/issues/4" class="external-link">#4</a>).</li>
+<li>
+<code>data-raw</code> scripts to download a CAVE synapse table and build the first snapshot, and an internal <code>crant_synsnap_server()</code> with a cron script (<code>inst/scripts/synsnap-cron.sh</code>) to make and publish daily checkpoints (<a href="https://github.com/flyconnectome/crantr/issues/4" class="external-link">#4</a>).</li>
+<li>New <code><a href="../reference/crant_mirror.html">crant_mirror()</a></code> mirrors points, neurons, meshes and dotprops across the midline (nm or microns), keeping dotprops tangent vectors (<a href="https://github.com/flyconnectome/crantr/issues/5" class="external-link">#5</a>).</li>
+<li>New <code>crant_mirror_tps</code> dataset: a thin plate spline mirror registration built from CRANT synapse density (<a href="https://github.com/flyconnectome/crantr/issues/5" class="external-link">#5</a>).</li>
+<li>New <code><a href="../reference/crant_read_l2dp.html">crant_read_l2dp()</a></code> quickly fetches dotprops suitable for NBLAST from the L2 cache, via python fafbseg using the CRANT token (<a href="https://github.com/flyconnectome/crantr/issues/6" class="external-link">#6</a>).</li>
+<li>New vignette on synapse snapshots (fc00222).</li>
+<li>Fixed <code><a href="../reference/crant_latestid.html">crant_updateids()</a></code> bookkeeping of old ids during the position-based update (3eb567b).</li>
+<li>Documentation regenerated with roxygen2 8.1.0 (01fed0b).</li>
+</ul><p><strong>Full Changelog</strong>: <a href="https://github.com/flyconnectome/crantr/compare/7861ea3" class="external-link uri">https://github.com/flyconnectome/crantr/compare/7861ea3</a>…v0.3.0</p>
+</div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.1" id="crantr-021">crantr 0.2.1<a class="anchor" aria-label="anchor" href="#crantr-021"></a></h2>
 <ul><li>New <code><a href="../reference/crant_key_point.html">crant_key_point()</a></code> returns a “good” annotation point on a neuron: the principal branch point of its L2 skeleton, with the neuron optionally rerooted onto its furthest endpoint first. Shares the dataset-agnostic <code><a href="https://rdrr.io/pkg/fafbseg/man/key_point_from_neuron.html" class="external-link">fafbseg::key_point_from_neuron()</a></code> helper but reads via <code><a href="../reference/crant_read_l2skel.html">crant_read_l2skel()</a></code> because the CRANT segmentation is hosted on a separate CAVE server that <code><a href="https://rdrr.io/pkg/fafbseg/man/read_l2skel.html" class="external-link">fafbseg::read_l2skel()</a></code> cannot currently reach (requires <code>fafbseg (&gt;= 0.15.15)</code>).</li>
