@@ -18,3 +18,8 @@ Useful links:
 
 **Maintainer**: Alexander Bates <alexander.shakeel.bates@gmail.com>
 ([ORCID](https://orcid.org/0000-0002-1195-0445))
+
+Authors:
+
+- Alexander Bates <alexander.shakeel.bates@gmail.com>
+  ([ORCID](https://orcid.org/0000-0002-1195-0445))

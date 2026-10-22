@@ -45,7 +45,7 @@ For banc this is the neuroglancer scene returned by
 infrastructure (see
 [`cam_meta`](https://rdrr.io/pkg/fafbseg/man/cam_meta.html)) at the
 CRANTb seatable instance via the `fafbseg.flytable.url` option (requires
-`fafbseg >= 0.15.7`). Inside `with_crant()` the `FLYTABLE_TOKEN`
+`fafbseg >= 0.15.10`). Inside `with_crant()` the `FLYTABLE_TOKEN`
 environment variable is temporarily replaced with the value of
 `CRANTTABLE_TOKEN` so that
 [`flytable_login`](https://rdrr.io/pkg/fafbseg/man/flytable_login.html)

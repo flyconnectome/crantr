@@ -4,7 +4,7 @@
 snapshots into your snapshot folder; select one with
 [`crant_use_snapshot()`](https://flyconnectome.github.io/crantr/reference/crant_use_snapshot.md)
 to use it. The first download fetches the static data and a full
-snapshot (several GB); later ones usually just fetch a few small
+snapshot (about 1.8 GB); later ones usually just fetch a few small
 checkpoints.
 
 `crant_publish_snapshot()` is for whoever maintains the snapshots: it

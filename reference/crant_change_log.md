@@ -31,7 +31,9 @@ crant_change_log(x, tz = "UTC", filtered = TRUE, OmitFailures = TRUE, ...)
 
   Whether to omit neurons for which there is an API timeout or error.
   The default value (`TRUE`) will skip over errors, while `NA`) will
-  result in a hard stop on error. See `nlapply` for more details.
+  result in a hard stop on error. See
+  [`nlapply`](https://rdrr.io/pkg/nat/man/nlapply.html) for more
+  details.
 
 - ...:
 

@@ -4,3 +4,5 @@
 
 - [Plot examples from the CRANT
   connectome](https://flyconnectome.github.io/crantr/articles/crant_alpn_split.md):
+- [Local Synapse
+  Snapshots](https://flyconnectome.github.io/crantr/articles/synapse-snapshots.md):

@@ -275,6 +275,13 @@ crant_partners(pn.ids[1], partners = "output")
 crant_neuron_volume(pn.ids)
 ```
 
+For fast partner queries on many neurons, at a materialisation version
+or right up to the current time, use a local synapse snapshot
+([`crant_use_snapshot()`](https://flyconnectome.github.io/crantr/reference/crant_use_snapshot.md));
+see the [Local Synapse
+Snapshots](https://flyconnectome.github.io/crantr/articles/synapse-snapshots.html)
+article.
+
 ## Meta data management in seatable
 
 ![ant_table](https://github.com/flyconnectome/crantr/blob/main/inst/images/ant_table.png?raw=true)
