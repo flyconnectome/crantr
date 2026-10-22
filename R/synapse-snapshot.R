@@ -96,11 +96,11 @@ crant_snapshot_check <- function(root) {
     return(invisible(TRUE))
   msg <- paste0("No local synapse snapshot in ", root, ".")
   if (rlang::is_interactive() &&
-      isTRUE(crant_ask_yes_no(paste(msg, "Download one now (several GB)?")))) {
+      isTRUE(crant_ask_yes_no(paste(msg, "Download one now (about 1.8 GB)?")))) {
     crant_download_snapshot(root = root)
     return(invisible(TRUE))
   }
-  stop(msg, " Download one with crant_download_snapshot() (several GB, ",
+  stop(msg, " Download one with crant_download_snapshot() (about 1.8 GB, ",
        "needs access to the CRANT CAVE datastack) or see ",
        "vignette(\"synapse-snapshots\", package = \"crantr\")", call. = FALSE)
 }
