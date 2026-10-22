@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/flyconnectome/crantr/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/flyconnectome/crantr/blob/v0.3.0/DESCRIPTION)
 
 Bates A (2026). *crantr: R Client Access to Clonal Raider ANT (CRANT)
 Datasets*. R package version 0.3.0,
