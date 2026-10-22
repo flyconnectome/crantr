@@ -1,3 +1,34 @@
+# crantr 0.3.0
+
+Fast local synapse snapshots for connectivity queries at any time up to the
+present, plus mirroring across the midline and fast L2 dotprops for mirrored
+NBLAST. See `vignette("synapse-snapshots")`.
+
+* New local synapse snapshot functions, using the snapshot code in aedes
+  (Suggests): `crant_use_snapshot()`, `crant_download_snapshot()`,
+  `crant_update_snapshot()`, `crant_synapse_data()`, `crant_snapshot_root()`
+  and `crant_publish_snapshot()`. The first download is about 1.8 GB; daily
+  checkpoints are then fetched automatically (#4).
+* `crant_partner_summary()` and `crant_partners()` gain
+  `method = c("auto", "cave", "local")` and explicit `version`/`timestamp`;
+  `"auto"` answers from the selected snapshot when possible, otherwise CAVE as
+  before (#4).
+* `data-raw` scripts to download a CAVE synapse table and build the first
+  snapshot, and an internal `crant_synsnap_server()` with a cron script
+  (`inst/scripts/synsnap-cron.sh`) to make and publish daily checkpoints (#4).
+* New `crant_mirror()` mirrors points, neurons, meshes and dotprops across the
+  midline (nm or microns), keeping dotprops tangent vectors (#5).
+* New `crant_mirror_tps` dataset: a thin plate spline mirror registration
+  built from CRANT synapse density (#5).
+* New `crant_read_l2dp()` quickly fetches dotprops suitable for NBLAST from
+  the L2 cache, via python fafbseg using the CRANT token (#6).
+* New vignette on synapse snapshots (fc00222).
+* Fixed `crant_updateids()` bookkeeping of old ids during the position-based
+  update (3eb567b).
+* Documentation regenerated with roxygen2 8.1.0 (01fed0b).
+
+**Full Changelog**: https://github.com/flyconnectome/crantr/compare/7861ea3...v0.3.0
+
 # crantr 0.2.1
 
 * New `crant_key_point()` returns a "good" annotation point on a neuron: the
