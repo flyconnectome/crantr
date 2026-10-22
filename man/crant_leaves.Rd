@@ -29,10 +29,10 @@ head(svids)
 \seealso{
 \code{\link{flywire_leaves}}
 
-Other crant-ids: 
-\code{\link{crant_islatest}()},
-\code{\link{crant_latestid}()},
-\code{\link{crant_rootid}()},
-\code{\link{crant_xyz2id}()}
+Other crant-ids:
+\code{\link[=crant_islatest]{crant_islatest()}},
+\code{\link[=crant_latestid]{crant_latestid()}},
+\code{\link[=crant_rootid]{crant_rootid()}},
+\code{\link[=crant_xyz2id]{crant_xyz2id()}}
 }
 \concept{crant-ids}

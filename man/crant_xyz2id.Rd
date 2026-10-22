@@ -62,10 +62,10 @@ crant_xyz2id(cbind(37306, 31317, 1405), rawcoords=TRUE)
 \seealso{
 \code{\link{flywire_xyz2id}}
 
-Other crant-ids: 
-\code{\link{crant_islatest}()},
-\code{\link{crant_latestid}()},
-\code{\link{crant_leaves}()},
-\code{\link{crant_rootid}()}
+Other crant-ids:
+\code{\link[=crant_islatest]{crant_islatest()}},
+\code{\link[=crant_latestid]{crant_latestid()}},
+\code{\link[=crant_leaves]{crant_leaves()}},
+\code{\link[=crant_rootid]{crant_rootid()}}
 }
 \concept{crant-ids}

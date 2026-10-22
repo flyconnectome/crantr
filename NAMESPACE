@@ -61,12 +61,16 @@ import(bit64)
 import(fafbseg)
 import(nat.flybrains)
 importFrom(magrittr,"%>%")
-importFrom(nat,as.neuron)
-importFrom(nat,nlapply)
-importFrom(nat,stitch_neurons_mst)
-importFrom(nat,xyzmatrix)
+importFrom(nat,
+  as.neuron,
+  nlapply,
+  stitch_neurons_mst,
+  xyzmatrix
+)
 importFrom(pbapply,pbsapply)
-importFrom(rlang,.data)
 importFrom(reticulate,py_run_string)
-importFrom(utils,browseURL)
-importFrom(utils,capture.output)
+importFrom(rlang,.data)
+importFrom(utils,
+  browseURL,
+  capture.output
+)

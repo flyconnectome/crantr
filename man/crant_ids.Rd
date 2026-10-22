@@ -24,7 +24,7 @@ root ids (passed to \code{\link[=crant_meta]{crant_meta()}}). Ignored for non-qu
 
 \item{normalise_colnames}{Logical; if \code{TRUE}, pass
 \code{normalise_colnames = TRUE} to \code{\link[=crant_meta]{crant_meta()}} so query aliases such as
-\code{class:}/\code{type:} and bare type tokens are translated to the underlying
+\verb{class:}/\verb{type:} and bare type tokens are translated to the underlying
 seatable schema before lookup.}
 
 \item{na.rm}{Whether to drop missing (\code{NA}) root ids rather than returning

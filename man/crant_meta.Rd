@@ -34,7 +34,7 @@ to which root ids in the returned table should be mapped.}
 
 \item{normalise_colnames}{Logical; if \code{TRUE}, rename metadata columns to the
 coconat/crantr schema (\code{root_id} -> \code{id}, \code{super_class} -> \code{class}, etc.)
-and translate query aliases such as \code{class:} -> \code{super_class:} and bare
+and translate query aliases such as \verb{class:} -> \verb{super_class:} and bare
 tokens like \code{"NSC"} -> \code{"cell_type:NSC"}.}
 
 \item{translate_ids}{Whether to bring explicitly supplied \code{ids} forward to

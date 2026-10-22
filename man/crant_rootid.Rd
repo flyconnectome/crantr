@@ -29,10 +29,10 @@ crant_rootid("576460752684030043")
 \seealso{
 \code{\link{flywire_rootid}}
 
-Other crant-ids: 
-\code{\link{crant_islatest}()},
-\code{\link{crant_latestid}()},
-\code{\link{crant_leaves}()},
-\code{\link{crant_xyz2id}()}
+Other crant-ids:
+\code{\link[=crant_islatest]{crant_islatest()}},
+\code{\link[=crant_latestid]{crant_latestid()}},
+\code{\link[=crant_leaves]{crant_leaves()}},
+\code{\link[=crant_xyz2id]{crant_xyz2id()}}
 }
 \concept{crant-ids}

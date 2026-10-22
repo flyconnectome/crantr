@@ -19,7 +19,7 @@ state of the neuron (default \code{TRUE}, see details).}
 
 \item{OmitFailures}{Whether to omit neurons for which there is an API timeout
 or error. The default value (\code{TRUE}) will skip over errors, while
-\code{NA}) will result in a hard stop on error. See \code{\link{nlapply}}
+\code{NA}) will result in a hard stop on error. See \code{\link[nat]{nlapply}}
 for more details.}
 
 \item{...}{Additional arguments passed to \code{\link[fafbseg]{flywire_fetch}}}

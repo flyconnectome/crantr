@@ -36,7 +36,7 @@ multiple data layers. For banc this is the neuroglancer scene returned by
 \code{with_crant} and \code{choose_crant} also redirect the
 \code{fafbseg} flytable infrastructure (see \code{\link[fafbseg]{cam_meta}})
 at the CRANTb seatable instance via the \code{fafbseg.flytable.url}
-option (requires \code{fafbseg >= 0.15.7}). Inside \code{with_crant()}
+option (requires \code{fafbseg >= 0.15.10}). Inside \code{with_crant()}
 the \code{FLYTABLE_TOKEN} environment variable is temporarily replaced
 with the value of \code{CRANTTABLE_TOKEN} so that
 \code{\link[fafbseg]{flytable_login}} authenticates against the CRANTb
