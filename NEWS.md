@@ -1,3 +1,14 @@
+# crantr (development version)
+
+* `crant_partner_summary()` and `crant_partners()` now default to
+  `synapse_table = "synapses_v3"` (Zetta's CRA9 synapse predictions, all
+  rows); `"synapses_v2"` is still available. Local synapse snapshots are built
+  from `synapses_v2`, so with the new default `method = "auto"` queries CAVE,
+  and `method = "local"` needs `synapse_table = "synapses_v2"`.
+* `crant_partners()` returns positions in nm for either table (v3 stores
+  16 x 16 x 42 nm voxels) by asking CAVE for `desired_resolution = c(1, 1, 1)`
+  unless one is passed.
+
 # crantr 0.3.0
 
 Fast local synapse snapshots for connectivity queries at any time up to the

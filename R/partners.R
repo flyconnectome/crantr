@@ -6,12 +6,16 @@
 #'
 #' @details note that the rootids you pass in must be up to date. See example.
 #'
+#'   The default synapse table is `synapses_v3` (Zetta's CRA9 predictions,
+#'   all rows). `synapses_v2` remains available via `synapse_table`.
+#'
 #'   Local queries (`method = "local"`) give the same results from a downloaded
 #'   synapse snapshot without contacting CAVE for synapses, when the query
 #'   time is no earlier than the snapshot. Edits made since the snapshot are
-#'   fetched from CAVE (see [crant_synapse_data()]). They support the
-#'   `synapses_v2` table with `cleft.threshold = 0` and the default
-#'   `datastack_name` only.
+#'   fetched from CAVE (see [crant_synapse_data()]). Snapshots are built from
+#'   `synapses_v2`, so they answer only `synapse_table = "synapses_v2"`
+#'   queries with `cleft.threshold = 0` and the default `datastack_name`;
+#'   with the `synapses_v3` default, `method = "auto"` queries CAVE.
 #'
 #' @param rootids Character vector specifying one or more crant rootids. As a
 #'   convenience this argument is passed to \code{\link{crant_ids}} allowing you
@@ -22,7 +26,10 @@
 #' @param cleft.threshold Numeric threshold for cleft filtering (default 0).
 #' @param datastack_name An optional CAVE \code{datastack_name}. If unset a
 #'   sensible default is chosen.
-#' @param synapse_table Character, the name of the synapse CAVE table you wish to use. Defaults to the latest.
+#' @param synapse_table Character, the name of the synapse CAVE table you
+#'   wish to use. Defaults to `synapses_v3`, the best CRANTb synapse table.
+#'   `crant_partners()` returns positions in nm for either table (v3 stores
+#'   16 x 16 x 42 nm voxels; see `desired_resolution` in `...`).
 #' @param version,timestamp A CAVE materialisation version or a timestamp
 #'   (including `"now"`) for the query. The default (both `NULL`) is the
 #'   current time.
@@ -30,8 +37,10 @@
 #'   [crant_use_snapshot()]). `"auto"` (the default) uses the selected local
 #'   snapshot when there is one and the query can be answered from it,
 #'   otherwise CAVE.
-#' @param ... Additional arguments passed to \code{\link[fafbseg]{flywire_partner_summary}}
-#'   (CAVE queries only)
+#' @param ... Additional arguments passed to
+#'   \code{\link[fafbseg]{flywire_partner_summary}} or, for `crant_partners()`,
+#'   to caveclient's `synapse_query` (CAVE queries only). `crant_partners()`
+#'   asks for `desired_resolution = c(1, 1, 1)` (nm) unless you pass one.
 #'
 #' @return a data.frame
 #' @seealso \code{\link{flywire_partner_summary}}, \code{\link{crant_latestid}}
@@ -47,7 +56,7 @@
 #' @rdname crant_partner_summary
 crant_partner_summary <- function(rootids,
                                  partners = c("outputs", "inputs"),
-                                 synapse_table = c("synapses_v2"),
+                                 synapse_table = c("synapses_v3", "synapses_v2"),
                                  threshold = 0,
                                  remove_autapses = TRUE,
                                  cleft.threshold = 0,
@@ -60,6 +69,7 @@ crant_partner_summary <- function(rootids,
   partners <- match.arg(partners)
   method <- match.arg(method)
   snap <- crant_synsnap_choose(method, version, timestamp,
+                               synapse_table = synapse_table,
                                cleft.threshold = cleft.threshold,
                                datastack_name = datastack_name, ...)
   if (!is.null(snap)) {
@@ -144,8 +154,12 @@ crant_synsnap_choose <- function(method, version, timestamp, ...) {
 
 # NULL if a query can be answered from snapshot `snap` at `when`, otherwise a
 # string saying why not
-crant_synsnap_problem <- function(snap, when, cleft.threshold = 0,
+crant_synsnap_problem <- function(snap, when, synapse_table = "synapses_v2",
+                                  cleft.threshold = 0,
                                   datastack_name = NULL, ...) {
+  # snapshots are built from synapses_v2
+  if (!identical(synapse_table, "synapses_v2"))
+    return(sprintf("snapshots hold synapses_v2, not %s", synapse_table))
   bad <- c(if (!isTRUE(cleft.threshold == 0)) "cleft.threshold",
            if (!is.null(datastack_name) &&
                !identical(datastack_name, crant_datastack_name())) "datastack_name",
@@ -169,15 +183,16 @@ crant_synsnap_problem <- function(snap, when, cleft.threshold = 0,
 #' # plot input and output synapses of a neuron
 #' nclear3d()
 #' fpi=crant_partners(crant_latestid("576460752716912866"), partners='in')
-#' points3d(crant_raw2nm(fpi$post_pt_position), col='cyan')
+#' # positions are in nm
+#' points3d(xyzmatrix(fpi$post_pt_position), col='cyan')
 #' fpo=crant_partners(crant_latestid("576460752716912866"), partners='out')
-#' points3d(crant_raw2nm(fpo$pre_pt_position), col='red')
+#' points3d(xyzmatrix(fpo$pre_pt_position), col='red')
 #' }
 #' @export
 #' @rdname crant_partner_summary
 crant_partners <- function(rootids,
                           partners=c("input", "output"),
-                          synapse_table = c("synapses_v2"),
+                          synapse_table = c("synapses_v3", "synapses_v2"),
                           version = NULL,
                           timestamp = NULL,
                           method = c("auto", "cave", "local"),
@@ -186,9 +201,14 @@ crant_partners <- function(rootids,
   partners=match.arg(partners)
   method = match.arg(method)
   rootids=crant_ids(rootids)
-  snap = crant_synsnap_choose(method, version, timestamp, ...)
+  snap = crant_synsnap_choose(method, version, timestamp,
+                              synapse_table = synapse_table, ...)
   if (!is.null(snap))
     return(crant_partners_local(rootids, partners, snap))
+  # positions in nm whatever the table's own voxel size (v3: 16 x 16 x 42)
+  extra = list(...)
+  if (!"desired_resolution" %in% names(extra))
+    extra$desired_resolution = c(1, 1, 1)
   fcc=crant_cave_client()
   pyids=fafbseg:::rids2pyint(rootids)
   when = c(if (!is.null(version)) list(materialization_version = as.integer(version)),
@@ -196,10 +216,10 @@ crant_partners <- function(rootids,
              list(timestamp = fafbseg:::ts2pydatetime(timestamp)))
   res=if(partners=='input') {
     do.call(reticulate::py_call, c(list(fcc$materialize$synapse_query, post_ids=pyids,
-                                        synapse_table=synapse_table), when, list(...)))
+                                        synapse_table=synapse_table), when, extra))
   } else {
     do.call(reticulate::py_call, c(list(fcc$materialize$synapse_query, pre_ids=pyids,
-                                        synapse_table=synapse_table), when, list(...)))
+                                        synapse_table=synapse_table), when, extra))
   }
   # Flatten array-valued position columns to strings before R conversion
   # to avoid REAL()/character type mismatch in Arrow/reticulate (numpy arrays

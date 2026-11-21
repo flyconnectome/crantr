@@ -8,7 +8,7 @@
 crant_partner_summary(
   rootids,
   partners = c("outputs", "inputs"),
-  synapse_table = c("synapses_v2"),
+  synapse_table = c("synapses_v3", "synapses_v2"),
   threshold = 0,
   remove_autapses = TRUE,
   cleft.threshold = 0,
@@ -22,7 +22,7 @@ crant_partner_summary(
 crant_partners(
   rootids,
   partners = c("input", "output"),
-  synapse_table = c("synapses_v2"),
+  synapse_table = c("synapses_v3", "synapses_v2"),
   version = NULL,
   timestamp = NULL,
   method = c("auto", "cave", "local"),
@@ -36,7 +36,10 @@ to pass in data.frames, crant URLs or simple ids.}
 
 \item{partners}{Character vector, either "input" or "output" to specify the direction of synaptic connections to retrieve.}
 
-\item{synapse_table}{Character, the name of the synapse CAVE table you wish to use. Defaults to the latest.}
+\item{synapse_table}{Character, the name of the synapse CAVE table you
+wish to use. Defaults to \code{synapses_v3}, the best CRANTb synapse table.
+\code{crant_partners()} returns positions in nm for either table (v3 stores
+16 x 16 x 42 nm voxels; see \code{desired_resolution} in \code{...}).}
 
 \item{threshold}{Integer threshold for minimum number of synapses (default 0).}
 
@@ -56,8 +59,10 @@ current time.}
 snapshot when there is one and the query can be answered from it,
 otherwise CAVE.}
 
-\item{...}{Additional arguments passed to \code{\link[fafbseg]{flywire_partner_summary}}
-(CAVE queries only)}
+\item{...}{Additional arguments passed to
+\code{\link[fafbseg]{flywire_partner_summary}} or, for \code{crant_partners()},
+to caveclient's \code{synapse_query} (CAVE queries only). \code{crant_partners()}
+asks for \code{desired_resolution = c(1, 1, 1)} (nm) unless you pass one.}
 }
 \value{
 a data.frame
@@ -73,12 +78,16 @@ connection (including its xyz location).
 \details{
 note that the rootids you pass in must be up to date. See example.
 
+The default synapse table is \code{synapses_v3} (Zetta's CRA9 predictions,
+all rows). \code{synapses_v2} remains available via \code{synapse_table}.
+
 Local queries (\code{method = "local"}) give the same results from a downloaded
 synapse snapshot without contacting CAVE for synapses, when the query
 time is no earlier than the snapshot. Edits made since the snapshot are
-fetched from CAVE (see \code{\link[=crant_synapse_data]{crant_synapse_data()}}). They support the
-\code{synapses_v2} table with \code{cleft.threshold = 0} and the default
-\code{datastack_name} only.
+fetched from CAVE (see \code{\link[=crant_synapse_data]{crant_synapse_data()}}). Snapshots are built from
+\code{synapses_v2}, so they answer only \code{synapse_table = "synapses_v2"}
+queries with \code{cleft.threshold = 0} and the default \code{datastack_name};
+with the \code{synapses_v3} default, \code{method = "auto"} queries CAVE.
 }
 \examples{
 \dontrun{
@@ -91,9 +100,10 @@ head(crant_partner_summary(sample_id, partners='inputs'))
 # plot input and output synapses of a neuron
 nclear3d()
 fpi=crant_partners(crant_latestid("576460752716912866"), partners='in')
-points3d(crant_raw2nm(fpi$post_pt_position), col='cyan')
+# positions are in nm
+points3d(xyzmatrix(fpi$post_pt_position), col='cyan')
 fpo=crant_partners(crant_latestid("576460752716912866"), partners='out')
-points3d(crant_raw2nm(fpo$pre_pt_position), col='red')
+points3d(xyzmatrix(fpo$pre_pt_position), col='red')
 }
 }
 \seealso{
